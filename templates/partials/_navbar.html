@@ -1,0 +1,87 @@
+{% load static %}
+<!-- Navbar-->
+<nav class="navbar navbar-marketing navbar-expand-lg bg-transparent navbar-lemon fixed-top">
+    <div class="container px-5">
+        <a href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" class="logo" alt="Qwikgas Logo"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i data-feather="menu"></i></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto me-lg-5">
+                <li class="nav-item"><a class="nav-link text-white" href="{% url 'index' %}">Home</a></li>
+                <li class="nav-item dropdown dropdown-xl no-caret">
+                    <a class="nav-link text-white dropdown-toggle" id="navbarDropdownDemos" href="{% url 'about' %}" role="button" aria-haspopup="true" aria-expanded="false">
+                        About Us
+                    </a>
+                </li>
+                <li class="nav-item dropdown dropdown-xl no-caret">
+                    <a class="nav-link dropdown-toggle text-white" id="navbarDropdownPages" href="{% url 'gallery' %}" role="button" aria-haspopup="true" aria-expanded="false">
+                        Gallery
+                    </a>
+                </li>
+                <li class="nav-item dropdown no-caret">
+                    <a class="text-white nav-link dropdown-toggle" id="navbarDropdownDocs" href="{% url 'contact' %}" role="button" aria-haspopup="true" aria-expanded="false">
+                        Contact Us
+                    </a>
+                </li>
+            </ul>
+            {% if user.is_authenticated and user.type == "QwikCustomer" %}
+              <a class="btn fw-500 ms-lg-4" href="{% url 'qwikcust_board' %}">
+                {% if user.photograph %}
+                  <img src="{{ user.photographURL }}" alt="Photograph" class="profile-small">
+                {% else %}
+                  <i class="fa fa-user-circle text-cylinder fa-4x"></i>
+                {% endif %}
+                <strong class="text-cylinder">(Dashboard)<i class="ms-2" data-feather="arrow-right"></i></strong>
+              </a>
+              <a class="btn fw-500 ms-lg-4 btn-cylinder rounded-pill" href="{% url 'logout' %}">
+                <i class="fas fa-sign-out-alt"></i>&nbspSign Out
+              </a>
+
+              {% elif user.is_authenticated and user.type == "QwikA--" %}
+                <a class="btn fw-500 ms-lg-4" href="{% url 'qwikadmin_board' %}">
+                  {% if user.photograph %}
+                    <img src="{{ user.photographURL }}" alt="Photograph" class="profile-small">
+                  {% else %}
+                    <i class="fa fa-user-circle text-cylinder fa-4x"></i>
+                  {% endif %}
+                  <strong class="text-cylinder">(Dashboard)<i class="ms-2" data-feather="arrow-right"></i></strong>
+                </a>
+                <a class="btn fw-500 ms-lg-4 btn-cylinder rounded-pill" href="{% url 'logout' %}">
+                  <i class="fas fa-sign-out-alt"></i>&nbspSign Out
+                </a>
+                {% elif user.is_authenticated and user.type == "QwikVendor" %}
+                  <a class="btn fw-500 ms-lg-4" href="{% url 'qwikvendor_board' %}">
+                    {% if user.photograph %}
+                      <img src="{{ user.photographURL }}" alt="Photograph" class="profile-small">
+                    {% else %}
+                      <i class="fa fa-user-circle text-cylinder fa-4x"></i>
+                    {% endif %}
+                    <strong class="text-cylinder">(Dashboard)<i class="ms-2" data-feather="arrow-right"></i></strong>
+                  </a>
+                  <a class="btn fw-500 ms-lg-4 btn-cylinder rounded-pill" href="{% url 'logout' %}">
+                    <i class="fas fa-sign-out-alt"></i>&nbspSign Out
+                  </a>
+                  {% elif user.is_authenticated and user.type == "QwikPartner" %}
+                    <a class="btn fw-500 ms-lg-4" href="{% url 'qwikpartner_board' %}">
+                      {% if user.photograph %}
+                        <img src="{{ user.photographURL }}" alt="Photograph" class="profile-small">
+                      {% else %}
+                        <i class="fa fa-user-circle text-cylinder fa-4x"></i>
+                      {% endif %}
+                      <strong class="text-cylinder">(Dashboard)<i class="ms-2" data-feather="arrow-right"></i></strong>
+                    </a>
+                    <a class="btn fw-500 ms-lg-4 btn-cylinder rounded-pill" href="{% url 'logout' %}">
+                      <i class="fas fa-sign-out-alt"></i>&nbspSign Out
+                    </a>
+            {% else %}
+              <a class="btn fw-500 ms-lg-4 btn-cylinder rounded-pill" href="{% url 'login' %}">
+                  Login
+                  <i class="ms-2" data-feather="arrow-right"></i>
+              </a>
+              <a class="btn fw-500 ms-lg-4 btn-cylinder rounded-pill" href="{% url 'account' %}">
+                  Create Account
+                  <i class="ms-2" data-feather="arrow-right"></i>
+              </a>
+            {% endif %}
+        </div>
+    </div>
+</nav>

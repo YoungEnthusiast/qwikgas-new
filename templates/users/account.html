@@ -1,0 +1,118 @@
+{% extends 'base_board.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+  <title>Create QwikGas Account</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-2">
+
+  </div>
+  <div class="col-md-8">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <h5>{{message}}</h5>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+    {% endfor %}
+  {% endif %}
+    <div class="page-header bg-white">
+        <h4 class="page-title text-dark-green"><i class="fa fa-file text-dark-green mr-1"></i><strong >QwikGas Registration</strong></h4>
+
+    </div>
+    <!--page header-->
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title text-dark-green">Please supply all fields</div>
+          </div>
+          <div class="card-body">
+            <form id="form" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="list-group">
+                <div class="list-group-item py-3" data-acc-step>
+                  <h5 class="mb-0 text-dark-green" data-acc-title>Name &amp; Email</h5>
+                  <div data-acc-content>
+                    <div class="my-3">
+                      <div class="form-group form-row">
+                        <div class="col-sm-6">
+                          {{ form.first_name|as_crispy_field }}
+                        </div>
+                        <div class="col-sm-6">
+                          {{ form.last_name|as_crispy_field }}
+                        </div>
+                      </div>
+                      <div class="form-group form-row">
+                        <div class="col-sm-6">
+                          {{ form.username|as_crispy_field }}
+                        </div>
+                        <div class="col-sm-6">
+                          {{ form.com_name|as_crispy_field }}
+                        </div>
+                      </div>
+                      <div class="form-group form-row">
+                        <div class="col-sm-12">
+                          {{ form.email|as_crispy_field }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-group-item py-3" data-acc-step>
+                  <h5 class="mb-0 text-dark-green" data-acc-title>Contact</h5>
+                  <div data-acc-content>
+                    <div class="my-3">
+                      <div class="form-group">
+                        {{ form.phone_number|as_crispy_field }}
+                      </div>
+                      <div class="form-group">
+                        {{ form.address|as_crispy_field }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-group-item py-3" data-acc-step>
+                  <h5 class="mb-0 text-dark-green" data-acc-title>Password</h5>
+                  <div data-acc-content>
+                    <div class="my-3">
+                      <div class="form-group form-row">
+                        <div class="col-sm-10">
+                          {{ form.password1|as_crispy_field }}
+                        </div>
+                        <div class="col-sm-2">
+                          <a class="small text-arrow-icon"><a tabindex="0" class="btn btn-cylinder" role="button" data-toggle="popover" data-trigger="focus" title="Password Guidance" data-html="true" data-content="Your password can’t be too similar to your other personal information <br><br> Your password must contain at least 8 characters <br><br> Your password can’t be a commonly used password <br><br> Your password can’t be entirely numeric"><i class="fa fa-info"></i></a>
+                        </div>
+                      </div>
+                      <div class="form-group form-row">
+                        <div class="col-sm-10">
+                          {{ form.password2|as_crispy_field }}
+                        </div>
+                        <div class="col-sm-2">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="text-center text-muted mt-3">
+          Already have an account? <a href="{% url 'login' %}"><span class="text-cylinder">Sign in</span></a>
+        </div>
+        <br>
+      </div>
+    </div>
+
+
+</div>
+{% endblock content%}

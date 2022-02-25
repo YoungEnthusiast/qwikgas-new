@@ -1,0 +1,300 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>Qwikgas Home</title>
+  <meta name="description" content="This is the homepage containing the types
+  of offers available and pricing.">
+
+{% endblock title %}
+
+{% block content %}
+
+<script type="text/javascript">
+function showIt(imgsrc)
+{
+document.getElementById('imageshow').src=imgsrc;
+document.getElementById('imageshow').style.display='block';
+}
+
+function hideIt()
+{
+document.getElementById('imageshow').src="{% static 'img/how.svg' %}";
+}
+
+$('.popover-dismiss').popover({
+  trigger: 'focus'
+})
+</script>
+
+<!-- Page Header-->
+<header class="page-header-ui page-header-ui-dark bg-dark-green">
+    <div class="page-header-ui-content pt-5">
+        <div class="container px-5">
+            <div class="row gx-5 align-items-center">
+                <div class="col-lg-6" data-aos="fade-up">
+                    <h1 class="page-header-ui-title">On-demand Cooking Gas Ordering</h1>
+                    <marquee behavior="scroll" scrollamount="2" direction="up" >
+                      <p class="page-header-ui-text mb-5">Solving clean energy poverty among the under-served in emerging markets.</p>
+                      <p class="page-header-ui-text mb-5">Get clean energy trade credit to power your business.</p>
+                      <p class="page-header-ui-text mb-5">Got no cylinder? No worries. QwikGas has got you covered.</p>
+                      <p class="page-header-ui-text mb-5">Opening a new restaurant outlet? QwikGas goes with you, so you can focus on things that matter.</p>
+                      <p class="page-header-ui-text mb-5">Enjoy the true VIP treatment you deserve. No subscription, no hidden fees.</p>
+                      <p class="page-header-ui-text mb-5">#1 AI-powered B2B Cookstove-as-a-Service brand.</p>
+
+                    </marquee>
+                    {% if user.is_authenticated and user.type == "QwikCustomer" %}
+                    <a class="btn btn-cylinder fw-500 me-2" href="{% url 'products:product_list' %}">
+                        Order gas
+                        <i class="ms-2" data-feather="arrow-right"></i>
+                    </a>
+                    {% else %}
+                    <a class="btn btn-cylinder fw-500 me-2" href="{% url 'account' %}">
+                        Order gas
+                        <i class="ms-2" data-feather="arrow-right"></i>
+                    </a>
+                    <a class="btn btn-cylinder fw-500 me-2" href="{% url 'account' %}">
+                        Join the train
+                        <i class="ms-2" data-feather="arrow-right"></i>
+                    </a>
+                    {% endif %}
+
+                </div>
+                <div class="col-lg-6 d-none d-lg-block" data-aos="fade-up" data-aos-delay="100"><img class="img-fluid" src="{% static 'img/how.svg' %}" /></div>
+            </div>
+        </div>
+    </div>
+    <div class="svg-border-rounded text-white">
+        <!-- Rounded SVG Border-->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144.54 17.34" preserveAspectRatio="none" fill="currentColor"><path d="M144.54,17.34H0V0H144.54ZM0,0S32.36,17.34,72.27,17.34,144.54,0,144.54,0"></path></svg>
+    </div>
+</header>
+<section class="bg-white py-10">
+    <div class="container px-5">
+        <div class="row gx-5 text-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="icon-stack icon-stack-xl bg-dark-green text-white mb-4"><i data-feather="chrome"></i></div>
+                <h3 class="text-dark-green"><strong>Stress-free Solution</strong></h3>
+                <p class="mb-0 text-dark">Swift and stress-free access to fill gas cylinder from the comfort of your home.</p>
+            </div>
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="icon-stack icon-stack-xl bg-dark-green text-white mb-4"><i data-feather="check"></i></div>
+                <h3 class="text-dark-green"><strong>Click & Get</strong></h3>
+                <p class="mb-0 text-dark">Click and get clean filled gas cylinder in excellent condition at your doorway.</p>
+            </div>
+        </div>
+    </div>
+    <div class="svg-border-rounded text-cylinder">
+        <!-- Rounded SVG Border-->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144.54 17.34" preserveAspectRatio="none" fill="currentColor"><path d="M144.54,17.34H0V0H144.54ZM0,0S32.36,17.34,72.27,17.34,144.54,0,144.54,0"></path></svg>
+    </div>
+</section>
+<section class="bg-light py-10">
+    <div class="container px-5">
+        <div class="row gx-5 align-items-center justify-content-center">
+            <div class="col-md-9 col-lg-6 order-1 order-lg-0" data-aos="fade-right">
+                <div class="content-skewed content-skewed-right"><img class="content-skewed-item img-fluid shadow-lg rounded-3" src="{% static 'img/how.svg' %}" id="imageshow" alt="..." /></div>
+            </div>
+            <div class="col-lg-6 order-0 order-lg-1 mb-5 mb-lg-0" data-aos="fade-left">
+                <div class="mb-5">
+                    <h1 class="text-dark-green"><strong>How Do You Get Served?</strong></h1>
+                    <p class="lead text-dark">Need gas delivery to your doorway or a location swiftly? QwikGas has got it covered. Your convenience and satisfaction is our priority.</p>
+                </div>
+                <div class="row gx-5">
+                    <div class="col-md-6 mb-4">
+                      <p><a class="popup"><span class="text-dark-green h3">Choose Your Location</span> <span><img  src="{% static 'img/location.png' %}" alt="Location Logo" style="width:100px;height:100px;" onmouseover="showIt(this.src)" onmouseout="hideIt()"></span></a> </p>
+                        <p class="mb-2 small text-dark">Tell us how to find you through maps.</p>
+                        <a class="small text-arrow-icon"><a tabindex="0" class="btn btn-outline-success" role="button" data-toggle="popover" data-trigger="focus" title="Choose Your location and leave the delivery to us" data-content="Need Gas delivery to your doorway or location swiftly? QwikGas has got it covered. Just choose your location and Qwikpartner agent will be at the location.">Learn More<i data-feather="arrow-right"></i></a>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <p><a class="popup"><span class="text-dark-green h5">Choose Your Preferred Package</span> <span><img  src="{% static 'img/packages.png' %}" alt="Packages Logo" style="width:100px;height:100px;" onmouseover="showIt(this.src)" onmouseout="hideIt()"></span></a> </p>
+                        <p class="mb-2 small mb-0 text-dark">Specify your most preferred refill option.</p>
+                        <a class="small text-arrow-icon"><a tabindex="0" class="btn btn-outline-success" role="button" data-toggle="popover" data-trigger="focus" title="Choose your preferred package" data-content="At QwikGas, we provide 3 basic types of Gas Cylinders each selected to meet specific customer needs. Depending on your needs and the type of gas required, we can provide you with QwikGas Standard (12.5KG), QwikGas Premium (25KG), QwikGas Max (50KG).">Learn More<i data-feather="arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="row gx-5">
+                    <div class="col-md-6 mb-4">
+                      <p><a class="popup"><span class="text-dark-green h5">Make your payment</span> <span><img  src="{% static 'img/card.png' %}" alt="Card Logo" style="width:100px;height:100px;" onmouseover="showIt(this.src)" onmouseout="hideIt()"></span></a> </p>
+                      <p class="mb-2 small mb-0 text-dark">Pay seamlessly with your bank card.</p>
+                      <a class="small text-arrow-icon"><a tabindex="0" class="btn btn-outline-success" role="button" data-toggle="popover" data-trigger="focus" title="Make your payment with ease" data-content="Pay for your preferred package with our secure, safe and convenient methods. Pay with QwikGas e-wallet, local Mastercard, Visa or Velve card.">Learn More<i data-feather="arrow-right"></i></a>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                      <p><a class="popup"><span class="text-dark-green h5">We deliver promptly</span> <span><img  src="{% static 'img/bike.png' %}" alt="Bike Logo" style="width:100px;height:100px;" onmouseover="showIt(this.src)" onmouseout="hideIt()"></span></a> </p>
+                      <p class="mb-2 small mb-0 text-dark">Timely delivery at your chosen location.</p>
+                      <a class="small text-arrow-icon"><a tabindex="0" class="btn btn-outline-success" role="button" data-toggle="popover" data-trigger="focus" title="We deliver promptly and swifty" data-content="Our Qwikpartner team are on alert and are happy to have you preferred package delivered at your doorstep and any other location of your chosen.">Learn More<i data-feather="arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<hr class="m-0" />
+<section class="bg-light pt-10">
+    <div class="container px-5">
+        <div class="text-center mb-5">
+            <h2 class="text-dark-green"><strong>Pricing Table of the QwikGas Packages</strong></h2>
+        </div>
+
+        <div class="row">
+          <div class="col-md-1">
+
+          </div>
+          <div class="col-md-10">
+            <div class="row gx-5 z-1">
+              <div class="col-lg-2 mb-lg-n10" data-aos="fade-up" data-aos-delay="100">
+              </div>
+              <div class="col-lg-4 mb-lg-n10" data-aos="fade-up" data-aos-delay="100">
+                  <div class="card pricing h-100">
+                    <div class="card-body p-5">
+                        <div class="text-center">
+                            <div class="badge bg-lemon-green text-dark-green rounded-pill badge-marketing badge-sm">QwikGas Standard</div>
+                            <br>
+                            <br>
+                            <img src="{% static 'img/12kg.png' %}" class="logo" alt="3Kg Cylinder Logo">
+                            <br>
+                            <br>
+                            <h1 class="text-dark-green">₦{{qwik_standard.price|intcomma}}</h1>
+                            <h5 class="text-cylinder">{{my_today}}</h5>
+                        </div>
+                        <ul class="fa-ul pricing-list">
+                            <li class="pricing-list-item">
+                                <span class="fa-li"><i class="far fa-check-circle text-teal"></i></span>
+                                <span class="text-dark">12.5KG LPG Cylinder</span>
+                            </li>
+                            <li class="pricing-list-item">
+                                <span class="fa-li"><i class="far fa-check-circle text-teal"></i></span>
+                                <span class="text-dark">Water capacity:</span>
+                            </li>
+                            <li class="pricing-list-item">
+                                <span class="fa-li"><i class="far fa-check-circle text-teal"></i></span>
+                                <span class="text-dark">Diameter:</span>
+                            </li>
+                            <li class="pricing-list-item">
+                                <span class="fa-li"><i class="far fa-check-circle text-teal"></i></span>
+                                <span class="text-dark">Height:</span>
+                            </li>
+                            <li class="pricing-list-item">
+                                <span class="fa-li"><i class="far fa-check-circle text-teal"></i></span>
+                                <span class="text-dark">Working pressure:</span>
+                            </li>
+                            <li class="pricing-list-item">
+                                <span class="fa-li"><i class="far fa-check-circle text-teal"></i></span>
+                                <span class="text-dark">Test pressure:</span>
+                            </li>
+                        </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 mb-lg-n10" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card pricing h-100">
+                      <div class="card-body p-5">
+                          <div class="text-center">
+                              <div class="badge bg-lemon-green text-dark-green rounded-pill badge-marketing badge-sm">QwikGas Premium</div>
+                              <br>
+                              <br>
+                              <img src="{% static 'img/12kg.png' %}" class="logo" alt="3Kg Cylinder Logo">
+                              <br>
+                              <br>
+                              <h1 class="text-dark-green">₦{{qwik_premium.price|intcomma}}</h1>
+                              <h5 class="text-cylinder">{{my_today}}</h5>
+                          </div>
+                          <ul class="fa-ul pricing-list">
+                              <li class="pricing-list-item">
+                                  <span class="fa-li"><i class="far fa-check-circle text-teal"></i></span>
+                                  <span class="text-dark">25KG LPG Cylinder</span>
+                              </li>
+                              <li class="pricing-list-item">
+                                  <span class="fa-li"><i class="far fa-check-circle text-teal"></i></span>
+                                  <span class="text-dark">Water capacity:</span>
+                              </li>
+                              <li class="pricing-list-item">
+                                  <span class="fa-li"><i class="far fa-check-circle text-teal"></i></span>
+                                  <span class="text-dark">Diameter:</span>
+                              </li>
+                              <li class="pricing-list-item">
+                                  <span class="fa-li"><i class="far fa-check-circle text-teal"></i></span>
+                                  <span class="text-dark">Height:</span>
+                              </li>
+                              <li class="pricing-list-item">
+                                  <span class="fa-li"><i class="far fa-check-circle text-teal"></i></span>
+                                  <span class="text-dark">Working pressure:</span>
+                              </li>
+                              <li class="pricing-list-item">
+                                  <span class="fa-li"><i class="far fa-check-circle text-teal"></i></span>
+                                  <span class="text-dark">Test pressure:</span>
+                              </li>
+                          </ul>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 mb-lg-n10" data-aos="fade-up" data-aos-delay="100">
+                </div>
+            </div>
+          </div>
+          <div class="col-md-1">
+
+          </div>
+        </div>
+    </div>
+
+</section>
+<section class="bg-lemon-green py-10">
+    <div class="container px-5">
+        <div class="row gx-5 my-10">
+            <div class="col-lg-6 mb-5">
+                <div class="d-flex h-100">
+                    <div class="icon-stack icon-stack-xl flex-shrink-0 bg-cylinder text-white"><i class="fas fa-question"></i></div>
+                    <div class="ms-4">
+                        <h2 class="text-dark-green">Do I need a cylinder to make online order from QwikGas?</h2>
+                        <p class="text-dark">No. You do not need to have a cylinder to order any of your desired QwikGas packages. QwikGas provides you with cost-free, clean, safe, and premium quality cylinder in excellent condition. Hence, you can seamlessly enjoy cooking with gas with no worries.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-5">
+                <div class="d-flex h-100">
+                  <div class="icon-stack icon-stack-xl flex-shrink-0 bg-cylinder text-white"><i class="fas fa-question"></i></div>
+                  <div class="ms-4">
+                      <h2 class="text-dark-green">How many cylinders can I order at a time?</h2>
+                      <p class="text-dark">QwikGas allows you to order cooking gas up to ten (10) 12.5 kg cylinders after KYC (Know Your Customer) has been completed.</p>
+                  </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="d-flex h-100">
+                  <div class="icon-stack icon-stack-xl flex-shrink-0 bg-cylinder text-white"><i class="fas fa-question"></i></div>
+                  <div class="ms-4">
+                      <h2 class="text-dark-green">How can I make payment for my QwikGas order?</h2>
+                      <p class="text-dark">You can pay using your credit/debit cards (including Masters card, Visa and Verve card), USSD and bank transfer through the QwikGas checkout payment gateway.</p>
+                  </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="d-flex h-100">
+                  <div class="icon-stack icon-stack-xl flex-shrink-0 bg-cylinder text-white"><i class="fas fa-question"></i></div>
+                  <div class="ms-4">
+                      <h2 class="text-dark-green">Where do you have QwikGas outlets?</h2>
+                      <p class="text-dark">QwikGas is presently delivered to any location within Kosofe LG, Ikosi-Isheri LCDA, Ketu-Agboyi LCDA, Mushin LG, Odi-olowo LCDA, Ikeja LG, Onigbongbo LCDA, Oshodi-Isolo LG, Somolu LG and Bariga LCDA.</p>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="row gx-5 justify-content-center text-center">
+            <div class="col-lg-8">
+                <div class="badge bg-cylinder rounded-pill badge-marketing mb-4">Get Started</div>
+                <br>
+                <h1 class="text-dark-green">Save time with QwikGas</h1>
+                <br>
+                {% if user.is_authenticated and user.type == "QwikCustomer" %}
+                <a class="btn btn-dark-green fw-500" href="{% url 'products:product_list' %}">Order gas now!</a>
+                {% else %}
+                <a class="btn btn-dark-green fw-500" href="{% url 'account' %}">Order gas now!</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="svg-border-rounded text-white">
+        <!-- Rounded SVG Border-->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144.54 17.34" preserveAspectRatio="none" fill="currentColor"><path d="M144.54,17.34H0V0H144.54ZM0,0S32.36,17.34,72.27,17.34,144.54,0,144.54,0"></path></svg>
+    </div>
+</section>
+{% endblock content%}

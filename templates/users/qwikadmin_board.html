@@ -1,0 +1,112 @@
+{% extends 'board_admin.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>My Dashboard</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+<div class=" app-content">
+  <div class="side-app">
+
+    <!--Page Header-->
+    <div class="page-header">
+      <h4 class="page-title"><i class="fa fa-home text-dark-green mr-2 fa-1x"></i>Welcome to the administrator dashboard, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+      <ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="{% url 'qwikadmin_board' %}"><strong>Home</strong></a></li>
+        <li class="breadcrumb-item active" aria-current="page"><strong>Dashboard</strong></li>
+      </ol>
+    </div>
+    <!--page header-->
+    <div class="row">
+      <div class="col-md-12 col-lg-6 col-xl-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{cust}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_cust}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500"></h6>
+                <h1 class="counter num-font mb-0 text-cylinder">{{qwikcustomers}}</h1>
+                <p class="text-muted mb-0">QwikCustomers</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 col-lg-6 col-xl-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{vend}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_vend}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500"></h6>
+                <h1 class="counter num-font mb-0 text-cylinder">{{qwikvendors}}</h1>
+                <p class="text-muted mb-0">QwikVendors</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 col-lg-6 col-xl-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{part}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_part}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500"></h6>
+                <h1 class="counter num-font mb-0 text-cylinder">{{qwikpartners}}</h1>
+                <p class="text-muted mb-0">QwikPartners</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 col-lg-6 col-xl-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{adm}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_adm}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500"></h6>
+                <h1 class="counter num-font mb-0 text-cylinder">{{qwikadmins}}</h1>
+                <p class="text-muted mb-0">QwikAdmins</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock content%}

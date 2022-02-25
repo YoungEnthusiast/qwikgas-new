@@ -1,0 +1,173 @@
+from django.db import models
+from django.contrib.auth.models import User
+from django.urls import reverse
+
+class Category(models.Model):
+    type = models.CharField(max_length=20, db_index=True, unique=True)
+    mass = models.CharField(max_length=6, db_index=True, unique=True)
+    slug = models.SlugField(max_length=200, db_index=True)
+    price = models.DecimalField(max_digits=11, null=True, decimal_places=2)
+    tare = models.CharField(max_length=6, db_index=True, unique=True, null=True)
+    working = models.CharField(max_length=6, db_index=True, null=True)
+    test = models.CharField(max_length=6, db_index=True, null=True)
+    water = models.CharField(max_length=6, db_index=True,  null=True)
+    image = models.ImageField(upload_to='categories_img/%Y/%m/%d', null=True, blank=True)
+    description = models.TextField(blank=True)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('type',)
+        verbose_name = 'category'
+        verbose_name_plural = 'categories'
+
+    def __str__(self):
+        return str(self.type)
+
+    @property
+    def imageURL(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
+
+    def get_absolute_url(self):
+        return reverse('products:product_list_by_category', args=[self.slug])
+
+class Product(models.Model):
+    VENDOR_CHOICES = [
+        ('Dispatched Empty to Plant','Dispatched Empty to Plant'),
+        ('Returned Empty to QwikLet', 'Returned Empty to QwikLet'),
+        ('Delivered Filled to QwikLet', 'Delivered Filled to QwikLet'),
+        ('Released Filled to QwikPartner', 'Released Filled to QwikPartner'),
+        ('Delivered to QwikCustomer', 'Delivered to QwikCustomer'),
+        ('Returned Filled to QwikLet', 'Returned Filled to QwikLet'),
+        ('Delivered to QwikCustomer', 'Delivered to QwikCustomer'),
+
+        ('Dispatched Empty','Dispatched Empty'),
+        ('Received Empty', 'Received Empty'),
+        ('Dispatched Filled','Dispatched Filled'),
+        ('Received Filled', 'Received Filled'),
+    ]
+    PARTNER_CHOICES = [
+        ('Returned Empty to QwikLet','Returned Empty to QwikLet'),
+        ('Received Empty from QwikCustomer', 'Received Empty from QwikCustomer'),
+        ('Delivered Filled to QwikLet', 'Delivered Filled to QwikLet'),
+        ('Dispatched Filled to QwikCustomer', 'Dispatched Filled to QwikCustomer'),
+        ('Delivered Filled to QwikCustomer', 'Delivered Filled to QwikCustomer'),
+        ('Returned Filled to QwikLet', 'Returned Filled to QwikLet'),
+        ('Dispatched Empty to Plant', 'Dispatched Empty to Plant'),
+        ('Delivered Empty to Plant', 'Delivered Empty to Plant'),
+
+        ('Returned Empty','Returned Empty'),
+        ('Received Empty', 'Received Empty'),
+        ('Received Filled', 'Received Filled'),
+    ]
+    CUSTOMER_CHOICES = [
+        ('Returned Empty to QwikPartner','Returned Empty to QwikPartner'),
+        ('Received Filled', 'Received Filled'),
+    ]
+    ADMIN_CHOICES = [
+        ('Received Empty from QwikCustomer', 'Received Empty from QwikCustomer'),
+        ('Returned Empty to QwikLet','Returned Empty to QwikLet'),
+        ('Dispatched Empty to Plant', 'Dispatched Empty to Plant'),
+        ('Delivered Filled to QwikLet', 'Delivered Filled to QwikLet'),
+        ('Dispatched Filled to QwikCustomer', 'Dispatched Filled to QwikCustomer'),
+        ('Delivered Filled to QwikCustomer', 'Delivered Filled to QwikCustomer'),
+        ('Returned Filled to QwikLet', 'Returned Filled to QwikLet'),
+    ]
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='products_category', verbose_name="Product")
+    product_Id = models.CharField(max_length=20, null=True, unique=True, verbose_name="Cylinder Id")
+    available = models.BooleanField(max_length=5, default = False)
+    outlet = models.ForeignKey('users.Outlet', on_delete=models.SET_NULL, null=True)
+    vendor_product_status = models.CharField(max_length=30, choices=VENDOR_CHOICES, null=True, verbose_name="QwikVendor's Remark")
+    vendor_product = models.CharField(max_length=20, null=True, blank=True)
+    vendor_consent = models.BooleanField(max_length=5, default = False)
+    partner_product_status = models.CharField(max_length=35, choices=PARTNER_CHOICES, blank=True, null=True, verbose_name="QwikPartner's Remark")
+    partner_product = models.CharField(max_length=20, null=True, blank=True)
+    partner_consent = models.BooleanField(max_length=5, default = False)
+    customer_product_status = models.CharField(max_length=35, choices=CUSTOMER_CHOICES, blank=True, null=True, verbose_name="QwikCustomer's Remark")
+    customer_product = models.CharField(max_length=20, null=True, blank=True)
+    admin_product_status = models.CharField(max_length=35, choices=ADMIN_CHOICES, blank=True, null=True, verbose_name="QwikAdmin's Remark")
+    admin_product = models.CharField(max_length=20, null=True, blank=True)
+    batch_Id = models.CharField(max_length=20, blank=True, null=True, unique=True)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('product_Id',)
+        index_together = (('id',))
+    def __str__(self):
+        try:
+            return str(self.product_Id)
+        except:
+            return str(self.id)
+
+    def get_absolute_url(self):
+        return reverse('products:product_detail', args=[self.id])
+
+    def get_absolute_url2(self):
+        return reverse('products:product_detail2', args=[self.id])
+
+class Cylinder(models.Model):
+    VENDOR_CHOICES = [
+        ('Dispatched Empty to Plant','Dispatched Empty to Plant'),
+        ('Returned Empty to QwikLet', 'Returned Empty to QwikLet'),
+        ('Delivered Filled to QwikLet', 'Delivered Filled to QwikLet'),
+        ('Released Filled to QwikPartner', 'Released Filled to QwikPartner'),
+        ('Delivered to QwikCustomer', 'Delivered to QwikCustomer'),
+        ('Returned Filled to QwikLet', 'Returned Filled to QwikLet'),
+        ('Delivered to QwikCustomer', 'Delivered to QwikCustomer'),
+        ('Agree', 'Agree'),
+        ('Disagree', 'Disagree'),
+
+    ]
+    PARTNER_CHOICES = [
+        ('Returned Empty to QwikLet','Returned Empty to QwikLet'),
+        ('Received Empty from QwikCustomer', 'Received Empty from QwikCustomer'),
+        ('Delivered Filled to QwikLet', 'Delivered Filled to QwikLet'),
+        ('Dispatched Filled to QwikCustomer', 'Dispatched Filled to QwikCustomer'),
+        ('Delivered Filled to QwikCustomer', 'Delivered Filled to QwikCustomer'),
+        ('Returned Filled to QwikLet', 'Returned Filled to QwikLet'),
+        ('Dispatched Empty to Plant', 'Dispatched Empty to Plant'),
+        ('Delivered Empty to Plant', 'Delivered Empty to Plant'),
+        ('Agree', 'Agree'),
+        ('Disagree', 'Disagree'),
+    ]
+    CUSTOMER_CHOICES = [
+        ('Returned Empty to QwikPartner','Returned Empty to QwikPartner'),
+        ('Received Filled', 'Received Filled'),
+        ('Agree', 'Agree'),
+        ('Disagree', 'Disagree'),
+    ]
+    ADMIN_CHOICES = [
+        ('Received Empty from QwikCustomer', 'Received Empty from QwikCustomer'),
+        ('Returned Empty to QwikLet','Returned Empty to QwikLet'),
+        ('Dispatched Empty to Plant', 'Dispatched Empty to Plant'),
+        ('Delivered Filled to QwikLet', 'Delivered Filled to QwikLet'),
+        ('Dispatched Filled to QwikCustomer', 'Dispatched Filled to QwikCustomer'),
+        ('Delivered Filled to QwikCustomer', 'Delivered Filled to QwikCustomer'),
+        ('Returned Filled to QwikLet', 'Returned Filled to QwikLet'),
+    ]
+    cylinder = models.ForeignKey('products.Product', on_delete=models.SET_NULL, null=True, verbose_name="Cylinder Id")
+    customer = models.ForeignKey('users.Person', null=True, blank=True, on_delete=models.SET_NULL)
+    vendor_product_status = models.CharField(max_length=30, choices=VENDOR_CHOICES, null=True, verbose_name="QwikVendor's Remark")
+    vendor_product = models.CharField(max_length=20, null=True, blank=True)
+    partner_product_status = models.CharField(max_length=35, choices=PARTNER_CHOICES, blank=True, null=True, verbose_name="QwikPartner's Remark")
+    partner_product = models.CharField(max_length=20, null=True, blank=True)
+    customer_product_status = models.CharField(max_length=35, choices=CUSTOMER_CHOICES, blank=True, null=True, verbose_name="QwikCustomer's Remark")
+    customer_product = models.CharField(max_length=20, null=True, blank=True)
+    admin_product_status = models.CharField(max_length=35, choices=ADMIN_CHOICES, blank=True, null=True, verbose_name="QwikAdmin's Remark")
+    admin_product = models.CharField(max_length=20, null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('-created',)
+        index_together = (('id',))
+    def __str__(self):
+        try:
+            return str(self.product_Id) + " - " + str(self.partner_product_status)
+        except:
+            return str(self.id)

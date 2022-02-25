@@ -1,0 +1,87 @@
+{% extends 'board.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% load humanize %}
+{% block title %}
+  <title>Checkout</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+    {% if order.user == request.user %}
+    <div class="row">
+      <div class="form-group col-lg-12">
+        <a  class="btn btn-outline-success btn-block" href="{% url 'orders:orders' %}">&#x2190; &nbspBack to Orders History</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="box-element">
+          <hr>
+          <h3 class="text-center text-dark-green">ORDER ID: {{order.order_Id}}</h3>
+          <hr>
+          {% for order_item in order_items %}
+          <div class="cart-row">
+            <div style="flex:1"><img class="logo9" src="{{order_item.product.category.imageURL}}"></div>
+            <div style="flex:3"><p>{{order_item.product.type}}</p></div>
+            <div style="flex:3"><p>₦{{order_item.price|intcomma}}</p></div>
+            <div style="flex:2"><p>x {{order_item.quantity}}</p></div>
+            <div style="flex:3"><p style="float:right">= ₦{{order_item.get_cost|intcomma}}</p></div>
+          </div>
+          {% endfor %}
+          <h5 style="float:right">Total: ₦{{order.get_total_cost|intcomma}}</h5>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-lg-3">
+      <a class="btn btn-dark-green btn-block" href="pay"><strong>Pay From Wallet</strong></a>
+      </div>
+      <div class="form-group col-lg-3">
+      <a class="btn btn-dark-green btn-block" href="pay"><strong>Pay with Card</strong></a>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+      </div>
+      <div class="col-lg-6">
+        <div class="card bg-twitter text-white">
+          <section onload="document.submit2gtpay_form.submit()">
+            <form name="submit2gtpay_form" action="https://ibank.gtbank.com/GTPay/Tranx.aspx" target="_self"
+                                                name="request0" method="post">
+              <input type="hidden" name="gtpay_mert_id" value="14581" />
+              <input type="hidden" name="gtpay_tranx_id" value="1235433" />
+              <input type="hidden" name="gtpay_tranx_amt" value="5000" />
+              <input type="hidden" name="gtpay_tranx_curr" value="566" />
+              <input type="hidden" name="gtpay_cust_id" value="458742" />
+              <input type="hidden" name="gtpay_cust_name" value="Test Customer" />
+              <input type="hidden" name="gtpay_tranx_memo" value="Mobow" />
+              <input type="hidden" name="gtpay_no_show_gtbank" value="yes" />
+              <input type="hidden" name="gtpay_echo_data" value="TEST" />
+              <input type="hidden" name="gtpay_gway_name" value="webpay" />
+              <input type="hidden" name="gtpay_hash" value="C1C36A64401213644C69C667DE5756BD1AFF68F3B8FA41CCC6968A7F7925B510C3E3815AD8B3EF460E4A7C59D187335D03C5C938B0C6793D597CDBC3B93EBFF5" />
+              <input type="hidden" name="gtpay_tranx_noti_url" value="{% url 'orders:payment_complete' %}" />
+              <input type="submit" value="Pay Via GTPay" name="btnSubmit"/>
+              <input type="hidden" name="gtpay_echo_data" value="DEQFOOIPP0;REG13762;
+                                          John Adebisi: 2nd term school and accomodation fees;XNFYGHT325541;1209">
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+    <br>
+    {% else %}
+      <h2 class="text-center">Access Restricted</h2>
+      <br>
+    {% endif %}
+  </div>
+</div>
+{% endblock content%}

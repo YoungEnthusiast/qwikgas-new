@@ -1,0 +1,81 @@
+{% extends 'board_admin.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>Outlets</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+		<!--Page Header-->
+		<div class="page-header">
+			<h4 class="page-title"><i class="fa fa-building text-dark-green mr-2 fa-1x"></i>Welcome to outlets' management page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+			<ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="{% url 'qwikadmin_board' %}"><strong>Dashboard</strong></a></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>Outlets</strong></li>
+			</ol>
+		</div>
+		<!--page header-->
+
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card">
+          <div class="card-header bg-lemon-green">
+            <div class="card-title text-dark-green">Outlets</div>
+          </div>
+          <div class="card-body">
+            <a href="{% url 'qwikadmin_outlet' %}"><button type="button" class="btn btn-dark-green text-white col-md-12"><strong><i class="fa fa-plus-circle fa-1x mr-1 text-white"></i>Add New Outlet</strong></button></a>
+
+            <div class="table-responsive ">
+              <table class="users table card-table border table-striped table-vcenter text-nowrap mb-0">
+                <thead class="bg-cylinder text-white">
+                  <tr>
+                    <th>VENDOR</th>
+                    <th>PARTNER</th>
+                    <th>OUTLET</th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody class="text-dark table-success">
+                {% for outlet in outlets_page_obj %}
+                  <tr class="">
+                    <td>{{outlet.manager.first_name}} {{outlet.manager.last_name}}</td>
+                    <td>{{outlet.partner.first_name}} {{outlet.partner.last_name}}</td>
+                    <td>{{outlet.outlet}}</td>
+                    <td class="text-center"><a href="outlet/update/{{outlet.id}}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-eye fa-1x text-white"></i> View</strong><strong> <i class="fa fa-edit fa-1x text-white"></i> Edit</strong></button></a></td>
+                    <td class="text-center"><a href="outlet/delete/{{outlet.id}}"><button type="button" class="btn btn-sm btn-danger text-white"><strong><i class="fa fa-trash fa-1x text-white"></i> &nbspDelete</strong></button></a></td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+              <nav aria-label="...">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
+                  {% if outlets_page_obj.has_previous %}
+                    <li class="page-item"><a class="text-dark-green page-link" href="{% my_url outlets_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{outlets_page_obj.previous_page_number}}</a></li>
+                  {% endif %}
+                  <li class="page-item active" aria-current="page"><a class="bg-dark-green page-link" href="{% my_url outlets_page_obj.number 'page' request.GET.urlencode %}">{{outlets_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+                  {% if outlets_page_obj.has_next %}
+                    <li class="page-item"><a class="text-dark-green page-link" href="{% my_url outlets_page_obj.next_page_number 'page' request.GET.urlencode %}">{{outlets_page_obj.next_page_number}}</a></li>
+                  {% endif %}
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url outlets_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock content%}

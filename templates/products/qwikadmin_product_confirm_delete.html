@@ -1,0 +1,54 @@
+{% extends 'board_admin.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>Delete Product</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+		<!--Page Header-->
+		<div class="page-header">
+			<h4 class="page-title"><i class="fa fa-building text-dark-green mr-2 fa-1x"></i>Welcome to products' removal page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+			<ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="{% url 'qwikadmin_board' %}"><strong>Dashboard</strong></a></li>
+        <li class="breadcrumb-item"><a href="{% url 'products:qwikadmin_products' %}"><strong>Products</strong></a></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>Delete Product</strong></li>
+			</ol>
+		</div>
+		<!--page header-->
+    <div class="d-flex justify-content-center">
+      <div class="text-center card bg-dark-green text-white form-group col-md-9">
+        <br>
+          {% if user.type == "QwikA--" %}
+          <h4 > <span class="text-danger">CAUTION!</span> Deleting {{product.type}} will affect all the information associated with the product. Do you still wish to continue?</h4>
+          <br>
+          <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" class="btn btn-danger" value="Yes, confirm"> <a class="btn btn-outline-light" href="{% url 'products:qwikadmin_products' %}">No, cancel</a>
+          </form>
+          {% else %}
+          <h2 class="text-center">Access Restricted</h2>
+          <br>
+          {% endif %}
+          <br>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+{% endblock content%}

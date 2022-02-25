@@ -1,0 +1,66 @@
+{% extends 'board_admin.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>Add Cylinder</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+		<!--Page Header-->
+		<div class="page-header">
+			<h4 class="page-title"><i class="fa fa-warehouse text-dark-green mr-2 fa-1x"></i>Welcome to cylinder's creation page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+			<ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="{% url 'qwikadmin_board' %}"><strong>Dashboard</strong></a></li>
+        <li class="breadcrumb-item"><a href="{% url 'products:qwikadmin_cylinders' %}"><strong>Cylinders</strong></a></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>Add Cylinder</strong></li>
+			</ol>
+		</div>
+		<!--page header-->
+    <div class="row">
+      <div class="col-md-12 col-xl-12 col-lg-12">
+      <div class="card">
+        <form method="post" class="form-group col-lg-12 text-dark-green" enctype="multipart/form-data">
+          <div class="card-header bg-cylinder">
+            <h4 class="text-white">
+              <i class="fas fa-plus-circle"></i> Add Cylinder</h4>
+          </div>
+          <br>
+          {% csrf_token %}
+          <div class="form-row">
+              <div class="form-group col-sm-12 mb-2">
+                  {{ form.category|as_crispy_field }}
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-sm-6 mb-2">
+                  {{ form.product_Id|as_crispy_field }}
+              </div>
+              <div class="form-group col-sm-6 mb-2">
+                  {{ form.outlet|as_crispy_field }}
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-sm-12 mb-2">
+                  {{ form.vendor_product_status|as_crispy_field }}
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-sm-12 mb-2">
+                  {{ form.batch_Id|as_crispy_field }}
+              </div>
+          </div>
+          <br>
+          <input type="submit" class="form-group col-md-12 btn btn-cylinder" value="Add">
+      </form>
+      </div>
+      </div>
+    </div>
+{% endblock content%}

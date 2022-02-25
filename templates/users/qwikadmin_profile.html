@@ -1,0 +1,136 @@
+{% extends 'board_admin.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}
+  <title>My Profile</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+		<!--Page Header-->
+		<div class="page-header">
+			<h4 class="page-title"><i class="fa fa-user text-dark-green mr-2 fa-1x"></i>Welcome to your profile page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+			<ol class="breadcrumb bg-white">
+				<li class="breadcrumb-item"><a href="{% url 'qwikadmin_board' %}"><strong>Dashboard</strong></a></li>
+        <li class="breadcrumb-item"><a href="{% url 'qwikadmin_profile' %}"><strong>Profile</strong></a></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>Edit Profile</strong></li>
+			</ol>
+		</div>
+
+    <div class="row">
+      <div class="col-md-12 col-xl-3 col-lg-4">
+        <div class="card">
+    			<div class="text-center card-header bg-cylinder">
+    				<h4 class=" text-dark-green"><strong class="text-white"></strong></h4>
+
+    			</div>
+    			<div class="card-body">
+            <div class="user-info">
+							<div class="text-center">
+								<div class="mr-3">
+									<a class="btn fw-500 ms-lg-4" href="{% url 'qwikadmin_board' %">
+										{% if user.photograph %}
+											<img src="{{ user.photographURL }}" alt="Photograph" class="profile-big">
+										{% else %}
+											<i class="fa fa-user-circle text-cylinder fa-7x"></i>
+										{% endif %}
+									</a>
+								</div>
+								<h5 class="text-dark mb-1">{{user.first_name}} {{user.last_name}}</h5>
+								<div class="badge bg-lemon-green text-dark-green rounded-pill badge-marketing badge-sm"><strong>{{user.type}}</strong></div>
+							</div>
+						</div>
+    			</div>
+    		</div>
+    	</div>
+      <div class="col-md-12 col-xl-9 col-lg-4">
+        <div class="card">
+          <form method="post" class="form-group col-md-12 text-dark-green" enctype="multipart/form-data">
+            <div class="card-header bg-white">
+              <h4 class="text-cylinder">
+                <i class="fas fa-user-edit"></i> Edit Profile</h4>
+            </div>
+            <br>
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-sm-6 mb-2">
+                    {{ form.first_name|as_crispy_field }}
+                </div>
+                <div class="form-group col-sm-6 mb-2">
+                    {{ form.last_name|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-sm-6 mb-2">
+                  {{ form.username|as_crispy_field }}
+              </div>
+              <div class="form-group col-sm-6 mb-2">
+                  {{ form.email|as_crispy_field }}
+              </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-6 mb-2">
+                    {{ form.gender|as_crispy_field }}
+                </div>
+                <div class="form-group col-sm-6 mb-2">
+                    {{ form.dob|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-6 mb-2">
+                    {{ form.phone_number|as_crispy_field }}
+                </div>
+                <div class="form-group col-sm-6 mb-2">
+                    {{ form.photograph|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-4 mb-2">
+                    {{ form.state|as_crispy_field }}
+                </div>
+                <div class="form-group col-sm-4 mb-2">
+                    {{ form.lg|as_crispy_field }}
+                </div>
+                <div class="form-group col-sm-4 mb-2">
+                    {{ form.city|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-12 mb-2">
+                    {{ form.outlet|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-12 mb-2">
+                    {{ form.address|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-12 mb-2">
+                    {{ form.about_me|as_crispy_field }}
+                </div>
+            </div>
+            <a href="{% url 'qwikadmin_change_password' %}"><strong class="text-cylinder">Click here</strong></a> <span class="text-dark">to change your password</span>
+            <div class="card-footer text-right bg-white">
+              <input type="submit" class="form-group btn btn-cylinder" value="Update">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+	<div class="col-md-12 col-xl-4 col-lg-4">
+
+	</div>
+	<div class="col-md-12 col-xl-4 col-lg-4">
+
+	</div>
+
+{% endblock content%}

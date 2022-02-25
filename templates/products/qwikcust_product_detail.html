@@ -1,0 +1,86 @@
+{% extends 'board.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% load humanize %}
+{% block title %}
+  <title>Add to Cart</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+
+<script type="text/javascript">
+        $(document).on("google_point_map_widget:marker_create", function (e, lat, lng, locationInputElem, mapWrapID) {
+            console.log(place);
+            console.log(locationInputElem); // django widget textarea widget (hidden)
+            console.log(lat, lng); // created marker coordinates
+            console.log(mapWrapID); // map widget wrapper element ID
+        });
+
+        $(document).on("google_point_map_widget:marker_change", function (e, lat, lng, locationInputElem, mapWrapID) {
+            console.log(place);
+            console.log(locationInputElem); // django widget textarea widget (hidden)
+            console.log(lat, lng);  // changed marker coordinates
+            console.log(mapWrapID); // map widget wrapper element ID
+        });
+
+        $(document).on("google_point_map_widget:marker_delete", function (e, lat, lng, locationInputElem, mapWrapID) {
+            console.log(locationInputElem); // django widget textarea widget (hidden)
+            console.log(lat, lng);  // deleted marker coordinates
+            console.log(mapWrapID); // map widget wrapper element ID
+        })
+    </script>
+
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+    <div class="row">
+      <div class="col-md-12 col-xl-3 col-lg-4">
+
+    	</div>
+
+    	<div class="col-md-12 col-xl-6 col-lg-4">
+    		<div class="card">
+    			<div class="text-center card-header bg-white">
+    				<h4 class="text-dark-green">Please add to cart</h4>
+
+    			</div>
+    			<div class="card-body">
+            <div class="product-detail text-center ml-2 mt-2">
+              <img class="logo9" src="{% if product.category.image %}{{ product.category.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+
+              <br>
+              <h3 class="text-dark-green">₦{{ product.category.price|intcomma }}</h3>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-title text-dark-green"></div>
+                    </div>
+                    <div class="card-body">
+                      <form id="form" action="{% url "cart:cart_add" product.id %}" method="post">
+                        {% csrf_token %}
+                        {{cart_product_form|crispy}}
+                        <div class="card-footer text-right bg-white">
+                          <input type="submit" class="form-group btn btn-cylinder" value="Add">
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+
+            </div>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="col-md-12 col-xl-3 col-lg-4">
+
+    	</div>
+    </div>
+  </div>
+</div>
+{% endblock content%}

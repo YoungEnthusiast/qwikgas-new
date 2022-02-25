@@ -1,0 +1,130 @@
+{% extends 'board_vendor.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>Orders</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+		<!--Page Header-->
+		<div class="page-header">
+			<h4 class="page-title"><i class="fa fa-receipt text-dark-green mr-2 fa-1x"></i>Welcome to customer invoice's page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+			<ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="{% url 'qwikvendor_board' %}"><strong>Dashboard</strong></a></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>Invoice</strong></li>
+			</ol>
+		</div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex">
+              <a class="header-brand" href="index.html">
+                <img alt="logo" class="logo2" src="{% static 'img/logo.png' %}">
+              </a>
+
+              <div class="text-right ml-auto">
+                <h2 class="mb-1 text-dark-green">Invoice {{order.order_Id}}</h2>
+                <p class="mb-1"><span class="font-weight-semibold">Invoice Date:</span> {{order.created}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-lg-6 ">
+                <p class="h3 text-dark-green">Invoice From:</p>
+                <address>
+                  {{order.outlet}} Outlet<br>
+                  {{order.outlet.address}}<br>
+                  {{order.outlet.email}}
+                </address>
+              </div>
+              <div class="col-lg-6 text-right">
+                <p class="h3 text-dark-green">Invoice To:</p>
+                <address>
+                  {{order.user.address}}<br>
+                  {{order.user.city}}, {{order.user.lg}}<br>
+                  {{order.user.lg}}<br>
+                  {{order.user.email}}
+                </address>
+              </div>
+            </div>
+            <div class="table-responsive push">
+              <table class="table table-bordered table-success table-hover mb-0">
+                <tr class=" ">
+                  <th class="text-dark-green"><strong>Cylinder ID</strong></th>
+                  <th class="text-dark-green"><strong>Product</strong></th>
+                  <th class="text-dark-green"><strong>Quantity</strong></th>
+                  <th class="text-right text-dark-green"><strong>Unit Price</strong></th>
+                  <th class="text-dark-green"><strong>Payment Type</strong></th>
+                  <th class="text-dark-green"><strong>Payment Choice</strong></th>
+                  <th class="text-dark-green"><strong>1st Payment</strong></th>
+                  <th class="text-dark-green"><strong>2nd Payment</strong></th>
+                  <th class="text-dark-green"><strong>3rd Payment</strong></th>
+                </tr>
+                <tr>
+                  <td>
+                    <p class="font-w600 mb-1">{{order.product}}</p>
+                  </td>
+                  <td>
+                    <p class="font-w600 mb-1">{{order.product.category}}</p>
+                    <div class="text-muted"><div class="text-muted">{{order.product.category.description}}</div></div>
+                  </td>
+                  <td class="text-center num-font">{{order.quantity}}</td>
+                  <td class="text-right num-font">₦{{order.static_price|intcomma}}</td>
+                  <td>
+                    <p class="font-w600 mb-1">{{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</p>
+                  </td>
+                  <td>
+                    <p class="font-w600 mb-1">{{order.payment_choice}}</p>
+                  </td>
+                  {% if order.payment1 != None %}
+                  <td>
+                    <p class="font-w600 mb-1">₦{{order.payment1|intcomma}} on {{order.payment1_date}}</p>
+                  </td>
+                  {% else %}
+                  <td>
+                    <p class="font-w600 mb-1"></p>
+                  </td>
+                  {% endif %}
+                  {% if order.payment2 != None %}
+                  <td>
+                    <p class="font-w600 mb-1">₦{{order.payment2|intcomma}} on {{order.payment2_date}}</p>
+                  </td>
+                  {% else %}
+                  <td>
+                    <p class="font-w600 mb-1">Due on <span class="text-red">{{order.payment2_date}}<span></p>
+                  </td>
+                  {% endif %}
+                  {% if order.payment3 != None %}
+                  <td>
+                    <p class="font-w600 mb-1">₦{{order.payment3|intcomma}} on {{order.payment3_date}}</p>
+                  </td>
+                  {% else %}
+                  <td>
+                    <p class="font-w600 mb-1">Due on <span class="text-red">{{order.payment3_date}}</span></p>
+                  </td>
+                  {% endif %}
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer text-right">
+            <button type="button" class="btn btn-cylinder mb-1" onClick="javascript:window.print();"><i class="fas fa-print fa-1x mr-1"></i> Print Invoice</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+	</div>
+  </div>
+{% endblock content%}

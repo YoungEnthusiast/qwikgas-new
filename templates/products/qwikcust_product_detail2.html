@@ -1,0 +1,69 @@
+{% extends 'board.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+{% block title %}
+  <title>Add to Cart</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+    <div class="row">
+      <div class="col-md-12 col-xl-4 col-lg-4">
+
+    	</div>
+
+    	<div class="col-md-12 col-xl-4 col-lg-4">
+    		<div class="card">
+    			<div class="text-center card-header bg-white">
+    				<h4 class="text-dark-green">Product Description</h4>
+
+    			</div>
+    			<div class="card-body">
+            <div class="product-detail text-center ml-2 mt-2">
+              <img class="logo9" src="{% if product.category.image %}{{ product.category.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+
+              <br>
+              <h6 class="text-dark">{{ product.category.description|linebreaks }}</h6>
+
+              <ul class="fa-ul pricing-list text-left">
+                  <li class="pricing-list-item">
+                      <span class="fa-li"><i class="far fa-check-circle text-teal"></i></span>
+                      <span class="text-dark">LPG Weight: {{product.category.mass}}</span>
+                  </li>
+                  <li class="pricing-list-item">
+                      <span class="fa-li"><i class="far fa-check-circle text-teal"></i></span>
+                      <span class="text-dark">Tare Weight: {{product.category.tare}}</span>
+                  </li>
+                  <li class="pricing-list-item">
+                      <span class="fa-li"><i class="far fa-check-circle text-teal"></i></span>
+                      <span class="text-dark">Working Pressure: {{product.category.working}}</span>
+                  </li>
+                  <li class="pricing-list-item">
+                      <span class="fa-li"><i class="far fa-check-circle text-teal"></i></span>
+                      <span class="text-dark">Test pressure: {{product.category.test}}</span>
+                  </li>
+                  <li class="pricing-list-item">
+                      <span class="fa-li"><i class="far fa-check-circle text-teal"></i></span>
+                      <span class="text-dark">Water Capacity: {{product.category.water}}</span>
+                  </li>
+              </ul>
+
+
+            </div>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="col-md-12 col-xl-4 col-lg-4">
+
+    	</div>
+    </div>
+  </div>
+</div>
+{% endblock content%}

@@ -1,0 +1,273 @@
+{% extends 'board_admin.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>All Wallet Histories</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+		<!--Page Header-->
+		<div class="page-header">
+			<h4 class="page-title"><i class="fa fa-wallet text-dark-green mr-2 fa-1x"></i>Welcome to customers wallet histories' page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+			<ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="{% url 'qwikadmin_board' %}"><strong>Dashboard</strong></a></li>
+        <li class="breadcrumb-item"><a href=""><strong>Wallet</strong></a></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>Wallet's Histories</strong></li>
+			</ol>
+		</div>
+		<!--page header-->
+
+    <div class="row">
+      <div class="col-md-12 col-lg-6 col-xl-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{perc_d}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_debit}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500">Debits</h6>
+                <span class="text-dark-green h1">₦</span><span class="num-font mb-1 counter text-dark-green h1">{{debits|intcomma}}</span>
+                <p class="text-muted mb-0">All Customers' Total Debits</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-lg-6 col-xl-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{perc_c}}" data-thickness="6" data-color="#83C229">
+                    <div class="chart-circle-value text-center ">{{perc_credit}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500">Credits</h6>
+                <span class="text-dark-green h1">₦</span><span class="num-font mb-1 counter text-dark-green h1">{{credits|intcomma}}</span>
+                <p class="text-muted mb-0">All Customers' Total Credits.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 col-lg-6 col-xl-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{perc_p}}" data-thickness="6" data-color="#D32120">
+                    <div class="chart-circle-value text-center ">{{perc_point}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500">QwikPoints</h6>
+                <span class="text-dark-green h1">₦</span><span class="num-font mb-1 counter text-dark-green h1">{{points|intcomma}}</span>
+                <p class="text-muted mb-0">Total QwikPoints Credits.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-lg-6 col-xl-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{perc_r}}" data-thickness="6" data-color="#B1A519">
+                    <div class="chart-circle-value text-center ">{{perc_referral}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500">QwikRefferals</h6>
+                <span class="text-dark-green h1">₦</span><span class="num-font mb-1 counter text-dark-green h1">{{referrals|intcomma}}</span>
+                <p class="text-muted mb-0">Total QwikReferrals Credits.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-lg-6 col-xl-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{perc_f}}" data-thickness="6" data-color="#E19222">
+                    <div class="chart-circle-value text-center ">{{perc_first}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500">QwikFirsts</h6>
+                <span class="text-dark-green h1">₦</span><span class="num-font mb-1 counter text-dark-green h1">{{firsts|intcomma}}</span>
+                <p class="text-muted mb-0">Total QwikFirsts Credits.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header bg-lemon-green">
+          <div class="card-title text-dark-green">All Wallet Histories Till Date</div>
+        </div>
+        <br>
+        <div class="text-center">
+          <h2 class="form-group text-dark-green">Filter By</h2>
+        </div>
+
+        <div class="col-md-12">
+          <div class="box-element bg-dark-green" id="form-wrapper">
+            <form method="get" class="form-inline text-white">
+              {% for field in filtered_wallets.form %}
+                <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
+              {% endfor %}
+              <input type="submit" class="btn btn-primary" value="Go">
+            </form>
+          </div>
+        </div>
+
+
+        <div class="card-body">
+          <div class="text-center">
+            {% if total_wallets > 1 %}
+              <div class="form-group col-md-12">
+                <h3 class="form-group text-dark-green">Total: {{total_wallets}}</h3>
+              </div>
+              {% else %}
+              <div class="form-group col-md-12">
+                <h3 class="form-group text-dark-green">Total: {{total_wallets}}</h3>
+              </div>
+              {% endif %}
+          </div>
+          <a href="{% url 'wallet_credit' %}"><button type="button" class="btn btn-dark-green text-white col-md-12"><strong><i class="fa fa-plus-circle fa-1x mr-1 text-white"></i>Credit Customer</strong></button></a>
+
+          <div class="table-responsive ">
+            <table class="users table card-table border table-striped table-vcenter text-nowrap mb-0">
+              <thead class="bg-cylinder text-white">
+                <tr>
+                  <th>DATE</th>
+                  <th>CUSTOMER</th>
+                  <th>TRANSACTION TYPE</th>
+                  <th>PAYMENT DEBIT</th>
+                  <th>WALLET CREDIT</th>
+                  <th>QWIKREFERRAL</th>
+                  <th>QWIKFIRST</th>
+                  <th>QWIKPOINT</th>
+                  <th>BALANCE</th>
+                </tr>
+              </thead>
+              <tbody class="text-dark table-success">
+                {% for wallet in wallets_page_obj %}
+                {% if wallet.amount_debited != None %}
+                <tr class="">
+                  <td>{{wallet.created}}</td>
+                  <td>{{wallet.user.first_name}} {{wallet.user.last_name}}</td>
+                  <td>{{wallet.transaction_type}}</td>
+                  <td><strong class="text-danger">-</strong>₦{{wallet.amount_debited|intcomma}}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>₦{{wallet.current_balance|intcomma}}</td>
+                </tr>
+                {% elif wallet.amount_credited != None %}
+                <tr class="">
+                  <td>{{wallet.created}}</td>
+                  <td>{{wallet.user.first_name}} {{wallet.user.last_name}}</td>
+                  <td>{{wallet.transaction_type}}</td>
+                  <td></td>
+                  <td><strong class="text-dark-green">+</strong>₦{{wallet.amount_credited|intcomma}}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>₦{{wallet.current_balance|intcomma}}</td>
+                </tr>
+                {% elif wallet.referral != None %}
+                <tr class="">
+                  <td>{{wallet.created}}</td>
+                  <td>{{wallet.user.first_name}} {{wallet.user.last_name}}</td>
+                  <td>{{wallet.transaction_type}}</td>
+                  <td></td>
+                  <td></td>
+                  <td><strong class="text-dark-green">+</strong>₦{{wallet.referral|intcomma}}</td>
+                  <td></td>
+                  <td></td>
+                  <td>₦{{wallet.current_balance|intcomma}}</td>
+                </tr>
+                {% elif wallet.first != None %}
+                <tr class="">
+                  <td>{{wallet.created}}</td>
+                  <td>{{wallet.user.first_name}} {{wallet.user.last_name}}</td>
+                  <td>{{wallet.transaction_type}}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><strong class="text-dark-green">+</strong>₦{{wallet.first|intcomma}}</td>
+                  <td></td>
+                  <td>₦{{wallet.current_balance|intcomma}}</td>
+                </tr>
+                {% elif wallet.point != None %}
+                <tr class="">
+                  <td>{{wallet.created}}</td>
+                  <td>{{wallet.user.first_name}} {{wallet.user.last_name}}</td>
+                  <td>{{wallet.transaction_type}}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><strong class="text-dark-green">+</strong>₦{{wallet.point|intcomma}}</td>
+                  <td>₦{{wallet.current_balance|intcomma}}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+            <nav aria-label="...">
+              <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="text-dark-green page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
+                {% if wallets_page_obj.has_previous %}
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url wallets_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{wallets_page_obj.previous_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item active" aria-current="page"><a class="bg-dark-green page-link" href="{% my_url wallets_page_obj.number 'page' request.GET.urlencode %}">{{wallets_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+                {% if wallets_page_obj.has_next %}
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url wallets_page_obj.next_page_number 'page' request.GET.urlencode %}">{{wallets_page_obj.next_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item"><a class="text-dark-green page-link" href="{% my_url wallets_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock content%}

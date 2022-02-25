@@ -1,0 +1,69 @@
+{% extends 'board_partner.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>Update Product Status</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+		<!--Page Header-->
+		<div class="page-header">
+			<h4 class="page-title"><i class="fa fa-wallet text-dark-green mr-2 fa-1x"></i>Welcome to the product status update page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+			<ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="{% url 'qwikpartner_board' %}"><strong>Dashboard</strong></a></li>
+        <li class="breadcrumb-item"><a href="{% url 'products:qwikpartner_products' %}"><strong>Products</strong></a></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>Update Product Status</strong></li>
+			</ol>
+		</div>
+		<!--page header-->
+    <div class="row">
+      <div class="col-md-12 col-xl-12 col-lg-12">
+      <div class="card">
+        <form method="post" class="form-group col-lg-12 text-dark-green" enctype="multipart/form-data">
+          <div class="card-header bg-cylinder">
+            <h4 class="text-white">
+              <i class="fas fa-clock"></i> Update Product Status</h4>
+          </div>
+          <br>
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-sm-4 mb-2">
+                {{ form.product_Id|as_crispy_field }}
+            </div>
+            <div class="form-group col-sm-4 mb-2">
+                {{ form.category|as_crispy_field }}
+            </div>
+            <div class="form-group col-sm-4 mb-2">
+                {{ form.outlet|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-sm-12 mb-2">
+                {{ form.vendor_product_status|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-sm-12 mb-2">
+                {{ form.partner_product_status|as_crispy_field }}
+            </div>
+        </div>
+        <input type="submit" class="form-group col-md-12 btn btn-cylinder" value="OK">
+      </form>
+      </div>
+      </div>
+    </div>
+
+
+
+
+
+
+{% endblock content%}

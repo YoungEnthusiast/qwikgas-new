@@ -1,0 +1,252 @@
+{% extends 'board.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>My Wallet Histories</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+		<!--Page Header-->
+		<div class="page-header">
+			<h4 class="page-title"><i class="fa fa-wallet text-dark-green mr-2 fa-1x"></i>Welcome to your wallet histories' page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+			<ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="{% url 'products:product_list' %}"><strong>Dashboard</strong></a></li>
+        <li class="breadcrumb-item"><a href=""><strong>Wallet</strong></a></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>Wallet's Histories</strong></li>
+			</ol>
+		</div>
+		<!--page header-->
+
+		<div class="row">
+			<div class="col-md-12 col-lg-6 col-xl-4 mb-3">
+				<div class="card bg-dark-green mb-3">
+					<div class="card-body">
+						<div class="mb-3">
+							<div class="float-left">
+								<span class="text-white">
+									<i class="fa fa-credit-card fa-4x"></i>
+								</span>
+							</div>
+							<div class="float-right text-right text-white">
+								<br>
+                <br>
+								<span class="text-lemon-green h4">₦</span><span class="num-font mb-1 counter text-lemon-green h4">{{current_balance|intcomma}}</span>
+								<br>
+								<h4 class="mb-1 text-white">Wallet Balance</h4>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 col-lg-6 col-xl-4">
+				<div class="card bg-dark-green">
+					<div class="card-body  pb-4">
+						<div class="">
+							<div class="float-left">
+								<span class="text-white">
+									<i class="fa fa-history fa-4x"></i><i class="fa fa-plus fa-2x"></i>
+								</span>
+							</div>
+							<div class="float-right text-right text-white">
+								<br>
+                <br>
+                <span class="text-lemon-green h4">₦</span><span class="num-font mb-1 counter text-lemon-green h4">{{all|intcomma}}</span>
+								<br>
+								<h4 class="mb-1 text-white">Past Credits</h4>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 col-lg-6 col-xl-4">
+				<div class="card bg-dark-green">
+					<div class="card-body  pb-4">
+						<div class="">
+							<div class="float-left">
+								<span class="text-white">
+									<i class="fa fa-history fa-4x"></i><i class="fa fa-minus fa-2x"></i>
+								</span>
+							</div>
+							<div class="float-right text-right text-white">
+								<br>
+                <br>
+                <span class="text-lemon-green h4">₦</span><span class="num-font mb-1 counter text-lemon-green h4">{{debits|intcomma}}</span>
+								<br>
+								<h4 class="mb-1 text-white">Past Debits</h4>
+
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title text-dark-green">Wallet Histories Till Date</div>
+        </div>
+        <br>
+        <div class="text-center">
+          <h2 class="form-group text-dark-green">Filter By</h2>
+        </div>
+
+        <div class="col-md-12">
+          <div class="box-element bg-dark-green" id="form-wrapper">
+            <form method="get" class="form-inline text-white">
+              {% for field in filtered_wallets.form %}
+                <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
+              {% endfor %}
+              <input type="submit" class="btn btn-primary" value="Go">
+            </form>
+          </div>
+        </div>
+
+
+        <div class="card-body">
+          <div class="text-center">
+            {% if total_wallets > 1 %}
+              <div class="form-group col-md-12">
+                <h3 class="form-group text-dark-green">Total: {{total_wallets}}</h3>
+              </div>
+              {% else %}
+              <div class="form-group col-md-12">
+                <h3 class="form-group text-dark-green">Total: {{total_wallets}}</h3>
+              </div>
+              {% endif %}
+          </div>
+
+
+          <div class="modal fade" id="add2" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title text-dark-green" id="inquiryModalLabel"><i class="fas fa-caret-square-down"></i> Request Credit</h4>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                      <br>
+                      <form method="post" class="form-group col-lg-12 text-dark-green" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="form-row">
+                          <div class="form-group col-sm-12 mb-2">
+                              {{ form|crispy }}
+                          </div>
+                      </div>
+                      <input type="submit" class="form-group col-md-12 btn btn-cylinder" value="OK">
+                    </form>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <button class="btn btn-dark-green col-md-12" data-toggle="modal" data-target="#add2"><strong><i class="fa fa-caret-square-down fa-1x mr-1 text-white"></i>Request Credit</strong></button>
+          <div class="table-responsive ">
+            <table class="table card-table table-vcenter text-nowrap">
+              <thead class="text-dark-green">
+                <tr>
+                  <th>DATE</th>
+                  <th>TRANSACTION TYPE</th>
+                  <th>PAYMENT DEBIT</th>
+                  <th>WALLET CREDIT</th>
+                  <th>QWIKREFERRAL</th>
+                  <th>QWIKFIRST</th>
+                  <th>QWIKPOINT</th>
+                  <th>BALANCE</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for wallet in wallets_page_obj %}
+                {% if wallet.amount_debited != None %}
+                <tr class="">
+                  <td>{{wallet.created}}</td>
+                  <td>{{wallet.transaction_type}}</td>
+                  <td><strong class="text-danger">-</strong>₦{{wallet.amount_debited|intcomma}}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>₦{{wallet.current_balance|intcomma}}</td>
+                </tr>
+                {% elif wallet.amount_credited != None %}
+                <tr class="">
+                  <td>{{wallet.created}}</td>
+                  <td>{{wallet.transaction_type}}</td>
+                  <td></td>
+                  <td><strong class="text-dark-green">+</strong>₦{{wallet.amount_credited|intcomma}}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>₦{{wallet.current_balance|intcomma}}</td>
+                </tr>
+                {% elif wallet.referral != None %}
+                <tr class="">
+                  <td>{{wallet.created}}</td>
+                  <td>{{wallet.transaction_type}}</td>
+                  <td></td>
+                  <td></td>
+                  <td><strong class="text-dark-green">+</strong>₦{{wallet.referral|intcomma}}</td>
+                  <td></td>
+                  <td></td>
+                  <td>₦{{wallet.current_balance|intcomma}}</td>
+                </tr>
+                {% elif wallet.first != None %}
+                <tr class="">
+                  <td>{{wallet.created}}</td>
+                  <td>{{wallet.transaction_type}}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><strong class="text-dark-green">+</strong>₦{{wallet.first|intcomma}}</td>
+                  <td></td>
+                  <td>₦{{wallet.current_balance|intcomma}}</td>
+                </tr>
+                {% elif wallet.point != None %}
+                <tr class="">
+                  <td>{{wallet.created}}</td>
+                  <td>{{wallet.transaction_type}}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><strong class="text-dark-green">+</strong>₦{{wallet.point|intcomma}}</td>
+                  <td>₦{{wallet.current_balance|intcomma}}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+            <nav aria-label="...">
+              <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="text-dark-green page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
+                {% if wallets_page_obj.has_previous %}
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url wallets_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{wallets_page_obj.previous_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item active" aria-current="page"><a class="bg-dark-green page-link" href="{% my_url wallets_page_obj.number 'page' request.GET.urlencode %}">{{wallets_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+                {% if wallets_page_obj.has_next %}
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url wallets_page_obj.next_page_number 'page' request.GET.urlencode %}">{{wallets_page_obj.next_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item"><a class="text-dark-green page-link" href="{% my_url wallets_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock content%}

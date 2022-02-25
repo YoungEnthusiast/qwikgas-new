@@ -1,0 +1,81 @@
+{% extends 'board_partner.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>Orders</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+		<!--Page Header-->
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex">
+              <a class="header-brand" href="index.html">
+                <img alt="logo" class="logo2" src="{% static 'img/logo.png' %}">
+              </a>
+
+              <div class="text-right ml-auto">
+                <h1 class="mb-1 text-dark-green">Invoice {{order.order_Id}}</h2>
+                <p class="mb-1 h2"><span class="font-weight-semibold">Invoice Date:</span> {{order.created}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-lg-6 h2">
+                <p class="h1 text-dark-green">Invoice From:</p>
+                <address>
+                  {{order.outlet}} Outlet<br>
+                  {{order.outlet.address}}<br>
+                  {{order.outlet.email}}
+                </address>
+              </div>
+              <div class="col-lg-6 text-right h2">
+                <p class="h1 text-dark-green">Invoice To:</p>
+                <address>
+                  {{order.user.address}}<br>
+                  {{order.user.city}}, {{order.user.lg}}<br>
+                  {{order.user.lg}}<br>
+                  {{order.user.email}}
+                </address>
+              </div>
+            </div>
+
+            <div class="row text-center h1">
+              <p><strong class="text-dark-green">Cylinder ID:</strong> {{order.product}}</p>
+              <p><strong class="text-dark-green">Product:</strong> {{order.product.category}}</p>
+              <p><strong class="text-dark-green">Quantity:</strong> {{order.quantity}}</p>
+              <p><strong class="text-dark-green">Unit Price:</strong> ₦{{order.static_price|intcomma}}</p>
+              <p><strong class="text-dark-green">Total Cost:</strong> ₦{{order.static_total_cost|intcomma}}</p>
+              <p><strong class="text-dark-green">Payment Type:</strong> {{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</p>
+              <p><strong class="text-dark-green">Payment Choice:</strong> {{order.payment_choice}}</p>
+              <p><strong class="text-dark-green">1st Payment:</strong> {% if order.payment1 != None %} ₦{{order.payment1|intcomma}} on {{order.payment1_date}} {% else %} {% endif %}  </p>
+              <p><strong class="text-dark-green">2nd Payment:</strong> {% if order.payment2 != None %} ₦{{order.payment2|intcomma}} on {{order.payment2_date}} {% else %} {% endif %}</p>
+              <p><strong class="text-dark-green">3rd Payment:</strong> {% if order.payment3 != None %} ₦{{order.payment3|intcomma}} on {{order.payment3_date}} {% else %} {% endif %}</p>
+
+            </div>
+
+
+
+          <div class="card-footer text-right">
+            <button type="button" class="btn btn-cylinder mb-1" onClick="javascript:window.print();"><i class="fas fa-print fa-1x mr-1"></i> Print Invoice</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+	</div>
+  </div>
+{% endblock content%}

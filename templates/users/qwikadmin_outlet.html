@@ -1,0 +1,74 @@
+{% extends 'board_admin.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>Add Outlet</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+		<!--Page Header-->
+		<div class="page-header">
+			<h4 class="page-title"><i class="fa fa-plus-circle text-dark-green mr-2 fa-1x"></i>Welcome to outlet's creation page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+			<ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="{% url 'qwikadmin_board' %}"><strong>Dashboard</strong></a></li>
+        <li class="breadcrumb-item"><a href="{% url 'qwikadmin_outlets' %}"><strong>Outlets</strong></a></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>Add Outlet</strong></li>
+			</ol>
+		</div>
+		<!--page header-->
+    <div class="row">
+      <div class="col-md-12 col-xl-12 col-lg-12">
+      <div class="card">
+        <form method="post" class="form-group col-lg-12 text-dark-green" enctype="multipart/form-data">
+          <div class="card-header bg-cylinder">
+            <h4 class="text-white">
+              <i class="fas fa-plus-circle"></i> Add Outlet</h4>
+          </div>
+          <br>
+          {% csrf_token %}
+          <div class="form-row">
+              <div class="form-group col-sm-12 mb-2">
+                  {{ form.manager|as_crispy_field }}
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-sm-12 mb-2">
+                  {{ form.partner|as_crispy_field }}
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-sm-12 mb-2">
+                  {{ form.outlet|as_crispy_field }}
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-sm-12 mb-2">
+                  {{ form.email|as_crispy_field }}
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-sm-12 mb-2">
+                  {{ form.address|as_crispy_field }}
+              </div>
+          </div>
+          <br>
+          <input type="submit" class="form-group col-md-12 btn btn-cylinder" value="Add">
+      </form>
+      </div>
+      </div>
+    </div>
+
+
+
+
+
+
+{% endblock content%}

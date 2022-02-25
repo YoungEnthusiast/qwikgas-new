@@ -1,0 +1,232 @@
+{% load static %}
+<div id="layoutDefault_footer">
+  <section class="bg-white py-10">
+      <div class="container px-5 mt-5">
+          <div class="row gx-5 align-items-center">
+            <div class="col-lg-1">
+
+            </div>
+              <div class="col-lg-5">
+                  <h4 class="text-dark">Ready to get served?</h4>
+                  <p class="lead mb-5 mb-lg-0 text-gray-500">Get in touch or create an account.</p>
+                  <h6 class="text-dark-green">QwikGas</h6>
+                  <h6 class="text-cylinder">Gas made easy</h6>
+                  <div class="">
+                      <a class="" href="https://wa.me/message/2JWR2UFJVHYVK1"><i class="fab fa-whatsapp text-whatsapp fa-1x"></i></a>
+                      <a class="" href="https://web.facebook.com/QwikGas-103130838914889"><i class="fab fa-facebook text-facebook fa-1x"></i></a>
+                      <a class="" href="https://www.instagram.com/qwikgasHQ/"><i class="fab fa-instagram fa-1x"></i></a>
+                      <a class="" href="https://www.linkedin.com/company/qwikgas/about/?viewAsMember=true"><i class="fab fa-linkedin fa-1x"></i></a>
+                      <a class="" href="#!"><i class="fab fa-twitter text-twitter fa-1x"></i></a>
+
+                  </div>
+              </div>
+              <div class="col-lg-5 text-lg-end">
+                  <a class="small text-arrow-icon"><a tabindex="0" class="btn btn-cylinder rounded-pill fw-500 me-1 my-2" role="button" data-html="true" data-toggle="popover" data-trigger="focus" title="Our Hot Lines" data-content="Mainland 1 [Oshodi-Isolo, Ikeja, Agege, Ilupeju, Mushin, Surulere] - 08179366466 <br><br> Mainland 2 [Ketu, Ikosi,  Alapere, Magodo, Maryland, Mile 12, Oregun, Ogudu, Ajelogo, Agboyi] - 08179366488 <br><br> Island [Lagos Island, Obalende, Ikoyi, Victoria Island, Lekki] - 08179366499">Contact Sales</a>
+                  {% if user.is_authenticated %}
+                  {% else %}
+                  <a class="btn btn-cylinder rounded-pill fw-500 me-1 my-2 shadow" href="{% url 'account' %}">Create Account</a>
+                  <a class="btn btn-cylinder rounded-pill fw-500 my-2 shadow" href="">Household</a>
+                  {% endif %}
+              </div>
+              <div class="col-lg-1">
+
+              </div>
+          </div>
+      </div>
+  </section>
+  <hr class="m-0" />
+    <footer class="footer pt-10 pb-5 mt-auto bg-white footer-light">
+        <div class="container px-5">
+            <div class="row gx-5">
+                <div class="col-lg-1">
+
+                </div>
+                <div class="col-lg-10 text-center">
+                </div>
+                <div class="col-lg-1">
+
+                </div>
+            </div>
+            <hr class="my-5" />
+            <div class="row gx-5 align-items-center">
+                <div class="col-md-3 small text-black">Copyright &copy; QwikGas <span class="year"></span></div>
+                <div class="col-md-9 text-md-end small">
+                  <a data-toggle="modal" data-target="#return" class="fw-500 me-2" href="#!">
+                      <span class="text-black">Return Policy</span>
+                  </a>
+                  <a data-toggle="modal" data-target="#terms1" class="fw-500 me-2" href="#!">
+                      <span class="text-black">Terms and Condition of Cylinder Use</span>
+                  </a>
+                  <a data-toggle="modal" data-target="#terms2" class="fw-500 me-2" href="#!">
+                      <span class="text-black">Terms and Condition of Website Use</span>
+                  </a>
+                  <!-- Return Policy -->
+                  <div class="modal fade" id="return" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+
+                          <h5 class="modal-title" id="exampleModalLabel">Return Policy</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                            <p style="text-align:left">QwikGas prefilled gas cylinder is sold with tamper-proof seal, which is a mark of quality and value for money. The seal is an assurance that the prefilled cylinder has passed the quality assurance check for accurate content and excellent cylinder condition. Do not take delivery of any QwikGas prefilled cylinder with broken seal.</p>
+                            <p style="text-align:left">QwikGas will only refund order that was appropriately invoiced and delivered, if the tamper-proof seal remains intact. This return policy is subject to the QwikGas Terms and Conditions of sale and Terms and Conditions of Cylinder use.</p>
+                            <p style="text-align:left">This return policy is subject to change at the discretion of QwikGas without prior notice.</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-dark-green" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Terms (Cylinder) -->
+                  <div class="modal fade" id="terms1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+
+                          <h5 class="modal-title" id="exampleModalLabel">Terms &amp; Condition of Cylinder Use</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                        <p style="text-align:left">The cylinder is owned and remains the sole property of QwikGas. QwikGas is a registered trademark and a brand of Viridescent Limited.</p>
+                        <p style="text-align:left">QwikGas cylinder has only been loaned to you to utilize the LPG content in a rightful and lawful manner.</p>
+                        <p style="text-align:left">Only the LPG content in the QwikGas cylinder has been sold to you and that you have paid for.</p>
+                        <p style="text-align:left">The Cylinder has been checked and certified by QwikGas to be in safe and proper working condition before issuance for delivery, inspect the cylinder and be satisfied that it has no defect before taking delivery.</p>
+                        <p style="text-align:left">Do not take delivery of any cylinder with defect or in an unsafe condition. QwikGas is not liable for any loss, damage or harm in any form and of any type arising from the use of QwikGas cylinder you take delivery of.</p>
+                        <p style="text-align:left">QwikGas cylinder must be returned not later than fifteen (15) days from the date of delivery of same cylinder. Failure to return cylinder by the due date may lead to pressing of charges against you and you would be demanded to pay compensation of N30,000.00 at the point of pressing of charges.</p>
+                        <p style="text-align:left">You agree not to tamper, erase, scratch or eliminate anything printed on the QwikGas cylinder including but not limited to the QwikGas cylinder tracking code, the QwikGas brand name and logo.</p>
+                        <p style="text-align:left">QwikGas cylinder must not be repainted. Repainting of the QwikGas cylinder shall be constituted a criminal sabotage and theft and shall be prosecuted as same.</p>
+                        <p style="text-align:left">QwikGas cylinder must not be defaced in anyway. Defacing of the QwikGas cylinder shall be constituted a criminal sabotage and theft and shall be prosecuted as same.</p>
+                        <p style="text-align:left">QwikGas cylinder must not be damaged in any form. Damaging of the QwikGas cylinder shall constitute a criminal sabotage and theft and shall be prosecuted as same. Unintentional minimal dent shall be exempted from this clause after due verification.</p>
+                        <p style="text-align:left">You agree not to use the QwikGas cylinder for any other purpose than the rightful and lawful use of its content originating from QwikGas.</p>
+                        <p style="text-align:left">You agree not to refill the QwikGas cylinder and nor use the QwikGas cylinder for decanting into another cylinder/container.</p>
+                        <p style="text-align:left">You agree to return the QwikGas cylinder upon emptying the LPG content originating from QwikGas.</p>
+                        <p style="text-align:left">You agree not to sell the QwikGas cylinder to yourself or any other party.</p>
+                        <p style="text-align:left">You agree not to take the QwikGas cylinder to other gas retail or refill company.</p>
+                        <p style="text-align:left">You agree not to keep the QwikGas cylinder as personal property.</p>
+                        <p style="text-align:left">You agree to safely and securely use the QwikGas cylinder.</p>
+                        <p style="text-align:left">You agree not to remold or reshape the QwikGas cylinder.</p>
+                        <p style="text-align:left">You agree not to transfer usage of the QwikGas cylinder to a third party.</p>
+                        <p style="text-align:left">You agree not to trade in or with the QwikGas cylinder.</p>
+                        <p style="text-align:left">You agree not to loan or borrow out the QwikGas cylinder to a third party.</p>
+                        <p style="text-align:left">You agree to abide by each and every part of these Terms and Conditions of the QwikGas cylinder use.</p>
+                        <p style="text-align:left">The breach of any part or the whole of these Terms and Conditions of QwikGas cylinder use shall constitute a criminal sabotage and you agree to be fully liable and prosecuted accordingly.</p>
+                        <p style="text-align:left">These Terms and Conditions of QwikGas cylinder use is subject to changes, modification and alternation at anytime without prior notification in any form.</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-dark-green" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Terms(Website) -->
+                  <div class="modal fade" id="terms2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Terms &amp; Conditions of Website Use</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p style="text-align:left"><b>1. Terms of website use</b></p>
+                          <p style="text-align:left">This page and any other referenced documents (and as may be updated, modified or replace without prior notification at any time) describe the terms on which our website, www.qwikgas.ng is allowed usage of (could be used) either as a registered user or a visitor. By accessing and using our site, you accept these terms of use and agree to abide by them.</p>
+                          <p style="text-align:left"><b>2. Privacy policy</b></p>
+                          <p style="text-align:left">Kindly see our privacy policy.</p>
+                          <p style="text-align:left"><b>3. Information about us</b></p>
+                          <p style="text-align:left">www.qwikgas.ng is a site owned, operated and managed by Viridescent Limited. Viridescent Limited. is a private limited liability company, registered under the Laws of the Federal Republic of Nigeria, with Company registration number RC 1527640 and is the sole rights holder of the QwikGas Brand and Apps (including this website). For the purposes of this website, "seller", "we", "us" and "our" all refer to QwikGas.</p>
+                          <p style="text-align:left"><b>4. Accessing our site</b></p>
+                          <p style="text-align:left">By accessing this site through any device or gadget, you confirm that you are at least 18 years old or are supervised by a parent or legal guardian.
+                          Both parties (QwikGas and You) agree that this website will only be used according to the Terms and Conditions of Use. If you do not agree with the Terms and Conditions of Use or do not wish to be bound by them, you agree to abstain from using this website.
+                          We grant you a non-transferable, revocable and non-exclusive license to use this site, in accordance with the Terms and Conditions of Use, for such things as: shopping for liquefied petroleum gas (LPG) and its related products/accessories sold on the site, gathering prior information regarding our products and services and making purchases. Unauthorized use is strictly prohibited.
+                          These Terms and Conditions of Use specifically prohibits actions such as: accessing our servers or internal computer systems, interfering in any way with the functionality of this website, gathering or altering any underlying software code, infringing any intellectual property rights. This list is non-exhaustive and similar actions are also strictly prohibited.
+                          Any breach of these Terms and Conditions of Use shall result in the immediate revocation of the license granted in this paragraph without prior notice to you. Should we determine at our sole discretion that you are in breach of any of these conditions, we reserve the right to deny you access to this website and its contents and do so without prejudice to any available remedies at law or otherwise.
+                          Certain services and related features that may be made available on the site may require registration or subscription. Should you choose to register or subscribe for any such services or related features; you agree to provide promptly and update such information should there be any changes. Every user of the site is solely responsible for keeping account identifiers and login credentials safe and secure.
+                          The account owner is entirely responsible for all activities that occur under such user account. Also, we must be notified of any unauthorized use of your account and account credentials. The site shall not be responsible or liable, directly or indirectly, in any way whatsoever for any loss or damage of any kind incurred as a result of, or in connection with, your failure to comply with this section.
+                          During the registration process you agree to receive promotional emails from the site. You can subsequently opt out of receiving such promotional e-mails by clicking on the link at the bottom of any promotional email and unsubscribe.</p>
+                          <p style="text-align:left"><b>5. Intellectual property rights</b></p>
+                          <p style="text-align:left">The license of all intellectual property in our site, and in the material published on it belong to us. All such rights are reserved.
+                          You may print off one copy, and may download extracts, of any page(s) from our site for your personal reference and may draw the attention of others within your organisation to material posted on our site.
+                          You accept not to alter the document (including electronic copies of any materials) you have printed off or downloaded in any manner or form, and you agree not to use any illustrations, photographs, audio or video sequences or any graphics separately from any associated script.
+                          Our status (and that of any identified contributors) as the authors of material on our site must always be acknowledged.
+                          You accept not to use any part of the contents on our site for commercial purposes without obtaining a license to do so from us or our licensors.
+                          If you print, copy or download any part of our site in breach of these Terms of Use, your right to use our site shall cease with immediate effect and you accept, at our option, to return or destroy any copies of the contents you have made.</p>
+                          <p style="text-align:left"><b>6. Reliance on Information Posted</b></p>
+                          <p style="text-align:left">Information and other materials posted on our site are not intended as advice on which reliance should be placed. We therefore disclaim all liability and responsibility arising from any reliance placed on such contents by any visitor to our site, or by anyone who may become aware of any of its contents.</p>
+                          <p style="text-align:left"><b>7. Accuracy of information</b></p>
+                          <p style="text-align:left">Our site hosts information relating to us, our activities, and vendors. All information or guidance provided as part of our site is correct at the time of inclusion, but we make no representation or warranty as to the completeness, accuracy, currency, adequacy or suitability of that information. We take no responsibility for any action you may take, or for any loss or damage incurred, as a result of relying on such information or guidance.</p>
+                          <p style="text-align:left">The information included in our site has been compiled from a diverse source and is subject to modification without prior notification. We recommend that you read these Terms and Conditions and update your records regularly.</p>
+                          <p style="text-align:left"><b>8. Our site changes regularly</b></p>
+                          <p style="text-align:left">We shall update our site frequently, and the content might be altered at any time. If the need arises, we may suspend access to our site, or close it indefinitely. Any of the material on our site may be out of date at any given time, and we are under no obligation to update such material.</p>
+                          <p style="text-align:left"><b>9. Availability of our site</b></p>
+                          <p style="text-align:left">Due to the nature of the internet, we cannot guarantee that our site will always be accessible. Our site may be unavailable or suspended to allow for repairs, maintenance or the introduction of new facilities or services.</p>
+                          <p style="text-align:left"><b>10. Our liability</b></p>
+                          <p style="text-align:left">The content presented on our site is provided without any guarantees, conditions or warranties as to its accuracy. To the extent allowable by law, we, Viridescent Limited, our vendors and third parties connected to us hereby expressly exclude:</p>
+                          <p style="text-align:left">a) All conditions, warranties and other terms which might otherwise be implied by statute, common law or the law of equity.</p>
+                          <p style="text-align:left">b) Any liability for any direct, indirect or consequential loss or damage incurred by any user in connection with our site or in connection with the use, inability to use, or results of the use of our site, any websites linked to it and any contents posted on it, including, without limitation any liability for:</p>
+                          <p style="text-align:left">(i) loss of income or revenue;</p>
+                          <p style="text-align:left">(ii) loss of business;</p>
+                          <p style="text-align:left">(iii) loss of profits or contracts;</p>
+                          <p style="text-align:left">(iv) loss of anticipated savings;</p>
+                          <p style="text-align:left">(v) loss of data;</p>
+                          <p style="text-align:left">(vi) loss of goodwill;</p>
+                          <p style="text-align:left">(vii) wasted management or office time; and</p>
+                          <p style="text-align:left">(viii) for any other loss or damage of any kind, however arising and whether caused by tort (including negligence), breach of contract or otherwise, even if foreseeable.
+                          <p style="text-align:left">This does not affect our liability for death or personal injury arising from our negligence, or our liability for fraudulent misrepresentation or misrepresentation as to a fundamental matter, or any other liability which cannot be excluded or limited under applicable law.
+                          <p style="text-align:left"><b>11. Emails and Information sent to us</b> </p>
+                          <p style="text-align:left">Any email or attachment sent to us will not be encrypted and we therefore do not accept any liability if emails sent by you are compromised (including, but not limited to, their security or confidentiality). We do not, to the extent permitted by law, accept any liability for any external compromise of security and/or confidentiality in relation to transmissions sent by email.
+                          <p style="text-align:left"><b>12. Information about you and your visits to our site</b> </p>
+                          <p style="text-align:left">We process information about you in accordance with our privacy policy by using our site, you consent to such processing and agree that all data provided by you is accurate.
+                          <p style="text-align:left"><b>13. Username and password</b> </p>
+                          <p style="text-align:left">If you use our site, you are responsible for keeping your login or access credential confidential and for restricting access to your devices/gadgets to prevent unauthorized access to your account. You agree to accept responsibility for all activities that occur under your user account. You should bring to our awareness immediately if you have any suspicion regarding the compromise of user accounts by anyone else, or is likely to be used in an unauthorized manner.
+                          <p style="text-align:left">Please ensure all details provided to us are accurate and complete. Inform us immediately of any changes to the information that you provided when registering.
+                          <p style="text-align:left">We reserve the right to refuse access to the site, and to terminate accounts, remove or edit content or cancel orders at our discretion. If we cancel an order it will be without charge to you unless, due to your negligence, you have allowed unauthorised use of your user account.
+                          <p style="text-align:left"><b>14. Linking to our site</b> </p>
+                          <p style="text-align:left">You accept not to create link(s) to any part of our site without our prior written authorization. If you wish to request such authorization, please email hello@qwikgas.ng. Linked websites, whether permitted or not, do not have implied affiliation with our site. If we grant you authorization to create links to any part of our site, the website from which you are linking must comply in all respects with the content standards set out in our acceptable use policy.
+                          <p style="text-align:left"><b>15. Copyright</b> </p>
+                          <p style="text-align:left">All information presented, unless specifically stated otherwise is under copyright to us or our licensors. Information is freely available for downloading and browsing but may not be altered, transmitted, distributed, reproduced, duplicated, copied, or re-sold without our prior written consent.
+                          <p style="text-align:left"><b>16. Links from our site</b> </p>
+                          <p style="text-align:left">Where our site contains links to other sites and resources provided by third parties, these links are provided for your information only. We have no control over the contents of those sites or resources, and accept no responsibility for them or for any loss or damage that may arise from your use of them.
+                          <p style="text-align:left"><b>17. Jurisdiction and applicable law</b> </p>
+                          <p style="text-align:left">These Terms and Conditions of Use shall be interpreted and governed by the laws in operation in the Federal Republic of Nigeria. Subject to the Arbitration section below, each party hereby agrees to submit to the jurisdiction of the courts of Nigeria and to waive any objections based upon venue.
+                          <p style="text-align:left"><b>ARBITRATION</b> </p>
+                          <p style="text-align:left">Any complaint, claim or dispute arising out of or relating to these Terms and Conditions of Use will be referred and finally settled by private and confidential binding arbitration before a single arbitrator held in Nigeria in English and governed by Nigeria law pursuant to the Arbitration and Conciliation Act Cap A18 Laws of the Federation of Nigeria 2004, as amended, replaced or re-enacted from time to time.</p>
+                          <p style="text-align:left">The arbitrator shall be a person who is legally trained and who has experience in the information technology field in Nigeria and is independent of either party, Notwithstanding the foregoing, the site reserves the right to pursue the protection of intellectual property rights and confidential information through injunctive or other equitable relief through the courts.</p>
+                          <p style="text-align:left"><b>TERMINATION</b> </p>
+                          <p style="text-align:left">In addition to any other legal or equitable remedies, we may, without prior notice to you, immediately terminate the Terms and Conditions of Use or revoke any or all of your rights granted under the Terms and Conditions of Use.</p>
+                          <p style="text-align:left">Upon any termination of this agreement, you shall immediately cease all access to and use of the site and we shall, in addition to any other legal or equitable remedies, immediately revoke all account credentials and identifiers issued to you and deny your access to and use of this site in whole or in part.
+                          Any termination of this agreement shall not affect the respective rights and obligations (including without limitation, payment obligations) of the parties arising before the date of termination. You furthermore agree that the site shall not be liable to you or to any other person as a result of any such suspension or termination.
+                          Should you become dissatisfied with the site or with any terms, conditions, rules, policies, guidelines, or practices of QwikGas in operating the site, your sole and exclusive remedy is to cease using the site.</p>
+                          <p style="text-align:left"><b>SEVERABILITY</b> </p>
+                          <p style="text-align:left">If any portion of these terms or conditions is held by any court or tribunal to be invalid or unenforceable, either in whole or in part, then the part shall be severed from these Terms and Conditions of Use and shall not affect the validity or enforceability of any other section listed in this document.</p>
+                          <p style="text-align:left"><b>MISCELLANOUS PROVISIONS</b> </p>
+                          <p style="text-align:left">You agree that all agreements, notices, receipts, invoices, disclosures and other communications that we provide to you electronically satisfy any legal requirement that such communications be in writing.
+                          Assigning or sub-contracting any of your rights or obligations under these Terms and Conditions of Use to any third party is prohibited unless agreed upon in writing by the seller.
+                          We reserve the right to transfer, assign or sub-contact the benefit of the whole or part of any rights or obligations under these Terms and Conditions of Use to any third party.</p>
+                          <p style="text-align:left"><b>18. Variations</b> </p>
+                          <p style="text-align:left">We may revise these Terms of Use at any time by amending this page. You are expected to check this page regularly to take notice of any changes we have made, as they are binding on you. Some of the provisions contained in these Terms of Use may also be superseded by provisions or notices published elsewhere on our site.</p>
+                          <p style="text-align:left"><b>19. Your concerns</b> </p>
+                          <p style="text-align:left">Refer any query or concern about content that features on our site via email to support@qwikgas.ai.</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-dark-green" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>

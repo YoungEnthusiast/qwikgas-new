@@ -1,0 +1,78 @@
+{% extends 'board.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>My Cart</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+    {% if cart %}
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card">
+          <div class="card-header bg-white">
+            <div class="card-title text-dark-green">Cart Information</div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table card-table table-vcenter text-nowrap">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Product Id</th>
+                    <th></th>
+                    <th>Unit price</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for item in cart %}
+                    {% with product=item.product %}
+                      <tr>
+                        <td>
+                          <a href="{{ product.get_absolute_url }}">
+                            <img src="{% if product.category.image %}{{ product.category.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" class="logo8">
+                          </a>
+                        </td>
+                        <td>{{ product.category.type }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ product.product_Id }}</td>
+                        <td><a href="{% url "cart:cart_remove" product.id %}"><i class="fa fa-trash text-dark-green fa-1x"></i></a></td>
+                        <td>₦{{ item.price|intcomma }}</td>
+                        <td>₦{{ item.total_price|intcomma }}</td>
+                      </tr>
+                      {% endwith %}
+                  {% endfor %}
+                  <tr class="total">
+                      <td>Total</td>
+                      <td colspan="5"></td>
+                      <td><strong>₦{{ cart.get_total_price|intcomma }}</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+              <br>
+              <p class="text-right">
+                <a href="{% url "products:product_list" %}" class="bg-dark-green text-white button">Order More Gas</a>
+                <a href="{% url "orders:order_create" %}" class="bg-dark-green text-white button">Continue to Complete Order</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+  <h3 class="text-center">No cylinder in cart!</h3>
+{% endif %}
+
+{% endblock content%}

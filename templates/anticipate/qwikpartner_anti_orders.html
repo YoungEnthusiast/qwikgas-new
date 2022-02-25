@@ -1,0 +1,283 @@
+{% extends 'board_partner.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>Anticipatory Orders</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+		<!--Page Header-->
+		<div class="page-header">
+      <h4 class="page-title"><i class="fa fa-spinner text-dark-green mr-2 fa-1x"></i>Welcome to all customers anticipatory orders' page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+			<ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="{% url 'qwikpartner_board' %}"><strong>Dashboard</strong></a></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>Orders</strong></li>
+			</ol>
+		</div>
+		<!--page header-->
+
+
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card">
+          <div class="card-header bg-white">
+            <div class="card-title text-dark-green">Anticipatory Orders' Histories Till Date</div>
+          </div>
+          <br>
+          <div class="text-center">
+            <h2 class="form-group text-dark-green">Filter By</h2>
+          </div>
+
+          <div class="col-md-12">
+            <div class="box-element bg-dark-green" id="form-wrapper">
+              <form method="get" class="form-inline text-white">
+                {% for field in filtered_antiorders.form %}
+                  <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
+                {% endfor %}
+                <input type="submit" class="btn btn-primary" value="Go">
+              </form>
+            </div>
+          </div>
+
+
+          <div class="card-body">
+            <div class="text-center">
+              {% if total_antiorders > 1 %}
+                <div class="form-group col-md-12">
+                  <h3 class="form-group text-dark-green">Total Orders: {{total_antiorders}}</h3>
+                </div>
+                {% else %}
+                <div class="form-group col-md-12">
+                  <h3 class="form-group text-dark-green">Total Order: {{total_antiorders}}</h3>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Add 1st Form -->
+            <div class="modal fade" id="add1" role="dialog">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h4 class="modal-title text-dark-green" id="inquiryModalLabel"><i class="fas fa-plus-circle"></i> Add Anticipatory Order</h4>
+                          <button type="button" class="close" data-dismiss="modal">
+                              <span>&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                        <br>
+                        <form method="post" class="form-group col-lg-12 text-dark-green" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group col-sm-12 mb-2">
+                                {{ form.user|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-12 mb-2">
+                                {{ form.product|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-12 mb-2">
+                                {{ form.quantity|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-12 mb-2">
+                                {{ form.payment_type1|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-12 mb-2">
+                                {{ form.payment_type2|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-12 mb-2">
+                                {{ form.payment_date_later|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-12 mb-2">
+                                {{ form.payment_type3|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-12 mb-2">
+                                {{ form.payment_date_small|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-12 mb-2">
+                                {{ form.payment_split|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-12 mb-2">
+                                {{ form.payment_choice|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-12 mb-2">
+                                {{ form.payment_ref|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-sm-12 mb-2">
+                                {{ form.payment1|as_crispy_field }}
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-sm-12 mb-2">
+                                {{ form.payment1_date|as_crispy_field }}
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-sm-12 mb-2">
+                                {{ form.payment2_date|as_crispy_field }}
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-sm-12 mb-2">
+                                {{ form.payment3_date|as_crispy_field }}
+                          </div>
+                        </div>
+                        <input type="submit" class="form-group col-md-12 btn btn-cylinder" value="OK">
+                      </form>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <button class="btn btn-dark-green col-md-12" data-toggle="modal" data-target="#add1"><strong><i class="fa fa-plus-circle fa-1x mr-1 text-white"></i>Add Anticipatory Order</strong></button>
+            <!-- Modal Form Ends  -->
+            <div class="table-responsive">
+              <table class="table card-table table-vcenter text-nowrap">
+                <thead>
+                  <tr class="text-dark-green">
+                    <th>DATE/TIME</th>
+                    <th>CUSTOMER</th>
+                    <th>ORDER ID</th>
+                    <th>CYLINDER ID</th>
+                    <th>PRODUCT TYPE</th>
+                    <th>PRICE</th>
+                    <th>QUANTITY</th>
+                    <th>TOTAL COST</th>
+                    <th>PAYMENT TYPE</th>
+                    <th>PAYMENT CHOICE</th>
+                    <th>PAYMENT REFERENCE</th>
+                    <th>PAYMENT</th>
+                    <th>TRANSACTION STATUS</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for order in antiorders_page_obj %}
+                  {% if order.payment2 != None and order.payment3 == None %}
+                  <tr class="">
+                    <td>{{order.created}}</td>
+                    <td>{{order.user}}</td>
+                    <td>{{order.order_Id}}</td>
+                    <td>{{order.product.product_Id}}</td>
+                    <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
+                    <td>₦{{order.static_price|intcomma}}</td>
+                    <td>{{order.quantity}}</td>
+                    <td>₦{{order.static_total_cost|intcomma}}</td>
+                    <td>{{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</td>
+                    <td>{{order.payment_choice}}</td>
+                    <td>{{order.payment_ref}}</td>
+                    <td>{{order.payment1|intcomma}} on {{order.payment1_date}}|{{order.payment2}} on {{order.payment2_date}}|{{order.payment3}} on {{order.payment3_date}}</td>
+                    <td>{{order.transaction}}</td>
+                    <td class="text-center"><s>Update 2nd Payment</s></td>
+                    <td class="text-center"><a href="payment-update/{{order.id}}"><button type="button" class="btn btn-sm btn-dark-green"><strong> <i class="fa fa-edit fa-1x text-white"></i> Update 3rd Payment</strong></button></a></td>
+                    <td><a href="{% url 'anticipate:show_partner_anti_invoice' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
+                  </tr>
+                  {% elif order.payment3 != None and order.payment2 != None %}
+                  <tr class="">
+                    <td>{{order.created}}</td>
+                    <td>{{order.user}}</td>
+                    <td>{{order.order_Id}}</td>
+                    <td>{{order.product.product_Id}}</td>
+                    <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
+                    <td>₦{{order.static_price|intcomma}}</td>
+                    <td>{{order.quantity}}</td>
+                    <td>₦{{order.static_total_cost|intcomma}}</td>
+                    <td>{{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</td>
+                    <td>{{order.payment_choice}}</td>
+                    <td>{{order.payment_ref}}</td>
+                    <td>{{order.payment1}} on {{order.payment1_date}}|{{order.payment2}} on {{order.payment2_date}}|{{order.payment3}} on {{order.payment3_date}}</td>
+                    <td>{{order.transaction}}</td>
+                    <td class="text-center"><s>Update 2nd Payment</s></td>
+                    <td class="text-center"><s>Update 3rd Payment</s></td>
+                    <td><a href="{% url 'anticipate:show_partner_anti_invoice' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
+                  </tr>
+                  {% elif order.payment3 != None and order.payment2 == None %}
+                  <tr class="">
+                    <td>{{order.created}}</td>
+                    <td>{{order.user}}</td>
+                    <td>{{order.order_Id}}</td>
+                    <td>{{order.product.product_Id}}</td>
+                    <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
+                    <td>₦{{order.static_price|intcomma}}</td>
+                    <td>{{order.quantity}}</td>
+                    <td>₦{{order.static_total_cost|intcomma}}</td>
+                    <td>{{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</td>
+                    <td>{{order.payment_choice}}</td>
+                    <td>{{order.payment_ref}}</td>
+                    <td>{{order.payment1}} on {{order.payment1_date}}|{{order.payment2}} on {{order.payment2_date}}|{{order.payment3}} on {{order.payment3_date}}</td>
+                    <td>{{order.transaction}}</td>
+                    <td class="text-center"><s>Update 2nd Payment</s></td>
+                    <td class="text-center"><s>Update 3rd Payment</s></td>
+                    <td><a href="{% url 'anticipate:show_partner_anti_invoice' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
+                  </tr>
+                  {% elif order.payment2 == None and order.payment3 == None %}
+                  <tr class="">
+                    <td>{{order.created}}</td>
+                    <td>{{order.user}}</td>
+                    <td>{{order.order_Id}}</td>
+                    <td>{{order.product.product_Id}}</td>
+                    <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
+                    <td>₦{{order.static_price|intcomma}}</td>
+                    <td>{{order.quantity}}</td>
+                    <td>₦{{order.static_total_cost|intcomma}}</td>
+                    <td>{{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</td>
+                    <td>{{order.payment_choice}}</td>
+                    <td>{{order.payment_ref}}</td>
+                    <td>{{order.payment1|intcomma}} on {{order.payment1_date}}|{{order.payment2}} on {{order.payment2_date}}|{{order.payment3}} on {{order.payment3_date}}</td>
+                    <td>{{order.transaction}}</td>
+                    <td class="text-center"><a href="update/{{order.id}}"><button type="button" class="btn btn-sm btn-dark-green"><strong> <i class="fa fa-edit fa-1x text-white"></i> Update 2nd Payment</strong></button></a></td>
+                    <td class="text-center"><a href="payment-update/{{order.id}}"><button type="button" class="btn btn-sm btn-dark-green"><strong> <i class="fa fa-edit fa-1x text-white"></i> Update 3rd Payment</strong></button></a></td>
+                    <td><a href="{% url 'anticipate:show_partner_anti_invoice' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
+                  </tr>
+                  {% endif %}
+                  {% endfor %}
+                </tbody>
+              </table>
+              <nav aria-label="...">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
+                  {% if antiorders_page_obj.has_previous %}
+                    <li class="page-item"><a class="text-dark-green page-link" href="{% my_url antiorders_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{antiorders_page_obj.previous_page_number}}</a></li>
+                  {% endif %}
+                  <li class="page-item active" aria-current="page"><a class="bg-dark-green page-link" href="{% my_url antiorders_page_obj.number 'page' request.GET.urlencode %}">{{antiorders_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+                  {% if antiorders_page_obj.has_next %}
+                    <li class="page-item"><a class="text-dark-green page-link" href="{% my_url antiorders_page_obj.next_page_number 'page' request.GET.urlencode %}">{{antiorders_page_obj.next_page_number}}</a></li>
+                  {% endif %}
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url antiorders_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endblock content%}

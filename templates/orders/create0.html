@@ -1,0 +1,63 @@
+{% extends 'board.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% load humanize %}
+{% block title %}
+  <title>Complete Order</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+    <div class="form-group col-md-12 mt-2">
+      <div class="card col-md-12">
+        <form method="post" class="form-group text-dark-green" enctype="multipart/form-data">
+          <div class="card-header bg-white">
+            <h4 class="text-cylinder">
+              <i class="fas fa-list"></i> Your Order Summary</h4>
+          </div>
+          {% csrf_token %}
+
+          <div class="">
+              <h3></h3>
+              <ul class="text-cylinder">
+                  {% for item in cart %}
+                    <div class="row">
+                      <div class="col-md-5">
+                        <strong class="text-dark-green">From Outlet:</strong> <li>{{item.outlet_o}}</li>
+                        <strong class="text-dark-green">To Address:</strong> <li>{{item.address_o}}</li>
+                        <br>
+                        <br>
+                      </div>
+                      <div class="col-md-5">
+                        <li>{{ item.quantity }} x {{ item.product.category.type }} = <span>₦{{ item.total_price|intcomma }}</span></li>
+                        <br>
+                      </div>
+                    </div>
+                  {% endfor %}
+                  <div class="row">
+                    <div class="col-md-5">
+
+                    </div>
+                    <div class="col-md-5">
+                      <p class="text-dark-green"><strong>Total: ₦{{ cart.get_total_price|intcomma }}</strong></p>
+                    </div>
+                  </div>
+
+              </ul>
+
+          </div>
+          {{form.media}}
+          {{form|crispy}}
+          <input type="submit" class="form-group col-md-12" value="Complete Order">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content%}

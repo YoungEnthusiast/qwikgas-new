@@ -1,0 +1,135 @@
+{% extends 'board.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% load humanize %}
+{% block title %}
+  <title>Add to Cart</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+
+<script type="text/javascript">
+        $(document).on("google_point_map_widget:marker_create", function (e, lat, lng, locationInputElem, mapWrapID) {
+            console.log(place);
+            console.log(locationInputElem); // django widget textarea widget (hidden)
+            console.log(lat, lng); // created marker coordinates
+            console.log(mapWrapID); // map widget wrapper element ID
+        });
+
+        $(document).on("google_point_map_widget:marker_change", function (e, lat, lng, locationInputElem, mapWrapID) {
+            console.log(place);
+            console.log(locationInputElem); // django widget textarea widget (hidden)
+            console.log(lat, lng);  // changed marker coordinates
+            console.log(mapWrapID); // map widget wrapper element ID
+        });
+
+        $(document).on("google_point_map_widget:marker_delete", function (e, lat, lng, locationInputElem, mapWrapID) {
+            console.log(locationInputElem); // django widget textarea widget (hidden)
+            console.log(lat, lng);  // deleted marker coordinates
+            console.log(mapWrapID); // map widget wrapper element ID
+        })
+    </script>
+
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+    <div class="row">
+      <div class="col-md-12 col-xl-3 col-lg-4">
+
+    	</div>
+      <form id="form" action="{% url "cart:cart_add" product.id %}" method="post">
+        {% csrf_token %}
+        {{cart_product_form.media}}
+        {{cart_product_form.as_p}}
+      </form>
+    	<div class="col-md-12 col-xl-6 col-lg-4">
+    		<div class="card">
+    			<div class="text-center card-header bg-cylinder">
+    				<h4 class="text-dark-green"><strong class="text-white">Please add to cart</strong></h4>
+
+    			</div>
+    			<div class="card-body">
+            <div class="product-detail text-center ml-2 mt-2">
+              <img class="logo" src="{% if product.category.image %}{{ product.category.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+
+              <br>
+              <h3 class="text-dark-green">₦{{ product.category.price|intcomma }}</h3>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-title text-dark-green">Please supply all fields</div>
+                    </div>
+                    <div class="card-body">
+                      <form id="form" action="{% url "cart:cart_add" product.id %}" method="post">
+                        {% csrf_token %}
+                        {{cart_product_form.media}}
+                        {{cart_product_form.as_p}}
+                        <div class="list-group">
+                          <div class="list-group-item py-3" data-acc-step>
+                            <h5 class="mb-0 text-dark-green" data-acc-title>Quantity</h5>
+                            <div data-acc-content>
+                              <div class="my-3">
+                                <div class="form-group form-row">
+                                  <div class="col-sm-12">
+                                  {% render_field cart_product_form.quantity %}
+                                  </div>
+                                </div>
+                                <div class="form-group form-row">
+                                  <div class="col-sm-6">
+                                  </div>
+                                  <div class="col-sm-6">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="list-group-item py-3" data-acc-step>
+                            <h5 class="mb-0 text-dark-green" data-acc-title>Outlet</h5>
+                            <div data-acc-content>
+                              <div class="my-3">
+                                <div class="form-group">
+                                  {% render_field cart_product_form.outlet_o %}
+                                </div>
+                                <div class="form-group">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="list-group-item py-3" data-acc-step>
+                            <h5 class="mb-0 text-dark-green" data-acc-title>Address</h5>
+                            <div data-acc-content>
+                              <div class="my-3">
+                                <div class="form-group form-row">
+                                  <div class="col-sm-12">
+                                    {% render_field cart_product_form.address_o %}
+                                  </div>
+                                </div>
+                                <div class="form-group form-row">
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+
+            </div>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="col-md-12 col-xl-3 col-lg-4">
+
+    	</div>
+    </div>
+  </div>
+</div>
+{% endblock content%}

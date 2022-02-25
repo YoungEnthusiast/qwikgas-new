@@ -1,0 +1,201 @@
+{% extends 'board_admin.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>All Users</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+		<!--Page Header-->
+		<div class="page-header">
+			<h4 class="page-title"><i class="fa fa-users text-dark-green mr-2 fa-1x"></i>Welcome to all users' page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+			<ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="{% url 'qwikadmin_board' %}"><strong>Dashboard</strong></a></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>Users</strong></li>
+			</ol>
+		</div>
+		<!--page header-->
+
+    <div class="row">
+      <div class="col-md-12 col-lg-6 col-xl-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{cust}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_cust}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500"></h6>
+                <h1 class="counter num-font mb-0 text-cylinder">{{qwikcustomers}}</h1>
+                <p class="text-muted mb-0">QwikCustomers</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 col-lg-6 col-xl-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{vend}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_vend}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500"></h6>
+                <h1 class="counter num-font mb-0 text-cylinder">{{qwikvendors}}</h1>
+                <p class="text-muted mb-0">QwikVendors</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 col-lg-6 col-xl-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{part}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_part}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500"></h6>
+                <h1 class="counter num-font mb-0 text-cylinder">{{qwikpartners}}</h1>
+                <p class="text-muted mb-0">QwikPartners</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 col-lg-6 col-xl-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{adm}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_adm}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500"></h6>
+                <h1 class="counter num-font mb-0 text-cylinder">{{qwikadmins}}</h1>
+                <p class="text-muted mb-0">QwikAdmins</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card">
+          <div class="card-header bg-lemon-green">
+            <div class="card-title text-dark-green">Registered Users</div>
+          </div>
+          <br>
+          <div class="text-center">
+            <h2 class="form-group text-dark-green">Filter By</h2>
+          </div>
+
+          <div class="col-md-12">
+            <div class="box-element bg-dark-green" id="form-wrapper">
+              <form method="get" class="form-inline text-white">
+                {% for field in filtered_people.form %}
+                  <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
+                {% endfor %}
+                <input type="submit" class="btn btn-primary" value="Go">
+              </form>
+            </div>
+          </div>
+
+
+          <div class="card-body">
+            <div class="text-center">
+              {% if total_people > 1 %}
+                <div class="form-group col-md-12">
+                  <h3 class="form-group text-dark-green">Total People: {{total_people}}</h3>
+                </div>
+                {% else %}
+                <div class="form-group col-md-12">
+                  <h3 class="form-group text-dark-green">Total Person: {{total_people}}</h3>
+                </div>
+                {% endif %}
+            </div>
+            <a href="{% url 'qwikadmin_account' %}"><button type="button" class="btn btn-dark-green text-white col-md-12"><strong><i class="fa fa-user-plus fa-1x mr-1 text-white"></i>Add User</strong></button></a>
+
+            <div class="table-responsive ">
+              <table class="users table card-table border table-striped table-vcenter text-nowrap mb-0">
+                <thead class="bg-cylinder text-white">
+                  <tr>
+                    <th>DATE</th>
+                    <th>USER</th>
+                    <th>USER TYPE</th>
+                    <th>NUMBER</th>
+                    <th>OUTLET</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody class="text-dark table-success">
+                {% for person in people_page_obj %}
+                  <tr class="">
+                    <td>{{person.created}}</td>
+                    <td>{{person.first_name}} {{person.last_name}}</td>
+                    <td>{{person.type}}</td>
+                    <td>{{person.phone_number}}</td>
+                    <td>{{person.outlet}}</td>
+                    <td class="text-center"><a href="user/update/{{person.id}}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-eye fa-1x text-white"></i> View</strong><strong> <i class="fa fa-edit fa-1x text-white"></i> Edit</strong></button></a></td>
+                    <td class="text-center"><a href="user/delete/{{person.id}}"><button type="button" class="btn btn-sm btn-danger text-white"><strong><i class="fa fa-trash fa-1x text-white"></i> Delete</strong></button></a></td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+              <nav aria-label="...">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
+                  {% if people_page_obj.has_previous %}
+                    <li class="page-item"><a class="text-dark-green page-link" href="{% my_url people_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{people_page_obj.previous_page_number}}</a></li>
+                  {% endif %}
+                  <li class="page-item active" aria-current="page"><a class="bg-dark-green page-link" href="{% my_url people_page_obj.number 'page' request.GET.urlencode %}">{{people_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+                  {% if people_page_obj.has_next %}
+                    <li class="page-item"><a class="text-dark-green page-link" href="{% my_url people_page_obj.next_page_number 'page' request.GET.urlencode %}">{{people_page_obj.next_page_number}}</a></li>
+                  {% endif %}
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url people_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock content%}

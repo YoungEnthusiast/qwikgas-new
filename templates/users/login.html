@@ -1,0 +1,83 @@
+{% extends 'base_board.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+  <title>Login</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+<div class="row">
+
+  <div class="col-md-12">
+    {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <h5>{{message}}</h5>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+  {% endif %}
+    <div class="page custom-pages">
+			<div class="container">
+				<div class="row">
+					<div class="col  mx-auto">
+						<div class="text-center mb-6">
+							<img src="../assets/images/brand/logo.png" class="" alt="">
+						</div>
+						<div class="row justify-content-center">
+							<div class="col-md-10">
+
+								<div class="card-group mb-0">
+									<div class="card p-4">
+										<div class="card-body">
+											<p>Please enter the username and password registered on your account</p>
+                      <form method="post" class="form-group col-md-12 text-dark-green">
+											<div class="form-group">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+
+											</div>
+											<div class="checkbox text-left mb-2">
+
+											</div>
+											<div class="text-left">
+												<input type="submit"  class="form-group btn btn-cylinder" value="Sign In">
+											</div>
+                      </form>
+                      <div class="text-left text-muted mt-3">
+												Don't have account yet? <a href="{% url 'account' %}"><span class="text-cylinder">Sign up</span></a>
+											</div>
+											<div class="text-left text-muted mt-3">
+												<i class="fas fa-lock"></i> Forgot Password?<a href="{% url 'reset_password' %}"><span class="text-cylinder"> Reset here</span></a>
+											</div>
+
+										</div>
+									</div>
+									<div class="card  py-5 d-md-down-none">
+										<div class="card-body align-items-center">
+												<h2 class="text-center">
+                          <img  src="{% static 'img/packages.png' %}" alt="Packages Logo" style="width:300px;height:300px;">
+                        </h2>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+    </div>
+  </div>
+<br>
+<br>
+{% endblock content%}

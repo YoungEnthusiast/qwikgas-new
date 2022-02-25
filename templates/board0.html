@@ -1,0 +1,388 @@
+{% load static %}
+{% load humanize %}
+<!doctype html>
+<html lang="en" dir="ltr">
+	<head>
+		<!-- Meta data -->
+		<meta charset="UTF-8">
+
+		<meta content="" name="">
+		<meta content="" name="author">
+		<meta name="keywords" content=""/>
+
+		<!-- Title -->
+		<title></title>
+		<!--Bootstrap.min css-->
+		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+		<!--Font Awesome-->
+		<link rel="stylesheet" href="{% static 'css/all.css' %}">
+
+		<!-- Dashboard Css -->
+		<link rel="stylesheet" href="{% static 'css/style.css' %}">
+		<link rel="stylesheet" href="{% static 'css/dark-style.css' %}">
+		<link rel="stylesheet" href="{% static 'css/color-styles.css' %}">
+		<link rel="stylesheet" href="{% static 'css/skin-modes.css' %}">
+		<!-- p-scroll bar css-->
+		<link rel="stylesheet" href="{% static 'css/p-scroll.css' %}">
+		<!-- Sidemenu Css -->
+		<link rel="stylesheet" href="{% static 'css/sidemenu-closed.css' %}">
+		<!-- jvectormap CSS -->
+		<link rel="stylesheet" href="{% static 'css/jquery-jvectormap-2.0.2.css' %}">
+		<!---Font icons-->
+		<link rel="stylesheet" href="{% static 'css/plugin.css' %}">
+		<!-- Sidebar css -->
+		<link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+		<link rel="stylesheet" href="{% static 'css/sidebar2.css' %}">
+		<link rel="stylesheet" href="{% static 'css/side-bar.css' %}">
+
+		<!-- COLOR-SKINS -->
+		<link id="theme" rel="stylesheet" type="text/css" media="all" href="{% static 'css/color15.css">
+		<link rel="stylesheet" href="{% static 'css/demo.css' %}">
+		<link rel="stylesheet" href="{% static 'css/mine.css' %}">
+		<link rel="stylesheet" href="{% static 'css/a.css' %}">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="icon" type="image/x-icon" href="{% static 'img/logo.ico' %}" />
+		{% block title %}
+    {% endblock title %}
+
+	</head>
+
+
+	<body class="app sidebar-mini">
+
+		<!-- Global Loader-->
+
+		<div class="page">
+			<div class="page-main">
+				<!-- Navbar-->
+				<header class="app-header header">
+					<!-- Navbar Right Menu-->
+					<div class="container-fluid">
+						<div class="d-flex">
+							<a class="header-brand">
+								<a href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" class="logo2" alt="Qwikgas Logo"> <strong class="text-dark-green"></strong></a>
+							</a>
+
+							<!-- Sidebar toggle button-->
+							<div class="d-flex order-lg-2 ml-auto">
+								<div class="d-sm-flex d-none">
+									<a href="#" class="nav-link icon full-screen-link">
+										<i class="fa fa-object-group fa-2x text-cylinder fullscreen-button"></i>
+									</a>
+								</div>
+								<div class="dropdown d-sm-flex d-none header-message">
+									<a class="nav-link icon" data-toggle="dropdown">
+										<i class="fa fa-envelope text-cylinder fa-2x"></i>
+										<span class=" nav-unread badge badge-dark-green badge-pill">1</span>
+									</a>
+									<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+										<a class="dropdown-item text-center" href="#">1 New Message</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item d-flex pb-3" href="#">
+											<span class="avatar avatar-md brround mr-3 align-self-center cover-image" data-image-src="../assets/images/users/7.jpg"></span>
+											<div>
+												<strong>{{user.first_name}},</strong> Glad you made it here
+												<div class="small text-muted">
+													{{user.created|timesince}} ago
+												</div>
+											</div>
+										</a>
+										<div class="dropdown-divider"></div>
+										<div class="text-center dropdown-btn pb-3">
+											<div class="btn-list">
+												<a href="#" class="btn btn-cylinder btn-sm"><i class="fa fa-plus mr-1"></i>Add New</a>
+												<a href="#" class=" btn btn-cylinder btn-sm"><i class="fa fa-eye mr-1"></i>View All</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="dropdown d-sm-flex d-none header-message">
+									<a class="nav-link icon" data-toggle="dropdown">
+										<i class="fa fa-bell text-cylinder fa-2x"></i>
+										<span class=" nav-unread badge badge-dark-green  badge-pill">1</span>
+									</a>
+									<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+										<a class="dropdown-item text-center" href="#">Notifications</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item d-flex pb-4" href="#">
+											<span class="avatar avatar-md brround mr-3 align-self-center cover-image bg-cylinder"><i class="fa fa-user"></i>
+											</span>
+											<div>
+												<span class="font-weight-bold"> User account was Updated</span>
+												<div class="small text-muted d-flex">
+													1 minute ago
+													<div class="ml-auto">
+													<span class="badge badge-success">New</span>
+													</div>
+												</div>
+												<div class="progress progress-xs mt-1">
+													<div class="progress-bar bg-cylinder w-70"></div>
+												</div>
+											</div>
+										</a>
+										<div class="dropdown-divider"></div>
+										<div class="text-center dropdown-btn pb-3">
+											<div class="btn-list">
+												<a href="#" class="btn btn-cylinder btn-sm"><i class="fa fa-plus mr-1"></i>Add New</a>
+												<a href="#" class=" btn btn-cylinder btn-sm"><i class="fa fa-eye mr-1"></i>View All</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="dropdown d-sm-flex d-none header-message">
+									{% with total_items=cart|length %}
+				          {% if cart|length > 0 %}
+									<a class="nav-link icon" href="{% url "cart:cart_detail" %}">
+										<img src="{% static 'img/12kg.png' %}" class="logo4" alt="3Kg Cylinder Logo">
+										<span class=" nav-unread badge badge-dark-green badge-pill">{{ total_items }}</span>
+									</a>
+									{% else %}
+									<a class="nav-link icon">
+										<img src="{% static 'img/12kg.png' %}" class="logo4" alt="3Kg Cylinder Logo">
+										<span class=" nav-unread badge badge-dark-green badge-pill">0</span>
+									</a>
+									{% endif %}
+								 	{% endwith %}
+								</div>
+								<button class="navbar-toggler navresponsive-toggler d-sm-none" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
+									aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+									<span class="navbar-toggler-icon fa fa-th-list text-white"></span>
+								</button>
+								<!--Navbar -->
+								<div class="dropdown">
+									<a class="nav-link pr-0 leading-none d-flex" data-toggle="dropdown" href="#">
+										<span class="avatar avatar-md brround cover-image" data-image-src="../assets/images/users/5.jpg"></span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</header>
+				<div class="mb-1 navbar navbar-expand-lg  responsive-navbar navbar-dark d-sm-none bg-white">
+					<div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+						<div class="d-flex order-lg-2 ml-auto">
+							<div class="d-md-flex">
+								<a href="#" class="nav-link icon full-screen-link text-dark">
+									<i class="fa fa-object-group text-cylinder fa-2x fullscreen-button"></i>
+								</a>
+							</div>
+							<div class="dropdown  d-md-flex header-contact">
+								<a class="nav-link icon text-dark" data-toggle="dropdown">
+									<i class="fa fa-envelope text-cylinder fa-2x"></i>
+									<span class=" nav-unread badge badge-dark-green badge-pill">1</span>
+								</a>
+								<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+									<a class="dropdown-item text-center" href="#">1 New Message</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item d-flex pb-3" href="#">
+										<span class="avatar avatar-md brround mr-3 align-self-center cover-image" data-image-src="../assets/images/users/7.jpg"></span>
+										<div>
+											<strong>{{user.first_name}},</strong> Glad you made it here
+											<div class="small text-muted">
+												1 minute ago
+											</div>
+										</div>
+									</a>
+									<div class="dropdown-divider"></div>
+									<div class="text-center dropdown-btn pb-3">
+										<div class="btn-list">
+											<a href="#" class="btn btn-cylinder btn-sm"><i class="fa fa-plus mr-1"></i>Add New</a>
+											<a href="#" class=" btn btn-cylinder btn-sm"><i class="fa fa-eye mr-1"></i>View All</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="dropdown d-md-flex header-message">
+								<a class="nav-link icon text-dark" data-toggle="dropdown">
+									<i class="fa fa-bell text-cylinder fa-2x"></i>
+									<span class=" nav-unread badge badge-dark-green badge-pill">1</span>
+								</a>
+								<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+									<a class="dropdown-item text-center" href="#">Notifications</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item d-flex pb-4" href="#">
+										<span class="avatar avatar-md brround mr-3 align-self-center cover-image bg-cylinder"><i class="fa fa-user"></i>
+										</span>
+										<div>
+											<span class="font-weight-bold"> User account was Updated</span>
+											<div class="small text-muted d-flex">
+												1 minute ago
+												<div class="ml-auto">
+												<span class="badge badge-success">New</span>
+												</div>
+											</div>
+											<div class="progress progress-xs mt-1">
+												<div class="progress-bar bg-cylinder w-70"></div>
+											</div>
+										</div>
+									</a>
+									<div class="dropdown-divider"></div>
+									<div class="text-center dropdown-btn pb-3">
+										<div class="btn-list">
+											<a href="#" class="btn btn-cylinder btn-sm"><i class="fa fa-plus mr-1"></i>Add New</a>
+											<a href="#" class=" btn btn-cylinder btn-sm"><i class="fa fa-eye mr-1"></i>View All</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="dropdown d-md-flex header-message">
+								{% with total_items=cart|length %}
+								{% if cart|length > 0 %}
+								<a class="nav-link icon" href="{% url "cart:cart_detail" %}">
+									<img src="{% static 'img/12kg.png' %}" class="logo4" alt="3Kg Cylinder Logo">
+									<span class=" nav-unread badge badge-dark-green badge-pill">{{ total_items }}</span>
+								</a>
+								{% else %}
+								<a class="nav-link icon">
+									<img src="{% static 'img/12kg.png' %}" class="logo4" alt="3Kg Cylinder Logo">
+									<span class=" nav-unread badge badge-dark-green badge-pill">0</span>
+								</a>
+								{% endif %}
+								{% endwith %}
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--/.Navbar -->
+
+				<!-- Sidebar menu-->
+				<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+				<aside class="app-sidebar">
+					<div class="app-sidebar__user">
+						<div class="user-body">
+						</div>
+						<div class="user-info">
+							<div class="text-center">
+								<div class="mr-4">
+									<a class="btn fw-500 ms-lg-4" href="{% url 'products:product_list' %}">
+										{% if user.photograph %}
+											<img src="{{ user.photographURL }}" alt="Photograph" class="profile-big">
+										{% else %}
+											<i class="fa fa-user-circle text-lemon-green fa-7x"></i>
+										{% endif %}
+									</a>
+								</div>
+								<h5 class="text-dark mb-1">{{user.first_name}} {{user.last_name}}</h5>
+								<div class="badge bg-lemon-green text-dark-green rounded-pill badge-marketing badge-sm"><strong>{{user.type}}</strong></div>
+							</div>
+						</div>
+						<br>
+					</div>
+					<ul class="side-menu">
+						<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="{% url 'qwikcust_board' %}"><i class="fas fa-chalkboard-teacher fa-1x mr-1"></i></i><span class="side-menu__label"><strong>Dashboard</strong></span></a>
+						</li>
+						<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="{% url 'products:product_list' %}"><i class="fas fa-warehouse fa-1x mr-1"></i></i><span class="side-menu__label"><strong>Products</strong></span></a>
+						</li>
+						<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="{% url 'qwikcust_profile' %}"><i class="fas fa-user fa-1x mr-1"></i><span class="side-menu__label"><strong>My Profile</strong></span></a>
+						</li>
+						<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="{% url 'qwikcust_change_password' %}"><i class="fas fa-key fa-1x mr-1"></i><span class="side-menu__label"><strong>Change Password</strong></span></a>
+						</li>
+						<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="{% url 'orders:orders' %}"><i class="fas fa-spinner fa-1x mr-1"></i><span class="side-menu__label"><strong>Orders</strong></span></a>
+						</li>
+						<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="{% url 'orders:order_items' %}"><i class="fas fa-venus-mars fa-1x mr-1"></i><span class="side-menu__label"><strong>Order Items (New)</strong></span></a>
+						</li>
+						<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="{% url 'orders:order_statuses' %}"><i class="fas fa-clock fa-1x mr-1"></i><span class="side-menu__label"><strong>Order Items Tracking</strong></span></a>
+						</li>
+						<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="{% url 'qwikcust_wallets' %}"><i class="fas fa-wallet fa-1x mr-1"></i><span class="side-menu__label"><strong>Wallet</strong></span></a>
+						</li>
+						<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="{% url 'logout' %}"><i class="fa fa-sign-out-alt fa-1x mr-1"></i><span class="side-menu__label"><strong>Sign out</strong></span></a>
+						</li>
+					</ul>
+				</aside>
+				<!--side-menu-->
+
+				{% block content %}
+
+				{% endblock content %}
+					<!--footer-->
+					<footer class="footer">
+
+							<div class="row">
+								<div class="col-md-2">
+
+								</div>
+								<div class="col-md-8">
+
+									<div class="text-dark">Copyright &copy; <strong class="text-dark-green">QwikGas</strong> <span class="year"></span></div>
+								</div>
+								<div class="col-md-2">
+
+								</div>
+							</div>
+						</div>
+					</footer>
+					<!-- End Footer-->
+				</div>
+			</div>
+		</div>
+
+		<!-- Back to top -->
+		<a href="#top" id="back-to-top"><i class="fas fa-angle-up "></i></a>
+
+		<!-- Dashboard Core -->
+		<!--Jquery js -->
+    <script src="{% static 'js/jquery.js' %}"></script>
+		<!--Jquery.sparkline js-->
+    <script src="{% static 'js/jquery.sparkline.min.js' %}"></script>
+		<!--Jquery.Sparkline js -->
+    <script src="{% static 'js/jquery.sparkline.min0.js' %}"></script>
+		<script src="{% static 'js/selectize.min.js' %}"></script>
+		<script src="{% static 'js/jquery.tablesorter.min.js' %}"></script>
+		<!--Circle-Progress js -->
+    <script src="{% static 'js/circle-progress.min.js' %}"></script>
+		<!--Jquery.rating js -->
+    <script src="{% static 'js/jquery.rating-stars.js' %}"></script>
+		<!--Bootstrap.min js-->
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+		<!-- Side menu js -->
+    <script src="{% static 'js/sidemenu.js' %}"></script>
+		<!-- Sidemenu-responsive-tabs js-->
+    <script src="{% static 'js/sidemenu-responsive-tabs.js' %}"></script>
+    <script src="{% static 'js/left-menu.js' %}"></script>
+		<!-- p-scroll bar Js-->
+    <script src="{% static 'js/p-scroll.js' %}"></script>
+    <script src="{% static 'js/p-scroll-1.js' %}"></script>
+		<!-- Input Mask js -->
+    <script src="{% static 'js/jquery.mask.min.js' %}"></script>
+		<!-- peitychart -->
+    <script src="{% static 'js/jquery.peity.min.js' %}"></script>
+		<!--Jquery.knob js-->
+    <script src="{% static 'js/jquery.knob.js' %}"></script>
+    <script src="{% static 'js/othercharts.js' %}"></script>
+		<script src="{% static 'js/apexcharts.js' %}"></script>
+		<script src="{% static 'js/chart.bundle.js' %}"></script>
+		<!-- Vector Plugin -->
+		<script src="{% static 'js/jquery-jvectormap-2.0.2.min.js' %}"></script>
+			<script src="{% static 'js/jquery-jvectormap-world-mill-en.js' %}"></script>
+			<script src="{% static 'js/gdp-data.js' %}"></script>
+			<script src="{% static 'js/jquery-jvectormap-us-aea-en.js' %}"></script>
+			<script src="{% static 'js/jquery-jvectormap-uk-mill-en.js' %}"></script>
+			<script src="{% static 'js/jquery-jvectormap-au-mill.js' %}"></script>
+			<script src="{% static 'js/jquery-jvectormap-ca-lcc.js' %}"></script>
+		<script src="{% static 'js/jvectormap.js' %}"></script>
+		<!--Counters -->
+    <script src="{% static 'js/counterup.min.js' %}"></script>
+    <script src="{% static 'js/waypoints.min.js' %}"></script>
+		<!-- Sidebar js -->
+    <script src="{% static 'js/sidebar.js' %}"></script>
+		<!--Index js -->
+    <script src="{% static 'js/index5.js' %}"></script>
+		<script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+
+		<!-- custom js -->
+    <script src="{% static 'js/custom.js' %}"></script>
+		<script src="{% static 'js/scripts.js' %}"></script>
+
+	</body>
+</html>

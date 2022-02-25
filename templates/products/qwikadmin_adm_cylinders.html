@@ -1,0 +1,110 @@
+{% extends 'board_admin.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>Cylinders Management</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+		<!--Page Header-->
+		<div class="page-header">
+			<h4 class="page-title"><i class="fa fa-warehouse text-dark-green mr-2 fa-1x"></i>Welcome to cylinders' management page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+			<ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="{% url 'qwikadmin_board' %}"><strong>Dashboard</strong></a></li>
+        <li class="breadcrumb-item"><a href=""><strong>Cylinders</strong></a></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>Cylinder Management</strong></li>
+			</ol>
+		</div>
+		<!--page header-->
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header bg-lemon-green">
+          <div class="card-title text-dark-green">All Cylinders</div>
+        </div>
+        <br>
+        <div class="text-center">
+          <h2 class="form-group text-dark-green">Filter By</h2>
+        </div>
+        <div class="col-md-12">
+          <div class="box-element bg-dark-green" id="form-wrapper">
+            <form method="get" class="form-inline text-white">
+              {% for field in filtered_cylinders.form %}
+                <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
+              {% endfor %}
+              <input type="submit" class="btn btn-primary" value="Go">
+            </form>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="text-center">
+            {% if total_cylinders > 1 %}
+              <div class="form-group col-md-12">
+                <h3 class="form-group text-dark-green">Total: {{total_cylinders}}</h3>
+              </div>
+              {% else %}
+              <div class="form-group col-md-12">
+                <h3 class="form-group text-dark-green">Total: {{total_cylinders}}</h3>
+              </div>
+              {% endif %}
+          </div>
+          <div class="table-responsive ">
+            <table class="users table card-table border table-striped table-vcenter text-nowrap mb-0">
+              <thead class="bg-cylinder text-white">
+                <tr>
+                  <th>DATE ADDED</th>
+                  <th>CYLINDER ID</th>
+                  <th>OUTLET</th>
+                  <th>CUSTOMER</th>
+                  <th>VENDOR'S REMARK</th>
+                  <th>PARTNER'S REMARK</th>
+                  <th>CUSTOMER'S REMARK</th>
+                  <th>ADMIN'S REMARK</th>
+                  <th>LAST UPDATED</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody class="text-dark table-success">
+                {% for product in cylinders_page_obj %}
+                <tr class="">
+                  <td>{{product.created}}</td>
+                  <td>{{product.cylinder}}</td>
+                  <td>{{product.cylinder.outlet}}</td>
+                  <td>{{product.customer}}</td>
+                  <td>{{product.vendor_product_status}}</td>
+                  <td>{{product.partner_product_status}}</td>
+                  <td>{{product.customer_product_status}}</td>
+                  <td>{{product.admin_product_status}}</td>
+                  <td>{{product.updated}}</td>
+                  <td><a href="update/{{product.id}}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-clock mr-1 fa-1x"></i> Update</strong></button></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <nav aria-label="...">
+              <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="text-dark-green page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
+                {% if cylinders_page_obj.has_previous %}
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url cylinders_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{cylinders_page_obj.previous_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item active" aria-current="page"><a class="bg-dark-green page-link" href="{% my_url cylinders_page_obj.number 'page' request.GET.urlencode %}">{{cylinders_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+                {% if cylinders_page_obj.has_next %}
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url cylinders_page_obj.next_page_number 'page' request.GET.urlencode %}">{{cylinders_page_obj.next_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item"><a class="text-dark-green page-link" href="{% my_url cylinders_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content%}

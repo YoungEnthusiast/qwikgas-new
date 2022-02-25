@@ -1,0 +1,60 @@
+{% extends 'board.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>Products' Store</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+		<!--Page Header-->
+		<div class="page-header">
+			<h4 class="page-title"><i class="fa fa-warehouse text-dark-green mr-2 fa-1x"></i>Welcome to the products' store, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+			<ol class="breadcrumb bg-white">
+				<li class="breadcrumb-item"><a href="{% url 'products:product_list' %}"><strong>Home</strong></a></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>Products</strong></li>
+			</ol>
+		</div>
+		<!--page header-->
+
+  <div class="row">
+    <h5 class=" text-dark-green"><strong class="text-dark-green ml-1">Please click on your package and add to cart</strong></h5>
+    {% for product in products %}
+    <div class="col-md-12 col-xl-4 col-lg-4">
+      <div class="card">
+        <div class="text-center card-header bg-white">
+
+        </div>
+
+        <div class="card-body">
+          <div class="text-center">
+              <div class="badge bg-lemon-green text-dark-green rounded-pill badge-marketing badge-sm"><a href="{{ product.get_absolute_url }}">{{product.category.type}}</a></div>
+              <br>
+              <h6 class="text-cylinder"></h6>
+              <a href="{{ product.get_absolute_url }}">
+              <img src="{{product.category.imageURL}}" class="logo9" alt="{{product.category.mass}} Cylinder Logo">
+              </a>
+              <br>
+              <br>
+              <h5 class="text-dark-green">₦{{product.category.price|intcomma}}</h5>
+
+              <div class="text-center">
+                <a class="" href="{{ product.get_absolute_url2 }}"><i class="fas fa-eye text-cylinder fa-2x"></i></a><a class="" href="{{ product.get_absolute_url }}"><i class="fas fa-cart-plus text-cylinder fa-2x"></i></a>
+              </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+
+
+{% endblock content%}

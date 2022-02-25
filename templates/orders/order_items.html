@@ -1,0 +1,111 @@
+{% extends 'board.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>Order Items Management</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+		<!--Page Header-->
+		<div class="page-header">
+			<h4 class="page-title"><i class="fa fa-venus-mars text-dark-green mr-2 fa-1x"></i>Welcome to new orders page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+			<ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="{% url 'qwikcust_board' %}"><strong>Dashboard</strong></a></li>
+        <li class="breadcrumb-item"><a href="{% url 'orders:orders' %}"><strong>Orders</strong></a></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>New Orders</strong></li>
+			</ol>
+		</div>
+		<!--page header-->
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header bg-white">
+          <div class="card-title text-dark-green">All Order Items</div>
+        </div>
+        <br>
+        <div class="text-center">
+          <h2 class="form-group text-dark-green">Filter By</h2>
+        </div>
+
+        <div class="col-md-12">
+          <div class="box-element bg-dark-green" id="form-wrapper">
+            <form method="get" class="form-inline text-white">
+              {% for field in filtered_order_items.form %}
+                <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
+              {% endfor %}
+              <input type="submit" class="btn btn-primary" value="Go">
+            </form>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="text-center">
+            {% if total_order_items > 1 %}
+              <div class="form-group col-md-12">
+                <h3 class="form-group text-dark-green">Total Order Items: {{total_order_items}}</h3>
+              </div>
+              {% else %}
+              <div class="form-group col-md-12">
+                <h3 class="form-group text-dark-green">Total Order Items: {{total_order_items}}</h3>
+              </div>
+              {% endif %}
+          </div>
+          <div class="table-responsive">
+            <table class="table card-table table-vcenter text-nowrap">
+              <thead>
+                <tr>
+                  <th>DATE ORDERED</th>
+                  <th>CUSTOMER</th>
+                  <th>ORDER ID</th>
+                  <th>OUTLET</th>
+                  <th>PRODUCT TYPE</th>
+                  <th>PRICE</th>
+                  <th>QUANTITY</th>
+                  <th>TOTAL COST</th>
+                  <th>PAYMENT STATUS</th>
+                  <th>ORDER STATUS</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in order_items_page_obj %}
+                <tr class="">
+                  <td>{{order.created}}</td>
+                  <td>{{order.order.user.first_name}} {{order.order.user.last_name}}</td>
+                  <td>{{order.order.order_Id}}</td>
+                  <td>{{order.order.outlet}}</td>
+                  <td>{{order.product.category.type}} ({{order.product.category.mass}})</td>
+                  <td>{{order.price|intcomma}}</td>
+                  <td>{{order.quantity}}</td>
+                  <td>{{order.get_cost|intcomma}}</td>
+                  <td>{{order.order.payment_status}}</td>
+                  <td>{{order.order_item_status}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <nav aria-label="...">
+              <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="text-dark-green page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
+                {% if order_items_page_obj.has_previous %}
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url order_items_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{order_items_page_obj.previous_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item active" aria-current="page"><a class="bg-dark-green page-link" href="{% my_url order_items_page_obj.number 'page' request.GET.urlencode %}">{{order_items_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+                {% if order_items_page_obj.has_next %}
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url order_items_page_obj.next_page_number 'page' request.GET.urlencode %}">{{order_items_page_obj.next_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item"><a class="text-dark-green page-link" href="{% my_url order_items_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content%}
