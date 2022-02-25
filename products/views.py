@@ -154,10 +154,36 @@ def showQwikPartnerCylinders(request):
 @login_required
 @permission_required('users.view_partner')
 def showQwikPartnerCylindersReceivedEmpty(request):
+    cylinders = Cylinder.objects.all().count()
+    received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer").count()
+    returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Returned Empty to QwikLet").count()
+    dispatched_to_plants = Cylinder.objects.filter(partner_product_status="Dispatched to Plant").count()
+    delivered_filled_to_qwiklets = Cylinder.objects.filter(partner_product_status="Delivered Filled to QwikLet").count()
+    dispatched_filled_to_qwikcustomers = Cylinder.objects.filter(partner_product_status="Dispatched Filled to QwikCustomer").count()
+    delivered_to_qwikcustomers = Cylinder.objects.filter(partner_product_status="Delivered to QwikCustomer").count()
+    returned_filled_to_qwiklets = Cylinder.objects.filter(partner_product_status="Returned Filled to QwikLet").count()
+
+    perc_received_empty_from_qwikcustomers = round((received_empty_from_qwikcustomers/cylinders)*100,1)
+    perc_returned_empty_to_qwiklets = round((returned_empty_to_qwiklets/cylinders)*100,1)
+    perc_dispatched_to_plants = round((dispatched_to_plants/cylinders)*100,1)
+    perc_delivered_filled_to_qwiklets = round((delivered_filled_to_qwiklets/cylinders)*100,1)
+    perc_dispatched_filled_to_qwikcustomers = round((dispatched_filled_to_qwikcustomers/cylinders)*100,1)
+    perc_delivered_to_qwikcustomers = round((delivered_to_qwikcustomers/cylinders)*100,1)
+    perc_returned_filled_to_qwiklets = round((returned_filled_to_qwiklets/cylinders)*100,1)
+
+    received_empty_from_qwikcustomer = round(perc_received_empty_from_qwikcustomers/100,2)
+    returned_empty_to_qwiklet = round(perc_returned_empty_to_qwiklets/100,2)
+    dispatched_to_plant = round(perc_dispatched_to_plants/100,2)
+    delivered_filled_to_qwiklet = round(perc_delivered_filled_to_qwiklets/100,2)
+    dispatched_filled_to_qwikcustomer = round(perc_dispatched_filled_to_qwikcustomers/100,2)
+    delivered_to_qwikcustomer = round(perc_delivered_to_qwikcustomers/100,2)
+    returned_filled_to_qwiklet = round(perc_returned_filled_to_qwiklets/100,2)
+
     context = {}
     filtered_cylinders = CylinderFilter(
         request.GET,
-        queryset = Cylinder.objects.filter(cylinder__outlet__partner=request.user, partner_product_status="Received Empty from QwikCustomer")
+        queryset = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer")
+        # queryset = Cylinder.objects.filter(cylinder__outlet__partner=request.user, partner_product_status="Received Empty from QwikCustomer")
     )
     context['filtered_cylinders'] = filtered_cylinders
     paginated_filtered_cylinders = Paginator(filtered_cylinders.qs, 10)
@@ -166,7 +192,106 @@ def showQwikPartnerCylindersReceivedEmpty(request):
     context['cylinders_page_obj'] = cylinders_page_obj
     total_cylinders = filtered_cylinders.qs.count()
     context['total_cylinders'] = total_cylinders
+
+    context['received_empty_from_qwikcustomers'] = received_empty_from_qwikcustomers
+    context['returned_empty_to_qwiklets'] = returned_empty_to_qwiklets
+    context['dispatched_to_plants'] = dispatched_to_plants
+    context['delivered_filled_to_qwiklets'] = delivered_filled_to_qwiklets
+    context['dispatched_filled_to_qwikcustomers'] = dispatched_filled_to_qwikcustomers
+    context['delivered_to_qwikcustomers'] = delivered_to_qwikcustomers
+    context['returned_filled_to_qwiklets'] = returned_filled_to_qwiklets
+
+    context['perc_received_empty_from_qwikcustomers'] = perc_received_empty_from_qwikcustomers
+    context['perc_returned_empty_to_qwiklets'] = perc_returned_empty_to_qwiklets
+    context['perc_dispatched_to_plants'] = perc_dispatched_to_plants
+    context['perc_delivered_filled_to_qwiklets'] = perc_delivered_filled_to_qwiklets
+    context['perc_dispatched_filled_to_qwikcustomers'] = perc_dispatched_filled_to_qwikcustomers
+    context['perc_delivered_to_qwikcustomers'] = perc_delivered_to_qwikcustomers
+    context['perc_returned_filled_to_qwiklets'] = perc_returned_filled_to_qwiklets
+
+    context['received_empty_from_qwikcustomer'] = received_empty_from_qwikcustomer
+    context['returned_empty_to_qwiklet'] = returned_empty_to_qwiklet
+    context['dispatched_to_plant'] = dispatched_to_plant
+    context['delivered_filled_to_qwiklet'] = delivered_filled_to_qwiklet
+    context['dispatched_filled_to_qwikcustomer'] = dispatched_filled_to_qwikcustomer
+    context['delivered_to_qwikcustomer'] = delivered_to_qwikcustomer
+    context['returned_filled_to_qwiklet'] = returned_filled_to_qwiklet
+
+    form = CylinderFormPartner()
+    if request.method == 'POST':
+        form = CylinderFormPartner(request.POST, request.FILES, None)
+        if form.is_valid():
+            cylinder = form.cleaned_data.get('cylinder')
+            try:
+                product = Product.objects.filter(product_Id=cylinder)[0]
+                category = product.category.type
+            except:
+                category = "None"
+            form.save(commit=False).partner_product_status = "Received Empty from QwikCustomer"
+            form.save(commit=False).category = category
+            form.save()
+            messages.success(request, "The cylinder stage has been added successfully")
+            return redirect('products:qwikpartner_cylinders_received_empty')
+        else:
+            messages.error(request, "Please review form input fields below")
+    context['form'] = form
     return render(request, 'products/qwikpartner_cylinders_received_empty.html', context=context)
+
+@login_required
+@permission_required('users.view_partner')
+def showQwikCustomerCylindersReturnedEmpty(request):
+    cylinders = Cylinder.objects.all().count()
+    returned_empty_to_qwikpartners = Cylinder.objects.filter(customer_product_status="Returned Empty to QwikPartner").count()
+    received_filleds = Cylinder.objects.filter(customer_product_status="Received Filled").count()
+
+    perc_returned_empty_to_qwikpartners = round((returned_empty_to_qwikpartners/cylinders)*100,1)
+    perc_received_filleds = round((received_filleds/cylinders)*100,1)
+
+    returned_empty_to_qwikpartner = round(perc_received_empty_from_qwikcustomers/100,2)
+    received_filled = round(perc_received_filleds/100,2)
+
+    context = {}
+    filtered_cylinders = CylinderFilter(
+        request.GET,
+        queryset = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer")
+        # queryset = Cylinder.objects.filter(cylinder__outlet__partner=request.user, partner_product_status="Received Empty from QwikCustomer")
+    )
+    context['filtered_cylinders'] = filtered_cylinders
+    paginated_filtered_cylinders = Paginator(filtered_cylinders.qs, 10)
+    page_number = request.GET.get('page')
+    cylinders_page_obj = paginated_filtered_cylinders.get_page(page_number)
+    context['cylinders_page_obj'] = cylinders_page_obj
+    total_cylinders = filtered_cylinders.qs.count()
+    context['total_cylinders'] = total_cylinders
+
+    context['received_empty_from_qwikcustomers'] = received_empty_from_qwikcustomers
+    context['returned_empty_to_qwiklets'] = returned_empty_to_qwiklets
+
+    context['perc_received_empty_from_qwikcustomers'] = perc_received_empty_from_qwikcustomers
+    context['perc_returned_empty_to_qwiklets'] = perc_returned_empty_to_qwiklets
+
+    context['received_empty_from_qwikcustomer'] = received_empty_from_qwikcustomer
+    context['returned_empty_to_qwiklet'] = returned_empty_to_qwiklet
+
+    form = CylinderFormPartner()
+    if request.method == 'POST':
+        form = CylinderFormPartner(request.POST, request.FILES, None)
+        if form.is_valid():
+            cylinder = form.cleaned_data.get('cylinder')
+            try:
+                product = Product.objects.filter(product_Id=cylinder)[0]
+                category = product.category.type
+            except:
+                category = "None"
+            form.save(commit=False).partner_product_status = "Received Empty from QwikCustomer"
+            form.save(commit=False).category = category
+            form.save()
+            messages.success(request, "The cylinder stage has been added successfully")
+            return redirect('products:qwikpartner_cylinders_received_empty')
+        else:
+            messages.error(request, "Please review form input fields below")
+    context['form'] = form
+    return render(request, 'products/qwikcustomer_cylinders_returned_empty.html', context=context)
 
 @login_required
 @permission_required('users.view_admin')
@@ -277,20 +402,6 @@ def addQwikVendorCylinder(request):
         else:
             messages.error(request, "Please review form input fields below")
     return render(request, 'products/qwikvendor_cylinder.html', {'form': form})
-
-@login_required
-@permission_required('users.view_partner')
-def addQwikPartnerCylinder(request):
-    form = CylinderFormPartner()
-    if request.method == 'POST':
-        form = CylinderFormPartner(request.POST, request.FILES, None)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "The cylinder has been added successfully")
-            return redirect('products:qwikpartner_cylinders_received_empty')
-        else:
-            messages.error(request, "Please review form input fields below")
-    return render(request, 'products/qwikpartner_cylinder.html', {'form': form})
 
 @login_required
 @permission_required('users.view_partner')

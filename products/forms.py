@@ -11,9 +11,11 @@ class CylinderFormVendor(forms.ModelForm):
 
 class CylinderFormPartner(forms.ModelForm):
     customer = forms.ModelChoiceField(queryset=Person.objects.filter(type="QwikCustomer"))
+    # cylinder = forms.ModelChoiceField(queryset=Cylinder.objects.filter(partner_product_status="Delivered to QwikCustomer"))
+
     class Meta:
         model = Cylinder
-        fields = ['cylinder', 'customer', 'partner_product_status']
+        fields = ['customer', 'cylinder']
 
 class CylinderFormCustomerUp(forms.ModelForm):
     class Meta:

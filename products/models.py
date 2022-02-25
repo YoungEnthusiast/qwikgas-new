@@ -37,7 +37,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     VENDOR_CHOICES = [
-        ('Dispatched Empty to Plant','Dispatched Empty to Plant'),
+        ('Dispatched to Plant','Dispatched to Plant'),
         ('Returned Empty to QwikLet', 'Returned Empty to QwikLet'),
         ('Delivered Filled to QwikLet', 'Delivered Filled to QwikLet'),
         ('Released Filled to QwikPartner', 'Released Filled to QwikPartner'),
@@ -55,9 +55,9 @@ class Product(models.Model):
         ('Received Empty from QwikCustomer', 'Received Empty from QwikCustomer'),
         ('Delivered Filled to QwikLet', 'Delivered Filled to QwikLet'),
         ('Dispatched Filled to QwikCustomer', 'Dispatched Filled to QwikCustomer'),
-        ('Delivered Filled to QwikCustomer', 'Delivered Filled to QwikCustomer'),
+        ('Delivered to QwikCustomer', 'Delivered to QwikCustomer'),
         ('Returned Filled to QwikLet', 'Returned Filled to QwikLet'),
-        ('Dispatched Empty to Plant', 'Dispatched Empty to Plant'),
+        ('Dispatched to Plant', 'Dispatched to Plant'),
         ('Delivered Empty to Plant', 'Delivered Empty to Plant'),
 
         ('Returned Empty','Returned Empty'),
@@ -71,10 +71,10 @@ class Product(models.Model):
     ADMIN_CHOICES = [
         ('Received Empty from QwikCustomer', 'Received Empty from QwikCustomer'),
         ('Returned Empty to QwikLet','Returned Empty to QwikLet'),
-        ('Dispatched Empty to Plant', 'Dispatched Empty to Plant'),
+        ('Dispatched to Plant', 'Dispatched to Plant'),
         ('Delivered Filled to QwikLet', 'Delivered Filled to QwikLet'),
         ('Dispatched Filled to QwikCustomer', 'Dispatched Filled to QwikCustomer'),
-        ('Delivered Filled to QwikCustomer', 'Delivered Filled to QwikCustomer'),
+        ('Delivered to QwikCustomer', 'Delivered to QwikCustomer'),
         ('Returned Filled to QwikLet', 'Returned Filled to QwikLet'),
     ]
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='products_category', verbose_name="Product")
@@ -112,7 +112,7 @@ class Product(models.Model):
 
 class Cylinder(models.Model):
     VENDOR_CHOICES = [
-        ('Dispatched Empty to Plant','Dispatched Empty to Plant'),
+        ('Dispatched to Plant','Dispatched to Plant'),
         ('Returned Empty to QwikLet', 'Returned Empty to QwikLet'),
         ('Delivered Filled to QwikLet', 'Delivered Filled to QwikLet'),
         ('Released Filled to QwikPartner', 'Released Filled to QwikPartner'),
@@ -121,40 +121,42 @@ class Cylinder(models.Model):
         ('Delivered to QwikCustomer', 'Delivered to QwikCustomer'),
         ('Agree', 'Agree'),
         ('Disagree', 'Disagree'),
-
     ]
     PARTNER_CHOICES = [
-        ('Returned Empty to QwikLet','Returned Empty to QwikLet'),
         ('Received Empty from QwikCustomer', 'Received Empty from QwikCustomer'),
+        ('Returned Empty to QwikLet','Returned Empty to QwikLet'),
+        ('Dispatched to Plant', 'Dispatched to Plant'),
         ('Delivered Filled to QwikLet', 'Delivered Filled to QwikLet'),
         ('Dispatched Filled to QwikCustomer', 'Dispatched Filled to QwikCustomer'),
-        ('Delivered Filled to QwikCustomer', 'Delivered Filled to QwikCustomer'),
+        ('Delivered to QwikCustomer', 'Delivered to QwikCustomer'),
         ('Returned Filled to QwikLet', 'Returned Filled to QwikLet'),
-        ('Dispatched Empty to Plant', 'Dispatched Empty to Plant'),
-        ('Delivered Empty to Plant', 'Delivered Empty to Plant'),
-        ('Agree', 'Agree'),
-        ('Disagree', 'Disagree'),
     ]
+    PARTNER_CONFIRMS = [
+        ('Accept', 'Accept'),
+        ('Decline', 'Decline'),
+    ]
+
     CUSTOMER_CHOICES = [
         ('Returned Empty to QwikPartner','Returned Empty to QwikPartner'),
         ('Received Filled', 'Received Filled'),
-        ('Agree', 'Agree'),
-        ('Disagree', 'Disagree'),
     ]
     ADMIN_CHOICES = [
         ('Received Empty from QwikCustomer', 'Received Empty from QwikCustomer'),
         ('Returned Empty to QwikLet','Returned Empty to QwikLet'),
-        ('Dispatched Empty to Plant', 'Dispatched Empty to Plant'),
+        ('Dispatched to Plant', 'Dispatched to Plant'),
         ('Delivered Filled to QwikLet', 'Delivered Filled to QwikLet'),
         ('Dispatched Filled to QwikCustomer', 'Dispatched Filled to QwikCustomer'),
-        ('Delivered Filled to QwikCustomer', 'Delivered Filled to QwikCustomer'),
+        ('Delivered to QwikCustomer', 'Delivered to QwikCustomer'),
         ('Returned Filled to QwikLet', 'Returned Filled to QwikLet'),
     ]
-    cylinder = models.ForeignKey('products.Product', on_delete=models.SET_NULL, null=True, verbose_name="Cylinder Id")
+    cylinder = models.CharField(max_length=30, null=True, verbose_name="Cylinder Id")
+    category = models.CharField(max_length=12, null=True, verbose_name="")
+    # cylinder = models.ForeignKey('products.Product', on_delete=models.SET_NULL, null=True, verbose_name="Cylinder Id")
     customer = models.ForeignKey('users.Person', null=True, blank=True, on_delete=models.SET_NULL)
     vendor_product_status = models.CharField(max_length=30, choices=VENDOR_CHOICES, null=True, verbose_name="QwikVendor's Remark")
     vendor_product = models.CharField(max_length=20, null=True, blank=True)
     partner_product_status = models.CharField(max_length=35, choices=PARTNER_CHOICES, blank=True, null=True, verbose_name="QwikPartner's Remark")
+    partner_product_confirm = models.CharField(max_length=35, choices=PARTNER_CONFIRMS, blank=True, null=True, verbose_name="QwikPartner's Confirmation")
     partner_product = models.CharField(max_length=20, null=True, blank=True)
     customer_product_status = models.CharField(max_length=35, choices=CUSTOMER_CHOICES, blank=True, null=True, verbose_name="QwikCustomer's Remark")
     customer_product = models.CharField(max_length=20, null=True, blank=True)
@@ -168,6 +170,6 @@ class Cylinder(models.Model):
         index_together = (('id',))
     def __str__(self):
         try:
-            return str(self.product_Id) + " - " + str(self.partner_product_status)
+            return str(self.cylinder)
         except:
             return str(self.id)
