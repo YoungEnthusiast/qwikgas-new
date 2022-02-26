@@ -31,9 +31,11 @@
 		<link rel="stylesheet" href="{% static 'css/plugin.css' %}">
 		<!-- Sidebar css -->
 		<link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+		<link rel="stylesheet" href="{% static 'css/sidebar-old.css' %}">
 		<link rel="stylesheet" href="{% static 'css/sidebar2.css' %}">
-		<link rel="stylesheet" href="{% static 'css/side-bar.css' %}">
 
+		<link rel="stylesheet" href="{% static 'css/side-bar.css' %}">
+		<link rel="stylesheet" href="{% static 'css/sidemenu-responsive-tabs.css' %}">
 		<!-- COLOR-SKINS -->
 		<link id="theme" rel="stylesheet" type="text/css" media="all" href="{% static 'css/color15.css">
 		<link rel="stylesheet" href="{% static 'css/demo.css' %}">
@@ -234,10 +236,14 @@
 							<a class="side-menu__item" data-toggle="slide" href="{% url 'products:qwikadmin_products' %}"><i class="fas fa-spinner fa-1x mr-1"></i><span class="side-menu__label"><strong>Products</strong></span></a>
 						</li>
 						<li class="slide">
-							<a class="side-menu__item" data-toggle="slide" href="{% url 'products:qwikadmin_adm_cylinders' %}"><i class="fa fa-undo fa-1x mr-1"></i><span class="side-menu__label"><strong>Cylinders' Management</strong></span></a>
-						</li>
-						<li class="slide">
-							<a class="side-menu__item" data-toggle="slide" href="{% url 'products:qwikadmin_cylinders' %}"><i class="fas fa-warehouse fa-1x mr-1"></i><span class="side-menu__label"><strong>Cylinders Inventory</strong></span></a>
+							<a class="side-menu__item" data-toggle="slide" href="#"><i class="fa fa-undo fa-1x mr-1"></i><span class="side-menu__label"><strong>Cylinders Management</strong></span><i class="angle fas fa-angle-right"></i></a>
+							<ul class="slide-menu">
+								<li><a class="slide-item" href="{% url 'products:qwikadmin_cylinders_received_empty' %}">Received Empty from Customers</a></li>
+								<li><a class="slide-item" href="">Returned Empty to QwikLet</a></li>
+								<li><a class="slide-item" href="index3.html">Dashboard 03</a></li>
+								<li><a class="slide-item" href="index4.html">Dashboard 04</a></li>
+								<li><a class="slide-item" href="{% url 'products:qwikadmin_products' %}">Inventory</a></li>
+							</ul>
 						</li>
 						<li class="slide">
 							<a class="side-menu__item" data-toggle="slide" href="{% url 'orders:qwikadmin_orders' %}"><i class="fas fa-mars-stroke fa-1x mr-1"></i><span class="side-menu__label"><strong>Orders</strong></span></a>
@@ -280,7 +286,7 @@
 
 		<!-- Dashboard Core -->
 		<!--Jquery js -->
-    <script src="{% static 'js/jquery.js' %}"></script>
+		<script src="{% static 'js/jquery.js' %}"></script>
 		<!--Jquery.sparkline js-->
     <script src="{% static 'js/jquery.sparkline.min.js' %}"></script>
 		<!--Jquery.Sparkline js -->
@@ -332,6 +338,9 @@
 		<!-- custom js -->
     <script src="{% static 'js/custom.js' %}"></script>
 		<script src="{% static 'js/scripts.js' %}"></script>
+
+		<script src="{% static 'js/chart.js/jquery-1.6.3.min.js'  %}"></script>
+		<script src="{% static 'js/chart.js/jquery-1.9.1.min.js'  %}"></script>
 
 	</body>
 </html>

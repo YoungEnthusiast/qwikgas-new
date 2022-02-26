@@ -35,7 +35,7 @@ class CylinderFormPartnerUp(forms.ModelForm):
 class CylinderFormAdminUp(forms.ModelForm):
     class Meta:
         model = Cylinder
-        fields = ['admin_product_status']
+        fields = ['cylinder', 'customer']
 
 class ProductForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
