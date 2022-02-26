@@ -2,61 +2,52 @@
 {% load humanize %}
 <!doctype html>
 <html lang="en" dir="ltr">
-	<head>
-		<!-- Meta data -->
-		<meta charset="UTF-8">
+<head>
+	<!-- Meta data -->
+	<meta charset="UTF-8">
 
-		<meta content="" name="">
-		<meta content="" name="author">
-		<meta name="keywords" content=""/>
+	<meta content="" name="">
+	<meta content="" name="author">
+	<meta name="keywords" content=""/>
 
-		<!-- Title -->
-		<title></title>
-		<!--Bootstrap.min css-->
-		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-		<!--Font Awesome-->
-		<link rel="stylesheet" href="{% static 'css/all.css' %}">
+	<!-- Title -->
+	<title></title>
+	<!--Bootstrap.min css-->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<!--Font Awesome-->
+	<link rel="stylesheet" href="{% static 'css/all.css' %}">
 
-		<!-- Dashboard Css -->
-		<link rel="stylesheet" href="{% static 'css/style.css' %}">
-		<link rel="stylesheet" href="{% static 'css/dark-style.css' %}">
-		<link rel="stylesheet" href="{% static 'css/color-styles.css' %}">
-		<link rel="stylesheet" href="{% static 'css/skin-modes.css' %}">
-		<!-- p-scroll bar css-->
-		<link rel="stylesheet" href="{% static 'css/p-scroll.css' %}">
-		<!-- Sidemenu Css -->
-		<link rel="stylesheet" href="{% static 'css/sidemenu-closed.css' %}">
-		<!-- jvectormap CSS -->
-		<link rel="stylesheet" href="{% static 'css/jquery-jvectormap-2.0.2.css' %}">
-		<!---Font icons-->
-		<link rel="stylesheet" href="{% static 'css/plugin.css' %}">
-		<!-- Sidebar css -->
-		<link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
-		<link rel="stylesheet" href="{% static 'css/sidebar2.css' %}">
-		<link rel="stylesheet" href="{% static 'css/side-bar.css' %}">
+	<!-- Dashboard Css -->
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'css/dark-style.css' %}">
+	<link rel="stylesheet" href="{% static 'css/color-styles.css' %}">
+	<link rel="stylesheet" href="{% static 'css/skin-modes.css' %}">
+	<!-- p-scroll bar css-->
+	<link rel="stylesheet" href="{% static 'css/p-scroll.css' %}">
+	<!-- Sidemenu Css -->
+	<link rel="stylesheet" href="{% static 'css/sidemenu-closed.css' %}">
+	<!-- jvectormap CSS -->
+	<link rel="stylesheet" href="{% static 'css/jquery-jvectormap-2.0.2.css' %}">
+	<!---Font icons-->
+	<link rel="stylesheet" href="{% static 'css/plugin.css' %}">
+	<!-- Sidebar css -->
+	<link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+	<link rel="stylesheet" href="{% static 'css/sidebar-old.css' %}">
+	<link rel="stylesheet" href="{% static 'css/sidebar2.css' %}">
 
-		<!-- COLOR-SKINS -->
-		<link id="theme" rel="stylesheet" type="text/css" media="all" href="{% static 'css/color15.css">
-		<link rel="stylesheet" href="{% static 'css/demo.css' %}">
-		<link rel="stylesheet" href="{% static 'css/mine.css' %}">
-		<link rel="stylesheet" href="{% static 'css/a.css' %}">
-		<link rel="stylesheet" href="{% static 'css/accordion.css' %}">
+	<link rel="stylesheet" href="{% static 'css/side-bar.css' %}">
+	<link rel="stylesheet" href="{% static 'css/sidemenu-responsive-tabs.css' %}">
+	<!-- COLOR-SKINS -->
+	<link id="theme" rel="stylesheet" type="text/css" media="all" href="{% static 'css/color15.css">
+	<link rel="stylesheet" href="{% static 'css/demo.css' %}">
+	<link rel="stylesheet" href="{% static 'css/mine.css' %}">
+	<link rel="stylesheet" href="{% static 'css/a.css' %}">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="icon" type="image/x-icon" href="{% static 'img/logo.ico' %}" />
+	{% block title %}
+	{% endblock title %}
 
-
-		<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
-		<link rel="stylesheet" href="{% static 'css/magnific-popup.min.css' %}">
-		<link rel="stylesheet" href="{% static 'css/map_widgets.css' %}">
-		<link rel="stylesheet" href="{% static 'css/map_widgets.min.css' %}">
-
-
-
-		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-		<link rel="icon" type="image/x-icon" href="{% static 'img/logo.ico' %}" />
-		{{ form.media }}
-		{% block title %}
-    {% endblock title %}
-
-	</head>
+</head>
 
 
 	<body class="app sidebar-mini">
@@ -283,7 +274,7 @@
 						<li class="slide">
 							<a class="side-menu__item" data-toggle="slide" href="#"><i class="fa fa-undo fa-1x mr-1"></i><span class="side-menu__label"><strong>Cylinders Tracking</strong></span><i class="angle fas fa-angle-right"></i></a>
 							<ul class="slide-menu">
-								<li><a class="slide-item" href="{% url 'products:qwikpartner_cylinders_received_empty' %}">Returned Empty to QwikPartner</a></li>
+								<li><a class="slide-item" href="{% url 'products:qwikcustomer_cylinders_returned_empty' %}">Returned Empty to QwikPartner</a></li>
 								<li><a class="slide-item" href="">Returned Empty to QwikLet</a></li>
 								<li><a class="slide-item" href="index3.html">Dashboard 03</a></li>
 								<li><a class="slide-item" href="index4.html">Dashboard 04</a></li>
@@ -345,7 +336,7 @@
 
 		<!-- Dashboard Core -->
 		<!--Jquery js -->
-    <script src="{% static 'js/jquery.js' %}"></script>
+		<script src="{% static 'js/jquery.js' %}"></script>
 		<!--Jquery.sparkline js-->
     <script src="{% static 'js/jquery.sparkline.min.js' %}"></script>
 		<!--Jquery.Sparkline js -->
@@ -392,32 +383,14 @@
     <script src="{% static 'js/sidebar.js' %}"></script>
 		<!--Index js -->
     <script src="{% static 'js/index5.js' %}"></script>
-
-		<script src="{% static 'js/accordion.js' %}"></script>
-		<script src="{% static 'js/accordion.min.js' %}"></script>
-		<script src="{% static 'js/accordion-Wizard-Form.js' %}"></script>
-		<script src="{% static 'js/wizard.js' %}"></script>
-
-
-		<script src="{% static 'js/django_mw_base.js' %}"></script>
-		<script src="{% static 'js/jquery.custom.magnific-popup.js' %}"></script>
-		<script src="{% static 'js/jquery.custom.magnific-popup.min.js' %}"></script>
-		<script src="{% static 'js/jquery_class.js' %}"></script>
-		<script src="{% static 'js/jquery_init.js' %}"></script>
-		<script src="{% static 'js/mw_google_point_field.js' %}"></script>
-		<script src="{% static 'js/mw_google_point_field.min.js' %}"></script>
-		<script src="{% static 'js/mw_google_point_field_generater.js' %}"></script>
-		<script src="{% static 'js/mw_google_point_inline_field.min.js' %}"></script>
-		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-
-
 		<script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+
 		<!-- custom js -->
     <script src="{% static 'js/custom.js' %}"></script>
 		<script src="{% static 'js/scripts.js' %}"></script>
 
-		<script src="{% static 'js/chart.js/Chart.min.js'  %}"></script>
+		<script src="{% static 'js/chart.js/jquery-1.6.3.min.js'  %}"></script>
+		<script src="{% static 'js/chart.js/jquery-1.9.1.min.js'  %}"></script>
 
 	</body>
 </html>
