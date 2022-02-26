@@ -229,8 +229,8 @@
 							<a class="side-menu__item" data-toggle="slide" href="#"><i class="fa fa-undo fa-1x mr-1"></i><span class="side-menu__label"><strong>Cylinders Management</strong></span><i class="angle fas fa-angle-right"></i></a>
 							<ul class="slide-menu">
 								<li><a class="slide-item" href="{% url 'products:qwikvendor_cylinders_returned_empty' %}">Returned Empty to QwikLet</a></li>
-								<li><a class="slide-item" href="index3.html">Dashboard 03</a></li>
-								<li><a class="slide-item" href="index4.html">Dashboard 04</a></li>
+								<li><a class="slide-item" href="{% url 'products:qwikvendor_cylinders_dispatched_to_plant' %}">Dispatched to Plant</a></li>
+								<li><a class="slide-item" href="{% url 'products:qwikvendor_cylinders_delivered_filled_to_qwiklet' %}">Delivered Filled to QwikLet</a></li>
 								<li><a class="slide-item" href="{% url 'products:qwikvendor_products' %}">Inventory</a></li>
 							</ul>
 						</li>

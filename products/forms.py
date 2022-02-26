@@ -4,15 +4,13 @@ from .models import Product, Category, Cylinder
 from django.core.exceptions import ValidationError
 
 class CylinderFormVendor(forms.ModelForm):
-    customer = forms.ModelChoiceField(queryset=Person.objects.filter(type="QwikCustomer"))
     class Meta:
         model = Cylinder
-        fields = ['cylinder', 'customer', 'vendor_product_status']
+        fields = ['cylinder']
 
 class CylinderFormPartner(forms.ModelForm):
     customer = forms.ModelChoiceField(queryset=Person.objects.filter(type="QwikCustomer"))
     # cylinder = forms.ModelChoiceField(queryset=Cylinder.objects.filter(partner_product_status="Delivered to QwikCustomer"))
-
     class Meta:
         model = Cylinder
         fields = ['customer', 'cylinder']
@@ -36,6 +34,12 @@ class CylinderFormAdminUp(forms.ModelForm):
     class Meta:
         model = Cylinder
         fields = ['cylinder', 'customer']
+
+# class CylinderFormAdminUpReturnedEmpty(forms.ModelForm):
+#     vendor_confirm = forms.BooleanField()
+#     class Meta:
+#         model = Cylinder
+#         fields = ['vendor_confirm']
 
 class ProductForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):

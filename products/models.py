@@ -150,13 +150,16 @@ class Cylinder(models.Model):
         ('Returned Filled to QwikLet', 'Returned Filled to QwikLet'),
     ]
     cylinder = models.CharField(max_length=30, null=True, verbose_name="Cylinder Id")
-    category = models.CharField(max_length=12, null=True, verbose_name="")
+    category = models.CharField(max_length=12, null=True)
+    outlet = models.CharField(max_length=30, null=True)
     # cylinder = models.ForeignKey('products.Product', on_delete=models.SET_NULL, null=True, verbose_name="Cylinder Id")
     customer = models.ForeignKey('users.Person', null=True, blank=True, on_delete=models.SET_NULL)
     vendor_product_status = models.CharField(max_length=30, choices=VENDOR_CHOICES, null=True, verbose_name="QwikVendor's Remark")
     partner_product_status = models.CharField(max_length=35, choices=PARTNER_CHOICES, blank=True, null=True, verbose_name="QwikPartner's Remark")
     partner_confirm = models.BooleanField(blank=True, null=True, default=False, verbose_name="QwikPartner's Confirmation")
     vendor_confirm = models.BooleanField(blank=True, null=True, default=False, verbose_name="QwikVendor's Confirmation")
+    who = models.CharField(max_length=10, blank=True, null=True)
+    who2 = models.CharField(max_length=11, blank=True, null=True)
     customer_product_status = models.CharField(max_length=35, choices=CUSTOMER_CHOICES, blank=True, null=True, verbose_name="QwikCustomer's Remark")
     admin_product_status = models.CharField(max_length=35, choices=ADMIN_CHOICES, blank=True, null=True, verbose_name="QwikAdmin's Remark")
     admin_product = models.CharField(max_length=20, null=True, blank=True)
