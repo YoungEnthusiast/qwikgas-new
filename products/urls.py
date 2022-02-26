@@ -14,7 +14,6 @@ urlpatterns = [
     path('product/<id>/', views.product_detail, name='product_detail'),
 
     path('product/description/<id>/', views.product_detail2, name='product_detail2'),
-    path('cylinders/histories/', views.showQwikCustomerCylinders, name='qwikcustomer_cylinders'),
     path('cylinders/histories/update/<int:id>', views.updateQwikCustomerCylinders, name='update_cylinders'),
 
     path('qwikvendor-dashboard/products/', views.showQwikVendorProducts, name='qwikvendor_products'),

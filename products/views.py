@@ -102,22 +102,6 @@ def showQwikVendorProducts(request):
     return render(request, 'products/qwikvendor_products.html', context=context)
 
 @login_required
-def showQwikCustomerCylinders(request):
-    context = {}
-    filtered_cylinders = CylinderFilter(
-        request.GET,
-        queryset = Cylinder.objects.filter(customer=request.user)
-    )
-    context['filtered_cylinders'] = filtered_cylinders
-    paginated_filtered_cylinders = Paginator(filtered_cylinders.qs, 10)
-    page_number = request.GET.get('page')
-    cylinders_page_obj = paginated_filtered_cylinders.get_page(page_number)
-    context['cylinders_page_obj'] = cylinders_page_obj
-    total_cylinders = filtered_cylinders.qs.count()
-    context['total_cylinders'] = total_cylinders
-    return render(request, 'products/qwikcustomer_cylinders.html', context=context)
-
-@login_required
 @permission_required('users.view_vendor')
 def showQwikVendorCylinders(request):
     context = {}
