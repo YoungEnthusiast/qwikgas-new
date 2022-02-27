@@ -35,6 +35,11 @@ class CylinderFormAdminUp(forms.ModelForm):
         model = Cylinder
         fields = ['cylinder', 'customer']
 
+class CylinderFormAdminUpDispatchedToPlant(forms.ModelForm):
+    class Meta:
+        model = Cylinder
+        fields = ['cylinder']
+
 # class CylinderFormAdminUpReturnedEmpty(forms.ModelForm):
 #     vendor_confirm = forms.BooleanField()
 #     class Meta:

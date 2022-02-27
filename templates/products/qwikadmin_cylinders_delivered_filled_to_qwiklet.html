@@ -185,7 +185,7 @@
     <div class="col-xl-12">
       <div class="card">
         <div class="card-header bg-white">
-          <div class="card-title text-dark-green">Dispatched to Plant</div>
+          <div class="card-title text-dark-green">Delivered Filled to QwikLet</div>
         </div>
         <div class="card-body">
           <div class="text-center">
@@ -207,9 +207,7 @@
                   <th>Date & Time</th>
                   <th>Cylinder Type</th>
                   <th>Cylinder ID</th>
-                  <th>QwikPartner Remark</th>
-                  <th></th>
-                  <th>Edited</th>
+                  <th>QwikVendor Remark</th>
                 </tr>
               </thead>
               <tbody class="">
@@ -218,16 +216,9 @@
                   <td>{{product.created}}</td>
                   <td>{{product.category}}</td>
                   <td>{{product.cylinder}}</td>
-                  {% if product.partner_confirm %}
-                  <td><a href="{% url 'products:decline_qwikadmin_cylinders_dispatched_to_plant' product.id %}"><span class="text-dark-green">Click to Decline</span></a></td>
+                  {% if product.vendor_confirm %}
+                  <td>Accepted</td>
                   {% else %}
-                  <td><a href="{% url 'products:accept_qwikadmin_cylinders_dispatched_to_plant' product.id %}"><span class="text-dark-green">Click to Accept</span></a></td>
-                  {% endif %}
-                  <td class="text-center"><a href="update/{{product.id}}"><button type="button" class="btn btn-sm btn-dark-green"><strong> <i class="fa fa-edit fa-1x text-white"></i> Edit</strong></button></a></td>
-                  {% if product.who2 == "QwikAdmin" %}
-                  <td>{{product.updated}}</td>
-                  {% else %}
-                  <td></td>
                   {% endif %}
                 </tr>
                 {% endfor %}
