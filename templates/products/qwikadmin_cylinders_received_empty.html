@@ -221,7 +221,7 @@
                   <td>{{product.category}}</td>
                   <td>{{product.cylinder}}</td>
                   <td class="text-center"><a href="update/{{product.id}}"><button type="button" class="btn btn-sm btn-dark-green"><strong> <i class="fa fa-edit fa-1x text-white"></i> Edit</strong></button></a></td>
-                  {% if product.updated != product.created %}
+                  {% if product.who3 == "QwikAdmin" %}
                   <td>{{product.updated}}</td>
                   {% else %}
                   <td></td>
