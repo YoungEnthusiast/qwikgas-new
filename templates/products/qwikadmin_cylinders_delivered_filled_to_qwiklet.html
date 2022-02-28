@@ -208,6 +208,7 @@
                   <th>Cylinder Type</th>
                   <th>Cylinder ID</th>
                   <th>QwikVendor Remark</th>
+                  <th>Edited</th>
                 </tr>
               </thead>
               <tbody class="">
@@ -216,8 +217,15 @@
                   <td>{{product.created}}</td>
                   <td>{{product.category}}</td>
                   <td>{{product.cylinder}}</td>
-                  {% if product.vendor_confirm %}
-                  <td>Accepted</td>
+                  {% if product.who3 == "Accepted" %}
+                  <td>Accepted/<a href="{% url 'products:decline_qwikadmin_cylinders_delivered_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Decline</span></a></td>
+                  {% elif product.who3 == "Declined" %}
+                  <td><a href="{% url 'products:accept_qwikadmin_cylinders_delivered_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Accept</span></a>/Declined</td>
+                  {% else %}
+                  <td><a href="{% url 'products:accept_qwikadmin_cylinders_delivered_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Accept</span></a>/<a href="{% url 'products:decline_qwikadmin_cylinders_delivered_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Decline</span></a></td>
+                  {% endif %}
+                  {% if product.who3_2 == "QwikAdmin" %}
+                  <td>{{product.updated}}</td>
                   {% else %}
                   {% endif %}
                 </tr>

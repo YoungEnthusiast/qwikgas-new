@@ -218,13 +218,15 @@
                   <td>{{product.created}}</td>
                   <td>{{product.category}}</td>
                   <td>{{product.cylinder}}</td>
-                  {% if product.partner_confirm %}
-                  <td><a href="{% url 'products:decline_qwikadmin_cylinders_dispatched_to_plant' product.id %}"><span class="text-dark-green">Click to Decline</span></a></td>
+                  {% if product.who2 == "Accepted" %}
+                  <td>Accepted/<a href="{% url 'products:decline_qwikadmin_cylinders_dispatched_to_plant' product.id %}"><span class="text-dark-green">Decline</span></a></td>
+                  {% elif product.who2 == "Declined" %}
+                  <td><a href="{% url 'products:accept_qwikadmin_cylinders_dispatched_to_plant' product.id %}"><span class="text-dark-green">Accept</span></a>/Declined</td>
                   {% else %}
-                  <td><a href="{% url 'products:accept_qwikadmin_cylinders_dispatched_to_plant' product.id %}"><span class="text-dark-green">Click to Accept</span></a></td>
+                  <td><a href="{% url 'products:accept_qwikadmin_cylinders_dispatched_to_plant' product.id %}"><span class="text-dark-green">Accept</span></a>/<a href="{% url 'products:decline_qwikadmin_cylinders_dispatched_to_plant' product.id %}"><span class="text-dark-green">Decline</span></a></td>
                   {% endif %}
                   <td class="text-center"><a href="update/{{product.id}}"><button type="button" class="btn btn-sm btn-dark-green"><strong> <i class="fa fa-edit fa-1x text-white"></i> Edit</strong></button></a></td>
-                  {% if product.who2 == "QwikAdmin" %}
+                  {% if product.who2_2 == "QwikAdmin" %}
                   <td>{{product.updated}}</td>
                   {% else %}
                   <td></td>

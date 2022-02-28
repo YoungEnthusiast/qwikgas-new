@@ -219,11 +219,7 @@
                   <td>{{product.customer.username}}</td>
                   <td>{{product.category}}</td>
                   <td>{{product.cylinder}}</td>
-                  {% if product.vendor_confirm %}
-                  <td>Accepted</td>
-                  {% else %}
-                  <td></td>
-                  {% endif %}
+                  <td>{{product.who}}</td>
                 </tr>
                 {% endfor %}
               </tbody>

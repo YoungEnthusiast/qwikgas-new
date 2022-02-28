@@ -176,7 +176,7 @@
                   <th>Date & Time</th>
                   <th>Cylinder Type</th>
                   <th>Cylinder ID</th>
-                  <th>QwikVendor Remark</th>
+                  <th>QwikVendor Confirmation</th>
                 </tr>
               </thead>
               <tbody class="">
@@ -185,10 +185,12 @@
                   <td>{{product.created}}</td>
                   <td>{{product.category}}</td>
                   <td>{{product.cylinder}}</td>
-                  {% if product.vendor_confirm %}
+                  {% if product.who3 == "Accepted" %}
                   <td>Accepted</td>
+                  {% elif product.who3 == "Declined" %}
+                  <td>Declined</td>
                   {% else %}
-                  <td><a href="{% url 'products:accept_qwikvendor_cylinders_delivered_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Click to Accept</span></a></td>
+                  <td><a href="{% url 'products:accept_qwikvendor_cylinders_delivered_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Accept</span></a>/<a href="{% url 'products:decline_qwikvendor_cylinders_delivered_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Decline</span></a></td>
                   {% endif %}
                 </tr>
                 {% endfor %}

@@ -221,12 +221,14 @@
                   <td>{{product.customer.username}}</td>
                   <td>{{product.category}}</td>
                   <td>{{product.cylinder}}</td>
-                  {% if product.vendor_confirm %}
-                  <td><a href="{% url 'products:decline_qwikadmin_cylinders_returned_empty' product.id %}"><span class="text-dark-green">Click to Decline</span></a></td>
+                  {% if product.who == "Accepted" %}
+                  <td>Accepted/<a href="{% url 'products:decline_qwikadmin_cylinders_returned_empty' product.id %}"><span class="text-dark-green">Decline</span></a></td>
+                  {% elif product.who == "Declined" %}
+                  <td><a href="{% url 'products:accept_qwikadmin_cylinders_returned_empty' product.id %}"><span class="text-dark-green">Accept</span></a>/Declined</td>
                   {% else %}
-                  <td><a href="{% url 'products:accept_qwikadmin_cylinders_returned_empty' product.id %}"><span class="text-dark-green">Click to Accept</span></a></td>
+                  <td><a href="{% url 'products:accept_qwikadmin_cylinders_returned_empty' product.id %}"><span class="text-dark-green">Accept</span></a>/<a href="{% url 'products:decline_qwikadmin_cylinders_returned_empty' product.id %}"><span class="text-dark-green">Decline</span></a></td>
                   {% endif %}
-                  {% if product.who == "QwikAdmin" %}
+                  {% if product.who_2 == "QwikAdmin" %}
                   <td>{{product.updated}}</td>
                   {% else %}
                   <td></td>

@@ -216,10 +216,7 @@
                   <td>{{product.created}}</td>
                   <td>{{product.category}}</td>
                   <td>{{product.cylinder}}</td>
-                  {% if product.vendor_confirm %}
-                  <td>Accepted</td>
-                  {% else %}
-                  {% endif %}
+                  <td>{{product.who3}}</td>
                 </tr>
                 {% endfor %}
               </tbody>
