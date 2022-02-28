@@ -40,6 +40,11 @@ class CylinderFormAdminUpDispatchedToPlant(forms.ModelForm):
         model = Cylinder
         fields = ['cylinder']
 
+class CylinderFormAdminUpDispatchedToQwikCustomer(forms.ModelForm):
+    class Meta:
+        model = Cylinder
+        fields = ['cylinder']
+
 # class CylinderFormAdminUpReturnedEmpty(forms.ModelForm):
 #     vendor_confirm = forms.BooleanField()
 #     class Meta:
