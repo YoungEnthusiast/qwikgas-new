@@ -184,7 +184,7 @@
     <div class="col-xl-12">
       <div class="card">
         <div class="card-header bg-white">
-          <div class="card-title text-dark-green">Dispatched Filled to QwikCustomer</div>
+          <div class="card-title text-dark-green">Delivered to QwikCustomer (Anticipatory)</div>
         </div>
         <div class="card-body">
           <div class="text-center">
@@ -208,18 +208,16 @@
                   <th>Customer's ID</th>
                   <th>Product Type</th>
                   <th>Cylinder ID</th>
-                  <th>Order Type</th>
                 </tr>
               </thead>
               <tbody class="">
                 {% for product in cylinders_page_obj %}
                 <tr class="">
                   <td>{{product.created}}</td>
-                  <td>{{product.category}}</td>
-                  <td>{{product.cylinder}}</td>
-                  <td>Accepted</td>
-                  <td>Declined</td>
-                  <td><a href="{% url 'products:accept_qwikpartner_cylinders_dispatched_filled_to_qwikcustomer' product.id %}"><span class="text-dark-green">Accept</span></a>/<a href="{% url 'products:decline_qwikpartner_cylinders_dispatched_filled_to_qwikcustomer' product.id %}"><span class="text-dark-green">Decline</span></a></td>
+                  <td>{{product.user.first_name}} {{product.user.last_name}}</td>
+                  <td>{{product.user.username}}</td>
+                  <td>{{product.product.category}}</td>
+                  <td>{{product.product.product_Id}}</td>
                 </tr>
                 {% endfor %}
               </tbody>
