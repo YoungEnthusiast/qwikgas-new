@@ -3,7 +3,7 @@ from .models import Category, Product, Cylinder
 from anticipate.models import AntiOrder
 from orders.models import UserOrder, OrderStatus
 from users.models import Wallet, Outlet
-from .forms import CategoryForm, ProductForm, ProductFormPartner, ProductFormAdmin, CylinderFormVendor, CylinderFormAdminUp, CylinderFormAdminUpDispatchedToPlant, CylinderFormAdminUpDispatchedToQwikCustomer, CylinderFormAdminUpDeliveredToQwikCustomerAnti, CylinderFormPartner, CylinderFormVendorUp, CylinderFormPartnerUp, CylinderFormCustomerUp
+from .forms import CategoryForm, ProductForm, ProductFormPartner, ProductFormAdmin, CylinderFormVendor, CylinderFormAdminUp, CylinderFormAdminUpDispatchedToPlant, CylinderFormAdminUpDispatchedToQwikCustomer, CylinderFormAdminUpDeliveredToQwikCustomerAnti, CylinderFormAdminUpDeliveredToQwikCustomerUser, CylinderFormPartner, CylinderFormVendorUp, CylinderFormPartnerUp, CylinderFormCustomerUp
 # from orders.forms import VisitorOrderForm
 from .filters import ProductFilter, ProductFilterAdmin, CategoryFilter, CylinderFilter
 from django.contrib import messages
@@ -2139,6 +2139,29 @@ def updateQwikAdminCylindersDeliveredToQwikCustomerAnti(request, id):
             messages.success(request, "The cylinder has been modified successfully")
             return redirect('products:qwikadmin_cylinders_delivered_to_qwikcustomer_anti')
     return render(request, 'products/form_qwikadmin_cylinders_delivered_to_qwikcustomer_anti.html', {'form': form, 'cylinder': cylinder})
+
+@login_required
+@permission_required('users.view_admin')
+def updateQwikAdminCylindersDeliveredToQwikCustomerUser(request, id):
+    cylinder = OrderStatus.objects.get(id=id)
+    form = CylinderFormAdminUpDeliveredToQwikCustomerUser(instance=cylinder)
+    if request.method=='POST':
+        form = CylinderFormAdminUpDeliveredToQwikCustomerUser(request.POST, instance=cylinder)
+        if form.is_valid():
+
+            # cylinder = form.cleaned_data.get('cylinder')
+            # try:
+            #     product = Product.objects.filter(product_Id=cylinder)[0]
+            #     category = product.category.type
+            # except:
+            #     category = "None"
+            # form.save(commit=False).category = category
+            form.save(commit=False).who7_2 = "QwikAdmin"
+            form.save()
+
+            messages.success(request, "The cylinder has been modified successfully")
+            return redirect('products:qwikadmin_cylinders_delivered_to_qwikcustomer_user')
+    return render(request, 'products/form_qwikadmin_cylinders_delivered_to_qwikcustomer_user.html', {'form': form, 'cylinder': cylinder})
 
 @login_required
 @permission_required('users.view_admin')

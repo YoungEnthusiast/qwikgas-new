@@ -77,6 +77,7 @@ class OrderStatus(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='order_status_products', verbose_name="Cylinder")
     order_status = models.CharField(max_length=30, choices=STATUS_CHOICES, null=True, verbose_name="Select Present Order Status")
     employee = models.CharField(max_length=20, null=True, blank=True)
+    who7_2 = models.CharField(max_length=9, blank=True, null=True)    
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

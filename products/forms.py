@@ -1,5 +1,6 @@
 from django import forms
 from users.models import Person
+from orders.models import OrderStatus
 from .models import Product, Category, Cylinder
 from anticipate.models import AntiOrder
 from django.core.exceptions import ValidationError
@@ -50,6 +51,11 @@ class CylinderFormAdminUpDeliveredToQwikCustomerAnti(forms.ModelForm):
     class Meta:
         model = AntiOrder
         fields = ['user', 'product']
+
+class CylinderFormAdminUpDeliveredToQwikCustomerUser(forms.ModelForm):    
+    class Meta:
+        model = OrderStatus
+        fields = ['product']
 
 # class CylinderFormAdminUpReturnedEmpty(forms.ModelForm):
 #     vendor_confirm = forms.BooleanField()
