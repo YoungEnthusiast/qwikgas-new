@@ -27,6 +27,7 @@ class AntiOrder(models.Model):
     user = models.ForeignKey('users.Person', null=True, blank=True, on_delete=models.SET_NULL)
     order_Id = models.CharField(max_length = 10, blank=True, null=True)
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='anti_products')
+    who6_2 = models.CharField(max_length=9, blank=True, null=True)
     quantity = models.PositiveIntegerField(default=1)
     payment_type1 = models.CharField(max_length=7, choices=PAYMENT_TYPE1, blank=True, null=True, verbose_name="Payment Type")
     payment_type2 = models.CharField(max_length=8, choices=PAYMENT_TYPE2, blank=True, null=True, verbose_name="")

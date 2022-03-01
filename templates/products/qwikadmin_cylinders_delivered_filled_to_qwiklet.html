@@ -217,14 +217,14 @@
                   <td>{{product.created}}</td>
                   <td>{{product.category}}</td>
                   <td>{{product.cylinder}}</td>
-                  {% if product.who3 == "Accepted" %}
+                  {% if product.who4 == "Accepted" %}
                   <td>Accepted/<a href="{% url 'products:decline_qwikadmin_cylinders_delivered_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Decline</span></a></td>
-                  {% elif product.who3 == "Declined" %}
+                  {% elif product.who4 == "Declined" %}
                   <td><a href="{% url 'products:accept_qwikadmin_cylinders_delivered_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Accept</span></a>/Declined</td>
                   {% else %}
                   <td><a href="{% url 'products:accept_qwikadmin_cylinders_delivered_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Accept</span></a>/<a href="{% url 'products:decline_qwikadmin_cylinders_delivered_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Decline</span></a></td>
                   {% endif %}
-                  {% if product.who3_2 == "QwikAdmin" %}
+                  {% if product.who4_2 == "QwikAdmin" %}
                   <td>{{product.updated}}</td>
                   {% else %}
                   {% endif %}

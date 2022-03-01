@@ -208,6 +208,8 @@
                   <th>Customer's ID</th>
                   <th>Product Type</th>
                   <th>Cylinder ID</th>
+                  <th></th>
+                  <th>Edited</th>
                 </tr>
               </thead>
               <tbody class="">
@@ -218,6 +220,12 @@
                   <td>{{product.user.username}}</td>
                   <td>{{product.product.category}}</td>
                   <td>{{product.product.product_Id}}</td>
+                  <td class="text-center"><a href="update/{{product.id}}"><button type="button" class="btn btn-sm btn-dark-green"><strong> <i class="fa fa-edit fa-1x text-white"></i> Edit</strong></button></a></td>
+                  {% if product.who6_2 == "QwikAdmin" %}
+                  <td>{{product.updated}}</td>
+                  {% else %}
+                  <td></td>
+                  {% endif %}
                 </tr>
                 {% endfor %}
               </tbody>

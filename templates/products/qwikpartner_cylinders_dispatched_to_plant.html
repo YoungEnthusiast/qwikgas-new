@@ -216,9 +216,9 @@
                   <td>{{product.created}}</td>
                   <td>{{product.category}}</td>
                   <td>{{product.cylinder}}</td>
-                  {% if product.who2 == "Accepted" %}
+                  {% if product.who3 == "Accepted" %}
                   <td>Accepted</td>
-                  {% elif product.who2 == "Declined" %}
+                  {% elif product.who3 == "Declined" %}
                   <td>Declined</td>
                   {% else %}
                   <td><a href="{% url 'products:accept_qwikpartner_cylinders_dispatched_to_plant' product.id %}"><span class="text-dark-green">Accept</span></a>/<a href="{% url 'products:decline_qwikpartner_cylinders_dispatched_to_plant' product.id %}"><span class="text-dark-green">Decline</span></a></td>

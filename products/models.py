@@ -166,6 +166,8 @@ class Cylinder(models.Model):
     who3_2 = models.CharField(max_length=9, blank=True, null=True)
     who4 = models.CharField(max_length=8, blank=True, null=True)
     who4_2 = models.CharField(max_length=9, blank=True, null=True)
+    who5 = models.CharField(max_length=8, blank=True, null=True)
+    who5_2 = models.CharField(max_length=9, blank=True, null=True)
     customer_product_status = models.CharField(max_length=35, choices=CUSTOMER_CHOICES, blank=True, null=True, verbose_name="QwikCustomer's Remark")
     admin_product_status = models.CharField(max_length=35, choices=ADMIN_CHOICES, blank=True, null=True, verbose_name="QwikAdmin's Remark")
     admin_product = models.CharField(max_length=20, null=True, blank=True)

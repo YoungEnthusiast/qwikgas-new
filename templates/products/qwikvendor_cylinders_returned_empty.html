@@ -189,9 +189,9 @@
                   <td>{{product.customer.username}}</td>
                   <td>{{product.category}}</td>
                   <td>{{product.cylinder}}</td>
-                  {% if product.who == "Accepted" %}
+                  {% if product.who2 == "Accepted" %}
                   <td>Accepted</td>
-                  {% elif product.who == "Declined" %}
+                  {% elif product.who2 == "Declined" %}
                   <td>Declined</td>
                   {% else %}
                   <td><a href="{% url 'products:accept_qwikvendor_cylinders_returned_empty' product.id %}"><span class="text-dark-green">Accept</span></a>/<a href="{% url 'products:decline_qwikvendor_cylinders_returned_empty' product.id %}"><span class="text-dark-green">Decline</span></a></td>
