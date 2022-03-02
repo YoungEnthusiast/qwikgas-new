@@ -35,6 +35,12 @@ urlpatterns = [
     path('qwikvendor-dashboard/cylinders-delivered-filled-to-qwiklet/accept/<int:id>', views.acceptQwikVendorCylindersDeliveredFilledToQwikLet, name='accept_qwikvendor_cylinders_delivered_filled_to_qwiklet'),
     path('qwikvendor-dashboard/cylinders-delivered-filled-to-qwiklet/decline/<int:id>', views.declineQwikVendorCylindersDeliveredFilledToQwikLet, name='decline_qwikvendor_cylinders_delivered_filled_to_qwiklet'),
     path('qwikpartner-dashboard/cylinders-returned-filled-to-qwiklet/return/<int:id>', views.returnQwikPartnerCylindersReturnedFilledToQwikLet, name='return_qwikpartner_cylinders_returned_filled_to_qwiklet'),
+    path('qwikvendor-dashboard/cylinders-returned-filled-to-qwiklet/accept/<int:id>', views.acceptQwikVendorCylindersReturnedFilledToQwikLet, name='accept_qwikvendor_cylinders_returned_filled_to_qwiklet'),
+    path('qwikvendor-dashboard/cylinders-returned-filled-to-qwiklet/decline/<int:id>', views.declineQwikVendorCylindersReturnedFilledToQwikLet, name='decline_qwikvendor_cylinders_returned_filled_to_qwiklet'),
+    path('qwika-dashboard/cylinders-returned-filled-to-qwiklet/accept/<int:id>', views.acceptQwikAdminCylindersReturnedFilledToQwikLet, name='accept_qwikadmin_cylinders_returned_filled_to_qwiklet'),
+    path('qwika-dashboard/cylinders-returned-filled-to-qwiklet/decline/<int:id>', views.declineQwikAdminCylindersReturnedFilledToQwikLet, name='accept_qwikadmin_cylinders_returned_filled_to_qwiklet'),
+
+    path('qwika-dashboard/cylinders-returned-filled-to-qwiklet/', views.showQwikAdminCylindersReturnedFilledToQwikLet, name='qwikadmin_cylinders_returned_filled_to_qwiklet'),
 
     path('qwikpartner-dashboard/cylinders-dispatched-to-plant/accept/<int:id>', views.acceptQwikPartnerCylindersDispatchedToPlant, name='accept_qwikpartner_cylinders_dispatched_to_plant'),
     path('qwikpartner-dashboard/cylinders-dispatched-to-plant/decline/<int:id>', views.declineQwikPartnerCylindersDispatchedToPlant, name='decline_qwikpartner_cylinders_dispatched_to_plant'),
