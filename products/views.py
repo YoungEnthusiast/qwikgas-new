@@ -2691,6 +2691,26 @@ def showQwikCustomerCylindersReceivedFilledUser(request):
 
 @login_required
 @permission_required('users.view_admin')
+def returnQwikAdminCylindersReturnedFilledToQwikLet(request, id):
+    cylinder = Cylinder.objects.get(id=id)
+    cylinder.vendor_confirm = True
+    cylinder.who8 = "Return Filled"
+    cylinder.who8_2 = "QwikAdmin"
+    cylinder.save()
+    return redirect('products:qwikadmin_cylinders_returned_filled_to_qwiklet')
+
+@login_required
+@permission_required('users.view_admin')
+def notReturnQwikAdminCylindersReturnedFilledToQwikLet(request, id):
+    cylinder = Cylinder.objects.get(id=id)
+    cylinder.vendor_confirm = True
+    cylinder.who8 = "Not Returned Filled"
+    cylinder.who8_2 = "QwikAdmin"
+    cylinder.save()
+    return redirect('products:qwikadmin_cylinders_returned_filled_to_qwiklet')
+
+@login_required
+@permission_required('users.view_admin')
 def acceptQwikAdminCylindersReturnedFilledToQwikLet(request, id):
     cylinder = Cylinder.objects.get(id=id)
     cylinder.vendor_confirm = True
