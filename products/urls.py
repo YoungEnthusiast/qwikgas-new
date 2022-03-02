@@ -38,7 +38,7 @@ urlpatterns = [
     path('qwikvendor-dashboard/cylinders-returned-filled-to-qwiklet/accept/<int:id>', views.acceptQwikVendorCylindersReturnedFilledToQwikLet, name='accept_qwikvendor_cylinders_returned_filled_to_qwiklet'),
     path('qwikvendor-dashboard/cylinders-returned-filled-to-qwiklet/decline/<int:id>', views.declineQwikVendorCylindersReturnedFilledToQwikLet, name='decline_qwikvendor_cylinders_returned_filled_to_qwiklet'),
     path('qwika-dashboard/cylinders-returned-filled-to-qwiklet/accept/<int:id>', views.acceptQwikAdminCylindersReturnedFilledToQwikLet, name='accept_qwikadmin_cylinders_returned_filled_to_qwiklet'),
-    path('qwika-dashboard/cylinders-returned-filled-to-qwiklet/decline/<int:id>', views.declineQwikAdminCylindersReturnedFilledToQwikLet, name='accept_qwikadmin_cylinders_returned_filled_to_qwiklet'),
+    path('qwika-dashboard/cylinders-returned-filled-to-qwiklet/decline/<int:id>', views.declineQwikAdminCylindersReturnedFilledToQwikLet, name='decline_qwikadmin_cylinders_returned_filled_to_qwiklet'),
 
     path('qwika-dashboard/cylinders-returned-filled-to-qwiklet/', views.showQwikAdminCylindersReturnedFilledToQwikLet, name='qwikadmin_cylinders_returned_filled_to_qwiklet'),
 

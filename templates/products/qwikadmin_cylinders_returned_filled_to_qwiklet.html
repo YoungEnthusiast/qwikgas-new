@@ -209,6 +209,7 @@
                   <th>QwikPartner Status Update</th>
                   <th>QwikVendor Remark</th>
                   <th></th>
+                  <th>Edited</th>
                 </tr>
               </thead>
               <tbody class="">
@@ -231,6 +232,7 @@
                   <td class="text-center"><a href="update/{{product.id}}"><button type="button" class="btn btn-sm btn-dark-green"><strong> <i class="fa fa-edit fa-1x text-white"></i> Edit</strong></button></a></td>
                   {% if product.who8_2 == "QwikAdmin" %}
                   <td>{{product.updated}}</td>
+                  {% endif %}
                 </tr>
                 {% endfor %}
               </tbody>
