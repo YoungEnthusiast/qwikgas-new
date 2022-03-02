@@ -219,8 +219,11 @@
                   <td>{{product.category}}</td>
                   <td>{{product.cylinder}}</td>
                   {% if product.who8 == "Returned Filled" %}
-                  <td>Returned Filled</td>
+                  <td>Returned Filled/<a href="{% url 'products:not_return_qwikadmin_cylinders_returned_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Not Return</span></a></td>
+                  {% elif product.who8 == "Not Returned Filled" %}
+                  <td><a href="{% url 'products:return_qwikadmin_cylinders_returned_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Return</span></a>/Not Returned Filled</td>
                   {% else %}
+                  <td><a href="{% url 'products:return_qwikadmin_cylinders_returned_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Return</span></a>/<a href="{% url 'products:not_return_qwikadmin_cylinders_returned_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Not Return</span></a></td>                  
                   {% endif %}
                   {% if product.who8_1 == "Accepted" %}
                   <td>Accepted/<a href="{% url 'products:decline_qwikadmin_cylinders_returned_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Decline</span></a></td>
