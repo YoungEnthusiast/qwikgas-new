@@ -1926,7 +1926,7 @@ def showQwikPartnerCylindersDeliveredToQwikCustomerUser(request):
     delivered_to_qwikcustomers = AntiOrder.objects.filter(outlet__outlet=outlet_2).count()
     delivered_to_qwikcustomers_user = OrderStatus.objects.filter(order__order__outlet__outlet=outlet_2, order_status="Delivered").count()
     returned_filled_to_qwiklets = Cylinder.objects.filter(vendor_product_status="Released Filled to QwikPartner", partner_confirm=True, outlet=outlet_2).count()
-
+Here
     try:
         perc_received_empty_from_qwikcustomers = round((received_empty_from_qwikcustomers/cylinders)*100,1)
     except:
