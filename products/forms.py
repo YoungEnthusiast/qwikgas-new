@@ -42,6 +42,11 @@ class CylinderFormAdminUpDispatchedToPlant(forms.ModelForm):
         model = Cylinder
         fields = ['cylinder']
 
+class CylinderFormAdminUpReturnedFilledToQwikLet(forms.ModelForm):
+    class Meta:
+        model = Cylinder
+        fields = ['cylinder']
+
 class CylinderFormAdminUpDispatchedToQwikCustomer(forms.ModelForm):
     class Meta:
         model = Cylinder
@@ -52,7 +57,7 @@ class CylinderFormAdminUpDeliveredToQwikCustomerAnti(forms.ModelForm):
         model = AntiOrder
         fields = ['user', 'product']
 
-class CylinderFormAdminUpDeliveredToQwikCustomerUser(forms.ModelForm):    
+class CylinderFormAdminUpDeliveredToQwikCustomerUser(forms.ModelForm):
     class Meta:
         model = OrderStatus
         fields = ['product']

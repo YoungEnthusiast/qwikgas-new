@@ -3,7 +3,7 @@ from .models import Category, Product, Cylinder
 from anticipate.models import AntiOrder
 from orders.models import UserOrder, OrderStatus
 from users.models import Wallet, Outlet
-from .forms import CategoryForm, ProductForm, ProductFormPartner, ProductFormAdmin, CylinderFormVendor, CylinderFormAdminUp, CylinderFormAdminUpDispatchedToPlant, CylinderFormAdminUpDispatchedToQwikCustomer, CylinderFormAdminUpDeliveredToQwikCustomerAnti, CylinderFormAdminUpDeliveredToQwikCustomerUser, CylinderFormPartner, CylinderFormVendorUp, CylinderFormPartnerUp, CylinderFormCustomerUp
+from .forms import CategoryForm, ProductForm, ProductFormPartner, ProductFormAdmin, CylinderFormVendor, CylinderFormAdminUp, CylinderFormAdminUpDispatchedToPlant, CylinderFormAdminUpReturnedFilledToQwikLet, CylinderFormAdminUpDispatchedToQwikCustomer, CylinderFormAdminUpDeliveredToQwikCustomerAnti, CylinderFormAdminUpDeliveredToQwikCustomerUser, CylinderFormPartner, CylinderFormVendorUp, CylinderFormPartnerUp, CylinderFormCustomerUp
 # from orders.forms import VisitorOrderForm
 from .filters import ProductFilter, ProductFilterAdmin, CategoryFilter, CylinderFilter
 from django.contrib import messages
@@ -109,9 +109,11 @@ def showQwikPartnerCylindersReceivedEmpty(request):
         outlet_1 = Outlet.objects.filter(partner=request.user)[0]
     except:
         pass
-
     outlet_2 = outlet_1.outlet
-    cylinders = Cylinder.objects.all().count()
+    cylinders0 = Cylinder.objects.filter(outlet=outlet_2).count()
+    cylinders1 = AntiOrder.objects.filter(outlet__outlet=outlet_2).count()
+    cylinders2 = OrderStatus.objects.filter(outlet__outlet=outlet_2, order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", outlet=outlet_2).count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True, outlet=outlet_2).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True, outlet=outlet_2).count()
@@ -226,7 +228,10 @@ def showQwikVendorCylindersDispatchedToPlant(request):
     except:
         pass
     outlet_2 = outlet_1.outlet
-    cylinders = Cylinder.objects.all().count()
+    cylinders0 = Cylinder.objects.filter(outlet=outlet_2).count()
+    cylinders1 = AntiOrder.objects.filter(outlet__outlet=outlet_2).count()
+    cylinders2 = OrderStatus.objects.filter(outlet__outlet=outlet_2, order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", outlet=outlet_2).count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True, outlet=outlet_2).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True, outlet=outlet_2).count()
@@ -341,7 +346,10 @@ def showQwikVendorCylindersReleasedFilledToQwikPartner(request):
     except:
         pass
     outlet_2 = outlet_1.outlet
-    cylinders = Cylinder.objects.all().count()
+    cylinders0 = Cylinder.objects.filter(outlet=outlet_2).count()
+    cylinders1 = AntiOrder.objects.filter(outlet__outlet=outlet_2).count()
+    cylinders2 = OrderStatus.objects.filter(outlet__outlet=outlet_2, order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", outlet=outlet_2).count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True, outlet=outlet_2).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True, outlet=outlet_2).count()
@@ -456,7 +464,10 @@ def showQwikPartnerCylindersDispatchedFilledToQwikCustomer(request):
     except:
         pass
     outlet_2 = outlet_1.outlet
-    cylinders = Cylinder.objects.all().count()
+    cylinders0 = Cylinder.objects.filter(outlet=outlet_2).count()
+    cylinders1 = AntiOrder.objects.filter(outlet__outlet=outlet_2).count()
+    cylinders2 = OrderStatus.objects.filter(outlet__outlet=outlet_2, order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", outlet=outlet_2).count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True, outlet=outlet_2).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True, outlet=outlet_2).count()
@@ -550,7 +561,10 @@ def showQwikPartnerCylindersDispatchedToPlant(request):
     except:
         pass
     outlet_2 = outlet_1.outlet
-    cylinders = Cylinder.objects.all().count()
+    cylinders0 = Cylinder.objects.filter(outlet=outlet_2).count()
+    cylinders1 = AntiOrder.objects.filter(outlet__outlet=outlet_2).count()
+    cylinders2 = OrderStatus.objects.filter(outlet__outlet=outlet_2, order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", outlet=outlet_2).count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True, outlet=outlet_2).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True, outlet=outlet_2).count()
@@ -644,7 +658,10 @@ def showQwikPartnerCylindersDeliveredFilledToQwikLet(request):
     except:
         pass
     outlet_2 = outlet_1.outlet
-    cylinders = Cylinder.objects.all().count()
+    cylinders0 = Cylinder.objects.filter(outlet=outlet_2).count()
+    cylinders1 = AntiOrder.objects.filter(outlet__outlet=outlet_2).count()
+    cylinders2 = OrderStatus.objects.filter(outlet__outlet=outlet_2, order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", outlet=outlet_2).count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True, outlet=outlet_2).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True, outlet=outlet_2).count()
@@ -738,7 +755,10 @@ def showQwikVendorCylindersDeliveredFilledToQwikLet(request):
     except:
         pass
     outlet_2 = outlet_1.outlet
-    cylinders = Cylinder.objects.all().count()
+    cylinders0 = Cylinder.objects.filter(outlet=outlet_2).count()
+    cylinders1 = AntiOrder.objects.filter(outlet__outlet=outlet_2).count()
+    cylinders2 = OrderStatus.objects.filter(outlet__outlet=outlet_2, order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", outlet=outlet_2).count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True, outlet=outlet_2).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True, outlet=outlet_2).count()
@@ -827,7 +847,10 @@ def showQwikVendorCylindersDeliveredFilledToQwikLet(request):
 @login_required
 @permission_required('users.view_admin')
 def showQwikAdminCylindersDeliveredFilledToQwikLet(request):
-    cylinders = Cylinder.objects.all().count()
+    cylinders0 = Cylinder.objects.all().count()
+    cylinders1 = AntiOrder.objects.all().count()
+    cylinders2 = OrderStatus.objects.filter(order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer").count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True).count()
@@ -916,7 +939,10 @@ def showQwikAdminCylindersDeliveredFilledToQwikLet(request):
 @login_required
 @permission_required('users.view_admin')
 def showQwikAdminCylindersDispatchedToPlant(request):
-    cylinders = Cylinder.objects.all().count()
+    cylinders0 = Cylinder.objects.all().count()
+    cylinders1 = AntiOrder.objects.all().count()
+    cylinders2 = OrderStatus.objects.filter(order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer").count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True).count()
@@ -1010,7 +1036,10 @@ def showQwikPartnerCylindersReturnedEmpty(request):
     except:
         pass
     outlet_2 = outlet_1.outlet
-    cylinders = Cylinder.objects.all().count()
+    cylinders0 = Cylinder.objects.filter(outlet=outlet_2).count()
+    cylinders1 = AntiOrder.objects.filter(outlet__outlet=outlet_2).count()
+    cylinders2 = OrderStatus.objects.filter(outlet__outlet=outlet_2, order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", outlet=outlet_2).count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True, outlet=outlet_2).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True, outlet=outlet_2).count()
@@ -1104,7 +1133,10 @@ def showQwikPartnerCylindersReturnedFilledToQwikLet(request):
     except:
         pass
     outlet_2 = outlet_1.outlet
-    cylinders = Cylinder.objects.all().count()
+    cylinders0 = Cylinder.objects.filter(outlet=outlet_2).count()
+    cylinders1 = AntiOrder.objects.filter(outlet__outlet=outlet_2).count()
+    cylinders2 = OrderStatus.objects.filter(outlet__outlet=outlet_2, order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", outlet=outlet_2).count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True, outlet=outlet_2).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True, outlet=outlet_2).count()
@@ -1197,7 +1229,10 @@ def showQwikVendorCylindersReturnedFilledToQwikLet(request):
     except:
         pass
     outlet_2 = outlet_1.outlet
-    cylinders = Cylinder.objects.all().count()
+    cylinders0 = Cylinder.objects.filter(outlet=outlet_2).count()
+    cylinders1 = AntiOrder.objects.filter(outlet__outlet=outlet_2).count()
+    cylinders2 = OrderStatus.objects.filter(outlet__outlet=outlet_2, order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", outlet=outlet_2).count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True, outlet=outlet_2).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True, outlet=outlet_2).count()
@@ -1290,7 +1325,10 @@ def showQwikVendorCylindersReturnedFilledToQwikLet(request):
     except:
         pass
     outlet_2 = outlet_1.outlet
-    cylinders = Cylinder.objects.all().count()
+    cylinders0 = Cylinder.objects.filter(outlet=outlet_2).count()
+    cylinders1 = AntiOrder.objects.filter(outlet__outlet=outlet_2).count()
+    cylinders2 = OrderStatus.objects.filter(outlet__outlet=outlet_2, order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", outlet=outlet_2).count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True, outlet=outlet_2).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True, outlet=outlet_2).count()
@@ -1378,7 +1416,10 @@ def showQwikVendorCylindersReturnedFilledToQwikLet(request):
 @login_required
 @permission_required('users.view_admin')
 def showQwikAdminCylindersReturnedFilledToQwikLet(request):
-    cylinders = Cylinder.objects.all().count()
+    cylinders0 = Cylinder.objects.all().count()
+    cylinders1 = AntiOrder.objects.all().count()
+    cylinders2 = OrderStatus.objects.filter(order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer").count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True).count()
@@ -1473,7 +1514,8 @@ def showQwikVendorCylindersDeliveredToQwikCustomerAnti(request):
     outlet_2 = outlet_1.outlet
     cylinders0 = Cylinder.objects.filter(outlet=outlet_2).count()
     cylinders1 = AntiOrder.objects.filter(outlet__outlet=outlet_2).count()
-    cylinders = cylinders0 + cylinders1
+    cylinders2 = OrderStatus.objects.filter(outlet__outlet=outlet_2, order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", outlet=outlet_2).count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True, outlet=outlet_2).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True, outlet=outlet_2).count()
@@ -1564,7 +1606,8 @@ def showQwikVendorCylindersDeliveredToQwikCustomerAnti(request):
 def showQwikAdminCylindersDeliveredToQwikCustomerAnti(request):
     cylinders0 = Cylinder.objects.all().count()
     cylinders1 = AntiOrder.objects.all().count()
-    cylinders = cylinders0 + cylinders1
+    cylinders2 = OrderStatus.objects.filter(order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer").count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True).count()
@@ -1654,8 +1697,9 @@ def showQwikAdminCylindersDeliveredToQwikCustomerAnti(request):
 @permission_required('users.view_admin')
 def showQwikAdminCylindersDeliveredToQwikCustomerUser(request):
     cylinders0 = Cylinder.objects.all().count()
-    cylinders1 = OrderStatus.objects.filter(order_status="Delivered").count()
-    cylinders = cylinders0 + cylinders1
+    cylinders1 = AntiOrder.objects.all().count()
+    cylinders2 = OrderStatus.objects.filter(order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer").count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True).count()
@@ -1760,7 +1804,8 @@ def showQwikPartnerCylindersDeliveredToQwikCustomerAnti(request):
     outlet_2 = outlet_1.outlet
     cylinders0 = Cylinder.objects.filter(outlet=outlet_2).count()
     cylinders1 = AntiOrder.objects.filter(outlet__outlet=outlet_2).count()
-    cylinders = cylinders0 + cylinders1
+    cylinders2 = OrderStatus.objects.filter(outlet__outlet=outlet_2, order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", outlet=outlet_2).count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True, outlet=outlet_2).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True, outlet=outlet_2).count()
@@ -1855,8 +1900,9 @@ def showQwikPartnerCylindersDeliveredToQwikCustomerUser(request):
         pass
     outlet_2 = outlet_1.outlet
     cylinders0 = Cylinder.objects.filter(outlet=outlet_2).count()
-    cylinders1 = OrderStatus.objects.filter(product__outlet__outlet=outlet_2).count()
-    cylinders = cylinders0 + cylinders1
+    cylinders1 = AntiOrder.objects.filter(outlet__outlet=outlet_2).count()
+    cylinders2 = OrderStatus.objects.filter(outlet__outlet=outlet_2, order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", outlet=outlet_2).count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True, outlet=outlet_2).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True, outlet=outlet_2).count()
@@ -1960,8 +2006,9 @@ def showQwikVendorCylindersDeliveredToQwikCustomerUser(request):
         pass
     outlet_2 = outlet_1.outlet
     cylinders0 = Cylinder.objects.filter(outlet=outlet_2).count()
-    cylinders1 = OrderStatus.objects.filter(product__outlet__outlet=outlet_2).count()
-    cylinders = cylinders0 + cylinders1
+    cylinders1 = AntiOrder.objects.filter(outlet__outlet=outlet_2).count()
+    cylinders2 = OrderStatus.objects.filter(outlet__outlet=outlet_2, order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", outlet=outlet_2).count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True, outlet=outlet_2).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True, outlet=outlet_2).count()
@@ -2064,7 +2111,10 @@ def showQwikVendorCylindersReturnedEmpty(request):
     except:
         pass
     outlet_2 = outlet_1.outlet
-    cylinders = Cylinder.objects.all().count()
+    cylinders0 = Cylinder.objects.filter(outlet=outlet_2).count()
+    cylinders1 = AntiOrder.objects.filter(outlet__outlet=outlet_2).count()
+    cylinders2 = OrderStatus.objects.filter(outlet__outlet=outlet_2, order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", outlet=outlet_2).count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True, outlet=outlet_2).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True, outlet=outlet_2).count()
@@ -2153,7 +2203,10 @@ def showQwikVendorCylindersReturnedEmpty(request):
 @login_required
 @permission_required('users.view_admin')
 def showQwikAdminCylindersReceivedEmpty(request):
-    cylinders = Cylinder.objects.all().count()
+    cylinders0 = Cylinder.objects.all().count()
+    cylinders1 = AntiOrder.objects.all().count()
+    cylinders2 = OrderStatus.objects.filter(order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer").count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True).count()
@@ -2242,7 +2295,10 @@ def showQwikAdminCylindersReceivedEmpty(request):
 @login_required
 @permission_required('users.view_admin')
 def showQwikAdminCylindersReturnedEmpty(request):
-    cylinders = Cylinder.objects.all().count()
+    cylinders0 = Cylinder.objects.all().count()
+    cylinders1 = AntiOrder.objects.all().count()
+    cylinders2 = OrderStatus.objects.filter(order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer").count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True).count()
@@ -2330,7 +2386,10 @@ def showQwikAdminCylindersReturnedEmpty(request):
 @login_required
 @permission_required('users.view_admin')
 def showQwikAdminCylindersDispatchedFilledToQwikCustomer(request):
-    cylinders = Cylinder.objects.all().count()
+    cylinders0 = Cylinder.objects.all().count()
+    cylinders1 = AntiOrder.objects.all().count()
+    cylinders2 = OrderStatus.objects.filter(order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     received_empty_from_qwikcustomers = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer").count()
     returned_empty_to_qwiklets = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", vendor_confirm=True).count()
     dispatched_to_plants = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant", partner_confirm=True).count()
@@ -2464,6 +2523,30 @@ def updateQwikAdminCylindersDispatchedToPlant(request, id):
 
 @login_required
 @permission_required('users.view_admin')
+def updateQwikAdminCylindersReturnedFilledToQwikLet(request, id):
+    cylinder = Cylinder.objects.get(id=id)
+    form = CylinderFormAdminUpReturnedFilledToQwikLet(instance=cylinder)
+    if request.method=='POST':
+        form = CylinderFormAdminUpReturnedFilledToQwikLet(request.POST, instance=cylinder)
+        if form.is_valid():
+
+            cylinder = form.cleaned_data.get('cylinder')
+            try:
+                product = Product.objects.filter(product_Id=cylinder)[0]
+                category = product.category.type
+            except:
+                category = "None"
+            form.save(commit=False).category = category
+            form.save(commit=False).who8_2 = "QwikAdmin"
+            form.save()
+
+            messages.success(request, "The cylinder has been modified successfully")
+            return redirect('products:qwikadmin_cylinders_returned_filled_to_qwiklet')
+    return render(request, 'products/form_qwikadmin_cylinders_returned_filled_to_qwiklet.html', {'form': form, 'cylinder': cylinder})
+
+
+@login_required
+@permission_required('users.view_admin')
 def updateQwikAdminCylindersDispatchedFilledToQwikCustomer(request, id):
     cylinder = Cylinder.objects.get(id=id)
     form = CylinderFormAdminUpDispatchedToQwikCustomer(instance=cylinder)
@@ -2557,7 +2640,8 @@ def updateQwikAdminCylindersReturnedEmpty(request, id):
 def showQwikCustomerCylindersReturnedEmpty(request):
     cylinders0 = Cylinder.objects.filter(customer=request.user).count()
     cylinders1 = AntiOrder.objects.filter(user=request.user).count()
-    cylinders = cylinders0 + cylinders1
+    cylinders2 = OrderStatus.objects.filter(order__order__user==request.user).count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     returned_empty_to_qwikpartners = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", customer=request.user).count()
     # received_filleds = Cylinder.objects.filter(partner_product_status="Received Filled").count()
     try:
@@ -2598,7 +2682,8 @@ def showQwikCustomerCylindersReturnedEmpty(request):
 def showQwikCustomerCylindersReceivedFilledAnti(request):
     cylinders0 = Cylinder.objects.filter(customer=request.user).count()
     cylinders1 = AntiOrder.objects.filter(user=request.user).count()
-    cylinders = cylinders0 + cylinders1
+    cynders2 = OrderStatus.objects.filter(order__order__user=request.user, order_status="Delivered").count()
+    cylinders = cylinders0 + cylinders1 + cylinders2
     returned_empty_to_qwikpartners = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", customer=request.user).count()
     received_filleds = AntiOrder.objects.filter(user=request.user).count()
     try:
