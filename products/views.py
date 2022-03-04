@@ -2714,12 +2714,17 @@ def showQwikCustomerCylindersReturnedEmpty(request):
     cylinders2 = OrderStatus.objects.filter(order__order__user==request.user).count()
     cylinders = cylinders0 + cylinders1 + cylinders2
     returned_empty_to_qwikpartners = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", customer=request.user).count()
-    # received_filleds = Cylinder.objects.filter(partner_product_status="Received Filled").count()
+    received_filleds = AntiOrder.objects.filter(user=request.user).count()
+    received_filleds_users = OrderStatus.objects.filter(order__order__user==request.user).count()
+
     try:
         perc_returned_empty_to_qwikpartners = round((returned_empty_to_qwikpartners/cylinders)*100,1)
     except:
         perc_returned_empty_to_qwikpartners = 0
-    # perc_received_filleds = round((received_filleds/cylinders)*100,1)
+    try:
+        perc_returned_empty_to_qwikpartners = round((returned_empty_to_qwikpartners/cylinders)*100,1)
+    except:
+        perc_returned_empty_to_qwikpartners = 0
 
     returned_empty_to_qwikpartner = round(perc_returned_empty_to_qwikpartners/100,2)
     # received_filled = round(perc_received_filleds/100,2)
