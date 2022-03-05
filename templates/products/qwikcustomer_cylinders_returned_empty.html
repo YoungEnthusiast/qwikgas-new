@@ -24,7 +24,7 @@
 		</div>
 		<!--page header-->
     <div class="row">
-      <div class="col-md-12 col-lg-6 col-xl-6">
+      <div class="col-md-12 col-lg-6 col-xl-4">
         <div class="card">
           <div class="card-body">
             <div class="row mb-0">
@@ -44,28 +44,47 @@
           </div>
         </div>
       </div>
-      <div class="col-md-12 col-lg-6 col-xl-6">
+      <div class="col-md-12 col-lg-6 col-xl-4">
         <div class="card">
           <div class="card-body">
             <div class="row mb-0">
               <div class="col-md-5">
                 <div class="dash3 mb-0">
-                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{returned_empty_to_qwiklet}}" data-thickness="6" data-color="#007541">
-                    <div class="chart-circle-value text-center ">{{perc_returned_empty_to_qwiklets}}%</div>
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{received_filled}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_received_filleds}}%</div>
                   </div>
                 </div>
               </div>
               <div class="col-md-7  mt-4 mt-sm-0">
                 <h6 class="media-heading fw-500"></h6>
-                <h1 class="counter num-font mb-0 text-cylinder">{{returned_empty_to_qwiklets}}</h1>
-                <p class="text-muted mb-0">Returned Empty to Qwiklet</p>
+                <h1 class="counter num-font mb-0 text-cylinder">{{received_filleds}}</h1>
+                <p class="text-muted mb-0">Received Filled (Anticipatory)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-lg-6 col-xl-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{received_filled_user}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_received_filleds_users}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500"></h6>
+                <h1 class="counter num-font mb-0 text-cylinder">{{received_filleds_users}}</h1>
+                <p class="text-muted mb-0">Received Filled</p>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
 
   <div class="row">
     <div class="col-xl-12">

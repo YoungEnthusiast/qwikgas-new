@@ -25,7 +25,7 @@
 		</div>
 		<!--page header-->
     <div class="row">
-      <div class="col-md-12 col-lg-6 col-xl-6">
+      <div class="col-md-12 col-lg-6 col-xl-4">
         <div class="card">
           <div class="card-body">
             <div class="row mb-0">
@@ -45,7 +45,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-12 col-lg-6 col-xl-6">
+      <div class="col-md-12 col-lg-6 col-xl-4">
         <div class="card">
           <div class="card-body">
             <div class="row mb-0">
@@ -65,13 +65,33 @@
           </div>
         </div>
       </div>
+      <div class="col-md-12 col-lg-6 col-xl-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{received_filled_user}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_received_filleds_users}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500"></h6>
+                <h1 class="counter num-font mb-0 text-cylinder">{{received_filleds_users}}</h1>
+                <p class="text-muted mb-0">Received Filled</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
   <div class="row">
     <div class="col-xl-12">
       <div class="card">
         <div class="card-header bg-white">
-          <div class="card-title text-dark-green">Delivered to QwikCustomer (Anticipatory)</div>
+          <div class="card-title text-dark-green">Received Filled (Anticipatory)</div>
         </div>
         <div class="card-body">
           <div class="text-center">
@@ -91,8 +111,6 @@
               <thead class="text-dark-green">
                 <tr>
                   <th>Date & Time</th>
-                  <th>Customer's Name</th>
-                  <th>Customer's ID</th>
                   <th>Product Type</th>
                   <th>Cylinder ID</th>
                 </tr>
@@ -101,8 +119,6 @@
                 {% for product in cylinders_page_obj %}
                 <tr class="">
                   <td>{{product.created}}</td>
-                  <td>{{product.user.first_name}} {{product.user.last_name}}</td>
-                  <td>{{product.user.username}}</td>
                   <td>{{product.product.category}}</td>
                   <td>{{product.product.product_Id}}</td>
                 </tr>
