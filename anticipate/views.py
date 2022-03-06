@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from users.models import Outlet
+from users.models import Outlet, Person
 from .models import AntiOrder#, OrderStatus
 # from products.models import Category
 # from users.models import Wallet, Person, Outlet
@@ -71,12 +71,16 @@ def showQwikPartnerAntiOrders(request):
             form.save(commit=False).order_Id = str(random.randint(10000000,99999999))
             form.save()
             user = form.cleaned_data.get('user')
+            product = form.cleaned_data.get('product')
             reg = AntiOrder.objects.filter(user=user)[0]
             reg.static_price = reg.product.category.price
             reg.static_total_cost = reg.total_cost()
             reg.save()
 
-            # form.save()
+            reg1 = Person.objects.get(username=user.username)
+            reg1.holding = product.product_Id
+            reg1.save()
+
             messages.success(request, "The anticipatory order has been added successfully")
             return redirect('anticipate:qwikpartner_anti_orders')
         else:

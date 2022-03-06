@@ -66,6 +66,7 @@ class Person(AbstractUser):
     dob = models.DateField(blank=True, null=True, verbose_name="Date of Start of Business")
     type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='QwikCustomer', blank=True, null=True)
     photograph = models.ImageField(upload_to='users_img/%Y/%m/%d', null=True, blank=True)
+    holding = models.CharField(max_length=15, blank=True, null=True)
     state = models.ForeignKey('users.State', on_delete=models.SET_NULL, blank=True, null=True)
     lg = models.ForeignKey('users.Lg', on_delete=models.SET_NULL, blank=True, null=True, verbose_name="LG")
     city = models.CharField(max_length=20, blank=True, null=True)

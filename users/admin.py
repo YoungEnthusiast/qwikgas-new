@@ -18,7 +18,7 @@ class PersonAdmin(UserAdmin):
             (
                 "Custom Fields",
                 {
-                    'fields': ('phone_number', 'gender', 'type', 'photograph', 'address', 'state', 'lg', 'city', 'outlet', 'about_me', 'referrer')
+                    'fields': ('phone_number', 'gender', 'type', 'photograph', 'holding', 'address', 'state', 'lg', 'city', 'outlet', 'about_me', 'referrer')
                 }
             )
         )

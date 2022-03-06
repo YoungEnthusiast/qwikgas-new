@@ -12,9 +12,7 @@ urlpatterns = [
     path('sitemap.xml', sitemap, {'sitemaps':sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('<category_slug>/', views.product_list, name='product_list_by_category'),
     path('product/<id>/', views.product_detail, name='product_detail'),
-
     path('product/description/<id>/', views.product_detail2, name='product_detail2'),
-
     path('qwikvendor-dashboard/products/', views.showQwikVendorProducts, name='qwikvendor_products'),
     path('qwikpartner-dashboard/products/', views.showQwikPartnerProducts, name='qwikpartner_products'),
     path('qwikpartner-dashboard/cylinders-received-empty/', views.showQwikPartnerCylindersReceivedEmpty, name='qwikpartner_cylinders_received_empty'),
@@ -41,9 +39,7 @@ urlpatterns = [
     path('qwika-dashboard/cylinders-returned-filled-to-qwiklet/decline/<int:id>', views.declineQwikAdminCylindersReturnedFilledToQwikLet, name='decline_qwikadmin_cylinders_returned_filled_to_qwiklet'),
     path('qwika-dashboard/cylinders-returned-filled-to-qwiklet/return/<int:id>', views.returnQwikAdminCylindersReturnedFilledToQwikLet, name='return_qwikadmin_cylinders_returned_filled_to_qwiklet'),
     path('qwika-dashboard/cylinders-returned-filled-to-qwiklet/not-return/<int:id>', views.notReturnQwikAdminCylindersReturnedFilledToQwikLet, name='not_return_qwikadmin_cylinders_returned_filled_to_qwiklet'),
-
     path('qwika-dashboard/cylinders-returned-filled-to-qwiklet/', views.showQwikAdminCylindersReturnedFilledToQwikLet, name='qwikadmin_cylinders_returned_filled_to_qwiklet'),
-
     path('qwikpartner-dashboard/cylinders-dispatched-to-plant/accept/<int:id>', views.acceptQwikPartnerCylindersDispatchedToPlant, name='accept_qwikpartner_cylinders_dispatched_to_plant'),
     path('qwikpartner-dashboard/cylinders-dispatched-to-plant/decline/<int:id>', views.declineQwikPartnerCylindersDispatchedToPlant, name='decline_qwikpartner_cylinders_dispatched_to_plant'),
     path('qwika-dashboard/cylinders-dispatched-to-plant/', views.showQwikAdminCylindersDispatchedToPlant, name='qwikadmin_cylinders_dispatched_to_plant'),
@@ -52,18 +48,15 @@ urlpatterns = [
     path('qwikpartner-dashboard/cylinders-delivered-to-qwikcustomer-anticipatory/', views.showQwikPartnerCylindersDeliveredToQwikCustomerAnti, name='qwikpartner_cylinders_delivered_to_qwikcustomer_anti'),
     path('qwikpartner-dashboard/cylinders-delivered-to-qwikcustomer/', views.showQwikPartnerCylindersDeliveredToQwikCustomerUser, name='qwikpartner_cylinders_delivered_to_qwikcustomer_user'),
     path('qwikvendor-dashboard/cylinders-delivered-to-qwikcustomer/', views.showQwikVendorCylindersDeliveredToQwikCustomerUser, name='qwikvendor_cylinders_delivered_to_qwikcustomer_user'),
-
     path('qwikvendor-dashboard/cylinders-delivered-to-qwikcustomer-anticipatory/', views.showQwikVendorCylindersDeliveredToQwikCustomerAnti, name='qwikvendor_cylinders_delivered_to_qwikcustomer_anti'),
     path('qwika-dashboard/cylinders-delivered-to-qwikcustomer-anticipatory/', views.showQwikAdminCylindersDeliveredToQwikCustomerAnti, name='qwikadmin_cylinders_delivered_to_qwikcustomer_anti'),
     path('qwika-dashboard/cylinders-delivered-to-qwikcustomer/', views.showQwikAdminCylindersDeliveredToQwikCustomerUser, name='qwikadmin_cylinders_delivered_to_qwikcustomer_user'),
     path('qwika-dashboard/cylinders-delivered-to-qwikcustomer/update/<int:id>', views.updateQwikAdminCylindersDeliveredToQwikCustomerUser, name='update_qwikadmin_cylinders_delivered_to_qwikcustomer_user'),
-
     path('qwika-dashboard/cylinders-delivered-to-qwikcustomer-anticipatory/update/<int:id>', views.updateQwikAdminCylindersDeliveredToQwikCustomerAnti, name='update_qwikadmin_cylinders_delivered_to_qwikcustomer_anti'),
     path('qwikcustomer-dashboard/cylinders-received-filled-anticipatory/', views.showQwikCustomerCylindersReceivedFilledAnti, name='qwikcustomer_cylinders_received_filled_anti'),
     path('qwikcustomer-dashboard/cylinders-received-filled/', views.showQwikCustomerCylindersReceivedFilledUser, name='qwikcustomer_cylinders_received_filled_user'),
     path('qwikpartner-dashboard/cylinders-returned-filled-to-qwiklet/', views.showQwikPartnerCylindersReturnedFilledToQwikLet, name='qwikpartner_cylinders_returned_filled_to_qwiklet'),
     path('qwikvendor-dashboard/cylinders-returned-filled-to-qwiklet/', views.showQwikVendorCylindersReturnedFilledToQwikLet, name='qwikvendor_cylinders_returned_filled_to_qwiklet'),
-
     path('qwikpartner-dashboard/cylinders-returned-empty/', views.showQwikPartnerCylindersReturnedEmpty, name='qwikpartner_cylinders_returned_empty'),
     path('qwikvendor-dashboard/cylinders-returned-empty/', views.showQwikVendorCylindersReturnedEmpty, name='qwikvendor_cylinders_returned_empty'),
     path('qwikvendor-dashboard/cylinders-returned-empty/accept/<int:id>', views.acceptQwikVendorCylindersReturnedEmpty, name='accept_qwikvendor_cylinders_returned_empty'),
@@ -76,7 +69,6 @@ urlpatterns = [
     path('qwika-dashboard/cylinders-returned-empty/update/<int:id>', views.updateQwikAdminCylindersReturnedEmpty, name='update_qwikadmin_cylinders_returned_empty'),
     path('qwika-dashboard/cylinders-dispatched-to-plant/update/<int:id>', views.updateQwikAdminCylindersDispatchedToPlant, name='update_qwikadmin_cylinders_dispatched_to_plant'),
     path('qwika-dashboard/cylinders-returned-filled-to-qwiklet/update/<int:id>', views.updateQwikAdminCylindersReturnedFilledToQwikLet, name='update_qwikadmin_cylinders_returned_filled_to_qwiklet'),
-
     path('qwika-dashboard/cylinders-dispatched-filled-to-qwikcustomer/update/<int:id>', views.updateQwikAdminCylindersDispatchedFilledToQwikCustomer, name='update_qwikadmin_cylinders_dispatched_filled_to_qwikcustomer'),
     path('qwikcustomer-dashboard/cylinders-returned-empty/', views.showQwikCustomerCylindersReturnedEmpty, name='qwikcustomer_cylinders_returned_empty'),
     path('qwika-dashboard/products/', views.showQwikAdminProducts, name='qwikadmin_products'),
@@ -87,4 +79,10 @@ urlpatterns = [
     path('qwikpartner-dashboard/products/update/<int:id>', views.updateQwikPartnerProducts, name='update_products_partner'),
     # path('<id>/<slug>/', views.product_detail, name='product_detail'),
     # path('fund-wallet', views.fundWallet, name='fund'),
+    path('qwika-dashboard/cylinders/', views.showQwikAdminCylinders, name='qwikadmin_cylinders'),
+    path('qwika-dashboard/cylinders/update/<int:id>', views.updateCylinder, name='qwikadmin_update_cylinders'),
+    path('qwika-dashboard/cylinder/add-new', views.addCylinder, name='qwikadmin_cylinder'),
+    path('qwika-dashboard/cylinders/delete/<int:id>', views.deleteCylinder),
+
+
 ]

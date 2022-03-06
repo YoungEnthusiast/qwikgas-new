@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Category, Product, Cylinder
 from anticipate.models import AntiOrder
 from orders.models import UserOrder, OrderStatus
-from users.models import Wallet, Outlet
+from users.models import Wallet, Outlet, Person
 from .forms import CategoryForm, ProductForm, ProductFormPartner, ProductFormAdmin, CylinderFormVendor, CylinderFormAdminUp, CylinderFormAdminUpDispatchedToPlant, CylinderFormAdminUpReturnedFilledToQwikLet, CylinderFormAdminUpDispatchedToQwikCustomer, CylinderFormAdminUpDeliveredToQwikCustomerAnti, CylinderFormAdminUpDeliveredToQwikCustomerUser, CylinderFormPartner, CylinderFormVendorUp, CylinderFormPartnerUp, CylinderFormCustomerUp
 # from orders.forms import VisitorOrderForm
 from .filters import ProductFilter, ProductFilterAdmin, CategoryFilter, CylinderFilter
@@ -212,6 +212,7 @@ def showQwikPartnerCylindersReceivedEmpty(request):
         form = CylinderFormPartner(request.POST, request.FILES, None)
         if form.is_valid():
             cylinder = form.cleaned_data.get('cylinder')
+            customer = form.cleaned_data.get('customer')
             try:
                 product = Product.objects.filter(product_Id=cylinder)[0]
                 category = product.category.type
@@ -223,6 +224,9 @@ def showQwikPartnerCylindersReceivedEmpty(request):
             form.save(commit=False).category = category
             form.save(commit=False).outlet = outlet
             form.save()
+            reg = Person.objects.get(username=customer.username)
+            reg.holding = "Returned"
+            reg.save()
             messages.success(request, "The cylinder stage has been added successfully")
             return redirect('products:qwikpartner_cylinders_received_empty')
         else:
@@ -3261,3 +3265,58 @@ def addProduct(request):
         else:
             messages.error(request, "Please review form input fields below")
     return render(request, 'products/qwikadmin_product.html', {'form': form})
+
+#########
+@login_required
+@permission_required('users.view_admin')
+def showQwikAdminCylinders(request):
+    context = {}
+    filtered_products = ProductFilterAdmin(
+        request.GET,
+        queryset = Product.objects.all()
+    )
+    context['filtered_products'] = filtered_products
+    paginated_filtered_products = Paginator(filtered_products.qs, 10)
+    page_number = request.GET.get('page')
+    products_page_obj = paginated_filtered_products.get_page(page_number)
+    context['products_page_obj'] = products_page_obj
+    total_products = filtered_products.qs.count()
+    context['total_products'] = total_products
+    return render(request, 'products/qwikadmin_cylinders.html', context=context)
+
+@login_required
+@permission_required('users.view_admin')
+def updateCylinder(request, id):
+    product = Product.objects.get(id=id)
+    form = ProductFormAdmin(instance=product)
+    if request.method=='POST':
+        form = ProductFormAdmin(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "The cylinder has been modified successfully")
+            return redirect('products:qwikadmin_cylinders')
+    return render(request, 'products/qwikadmin_cylinder_update.html', {'form': form, 'product': product})
+
+@login_required
+@permission_required('users.view_admin')
+def addCylinder(request):
+    form = ProductFormAdmin()
+    if request.method == 'POST':
+        form = ProductFormAdmin(request.POST, request.FILES, None)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "The cylinder has been added successfully")
+            return redirect('products:qwikadmin_cylinders')
+        else:
+            messages.error(request, "Please review form input fields below")
+    return render(request, 'products/qwikadmin_cylinder.html', {'form': form})
+
+@login_required
+@permission_required('users.view_admin')
+def deleteCylinder(request, id):
+    product = Product.objects.get(id=id)
+    obj = get_object_or_404(Product, id=id)
+    if request.method =="POST":
+        obj.delete()
+        return redirect('products:qwikadmin_cylinders')
+    return render(request, 'products/qwikadmin_cylinder_confirm_delete.html', {'product': product})
