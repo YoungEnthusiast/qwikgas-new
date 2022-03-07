@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import OrderItem, UserOrder, OrderStatus, PayDelivery, PayLater, PaySmall
-from products.models import Category
+from products.models import Category, Owing
 from users.models import Wallet, Person, Outlet
 from .filters import UserOrderFilter, UserOrderFilter2, OrderItemFilter, OrderItemFilter2, OrderStatusFilter, OrderStatusFilter2
 from django.contrib import messages
 from django.core.mail import send_mail
-from .forms import UserOrderForm, AddOrderForm, UserOrderFormCust, PayDeliveryForm, PayLaterForm, PaySmallForm
+from .forms import UserOrderForm, AddOrderFormVendor, AddOrderFormPartner, UserOrderFormCust, PayDeliveryForm, PayLaterForm, PaySmallForm
 from cart.cart import Cart
 import random
 from django.core.paginator import Paginator
@@ -164,43 +164,6 @@ def addPaySmall(request):
             messages.error(request, "Please review form input fields below")
 
     return render(request, 'orders/pay_small.html', {'form': form})
-
-
-
-
-
-
-
-
-    # elif request.method == 'POST' and form2 == PayLaterForm():
-    #     form2 = PayLaterForm(request.POST, request.FILES, None)
-    #     if form2.is_valid():
-    #         form2.save(commit=False).user = request.user
-    #         form2.save()
-    #
-    #         reg2 = UserOrder.objects.filter(user=request.user)[0]
-    #         reg3 = PayLater.objects.filter(user=request.user)[0]
-    #         # reg2.payment_type = None
-    #         # reg2.save()
-    #         reg2.payment_type = "Later on "
-    #         reg2.payment_date_later = reg3.payment_date_later
-    #
-    #         reg2.payment_choice = reg3.payment_choice
-    #         reg3.pay_del_Id = reg2.order_Id
-    #         reg2.save()
-    #         reg3.save()
-    #         messages.success(request, "Your payment choice has been saved successfully.")
-    #         return redirect('orders:orders')
-    #     else:
-    #         messages.error(request, "Please review form input fields below")
-    # context = {'order': order, 'order_items': order_items, 'current_balance': current_balance, 'form2': form2}
-    # return render(request, 'orders/checkout.html', context)
-
-
-
-
-
-
 
 @login_required
 def showInvoice(request, pk, **kwargs):
@@ -439,9 +402,9 @@ def showQwikPartnerOrderStatuses(request):
 @permission_required('users.view_vendor')
 def addOrderStatusQwikVendor(request, id):
     order_item = OrderItem.objects.get(id=id)
-    form = AddOrderForm()
+    form = AddOrderFormVendor()
     if request.method == 'POST':
-        form = AddOrderForm(request.POST or None)
+        form = AddOrderFormVendor(request.POST or None)
         if form.is_valid():
             form.save()
             status = form.cleaned_data.get('order_status')
@@ -468,20 +431,38 @@ def addOrderStatusQwikVendor(request, id):
 @permission_required('users.view_partner')
 def addOrderStatusQwikPartner(request, id):
     order_item = OrderItem.objects.get(id=id)
-    form = AddOrderForm()
+    form = AddOrderFormPartner()
     if request.method == 'POST':
-        form = AddOrderForm(request.POST or None)
+        form = AddOrderFormPartner(request.POST or None)
         if form.is_valid():
-            form.save()
+            product = form.cleaned_data.get('product')
             status = form.cleaned_data.get('order_status')
+            form.save()
+
             reg = OrderStatus.objects.all()[0]
             reg.order = order_item
             reg.employee = request.user.first_name
             reg.save()
+
+            user = reg.order.order.user
+
+            owing_entry = Owing()
+            owing_entry.customer = user
+            owing_entry.cylinder = product.product_Id
+            owing_entry.save()
+
+            owings = Owing.objects.filter(customer=user)
+            reg = Person.objects.get(username=user.username)
+            reg.holding = ""
+            for each in owings:
+                reg.holding = reg.holding + " " + each.cylinder
+                reg.save()
+
+
             # email = reg.user.email
             # name = reg.user.first_name
             # order_Id = reg.order_Id
-            # send_mail(
+            # send_mail(s
             #     'Order Status',
             #     'Dear ' + str(name) + ', Your order status has now been changed to ' + str(status),
             #     'admin@buildqwik.ng',

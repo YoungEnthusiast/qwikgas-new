@@ -1,4 +1,5 @@
 from django import forms
+from users.models import Person
 from .models import AntiOrder#, VisitorOrder, OrderStatus
 from django.forms.widgets import NumberInput
 from django.core.exceptions import ValidationError
@@ -19,6 +20,7 @@ class AntiOrderForm(forms.ModelForm):
 		('PoS', 'PoS'),
         ('Cash', 'Cash'),
 	]
+    user = forms.ModelChoiceField(queryset=Person.objects.filter(type="QwikCustomer"))
     payment_type1 = forms.ChoiceField(label='Payment Type', choices=PAYMENT_TYPE1, widget=forms.RadioSelect, required = False)
     payment_type2 = forms.ChoiceField(label='', choices=PAYMENT_TYPE2, widget=forms.RadioSelect, required = False)
     payment_type3 = forms.ChoiceField(label='', choices=PAYMENT_TYPE3, widget=forms.RadioSelect, required = False)
