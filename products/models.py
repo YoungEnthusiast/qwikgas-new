@@ -185,3 +185,20 @@ class Cylinder(models.Model):
             return str(self.cylinder)
         except:
             return str(self.id)
+
+class Owing(models.Model):
+    cylinder = models.CharField(max_length=30, null=True, verbose_name="Cylinder Id")
+    category = models.CharField(max_length=12, null=True)
+    outlet = models.CharField(max_length=30, null=True)
+    customer = models.ForeignKey('users.Person', null=True, blank=True, on_delete=models.SET_NULL)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('-created',)
+        index_together = (('id',))
+    def __str__(self):
+        try:
+            return str(self.cylinder)
+        except:
+            return str(self.id)

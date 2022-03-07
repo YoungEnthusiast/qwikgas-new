@@ -224,9 +224,11 @@ def showQwikPartnerCylindersReceivedEmpty(request):
             form.save(commit=False).category = category
             form.save(commit=False).outlet = outlet
             form.save()
-            reg = Person.objects.get(username=customer.username)
-            reg.holding = "Returned"
-            reg.save()
+
+            # reg = Person.objects.get(username=customer.username)
+            #
+            # reg.holding = "Returned"
+            # reg.save()
             messages.success(request, "The cylinder stage has been added successfully")
             return redirect('products:qwikpartner_cylinders_received_empty')
         else:

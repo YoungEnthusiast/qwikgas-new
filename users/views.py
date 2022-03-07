@@ -2,7 +2,7 @@ import urllib.request
 from datetime import datetime
 from anticipate.models import AntiOrder
 from orders.models import OrderStatus
-from products.models import Category, Product, Cylinder
+from products.models import Category, Product, Cylinder, Owing
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CustomRegisterForm, CustomRegisterForm2, RequestForm, CustomRegisterFormQwikCust, CustomRegisterFormQwikAdmin, CustomRegisterFormQwikVendor, CustomRegisterFormQwikPartner, AdminCreditForm, OutletForm
 from django.contrib import messages
@@ -551,20 +551,6 @@ def showQwikAdminBoard(request):
 @login_required
 @permission_required('users.view_admin')
 def showQwikAdminPeople(request):
-    cylinders0 = Cylinder.objects.filter(customer=request.user).count()
-    cylinders1 = AntiOrder.objects.filter(user=request.user).count()
-    cylinders2 = OrderStatus.objects.filter(order__order__user=request.user, order_status="Delivered").count()
-    cylinders = cylinders0 + cylinders1 + cylinders2
-    returned_empty_to_qwikpartners = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer", customer=request.user).count()
-    received_filleds = AntiOrder.objects.filter(user=request.user).count()
-    received_filleds_users = OrderStatus.objects.filter(order__order__user=request.user, order_status="Delivered").count()
-
-    try:
-        perc_returned_empty_to_qwikpartners = round((returned_empty_to_qwikpartners/cylinders)*100,1)
-    except:
-        perc_returned_empty_to_qwikpartners = 0
-
-
     context = {}
     filtered_people = PeopleFilter(
         request.GET,
@@ -577,6 +563,9 @@ def showQwikAdminPeople(request):
     context['people_page_obj'] = people_page_obj
     total_people = filtered_people.qs.count()
     context['total_people'] = total_people
+
+    owings = Owing.objects.all()
+
 
     people = Person.objects.all().count()
     qwikcustomers = Person.objects.filter(type="QwikCustomer").count()

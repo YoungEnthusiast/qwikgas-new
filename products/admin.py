@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, Cylinder
+from .models import Category, Product, Cylinder, Owing
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['created', 'updated', 'type', 'mass', 'price', 'image']
@@ -28,3 +28,13 @@ class CylinderAdmin(admin.ModelAdmin):
     list_per_page = 10
 
 admin.site.register(Cylinder, CylinderAdmin)
+
+class OwingAdmin(admin.ModelAdmin):
+    list_display = ['created', 'cylinder', 'customer']
+    # search_fields = ['type', 'price']
+    list_display_links = ['cylinder']
+    # list_editable = ['price']
+    #prepopulated_fields = {'slug': ('type',)}
+    list_per_page = 10
+
+admin.site.register(Owing, OwingAdmin)
