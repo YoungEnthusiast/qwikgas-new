@@ -84,15 +84,10 @@ def showQwikPartnerAntiOrders(request):
 
             owings = Owing.objects.filter(customer=user)
             reg = Person.objects.get(username=user.username)
+            reg.holding = ""
             for each in owings:
                 reg.holding = reg.holding + " " + each.cylinder
                 reg.save()
-
-
-
-            #
-            # reg.holding = reg.holding + " " + product.product_Id
-            # reg.save()
 
             messages.success(request, "The anticipatory order has been added successfully")
             return redirect('anticipate:qwikpartner_anti_orders')

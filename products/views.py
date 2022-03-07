@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Category, Product, Cylinder
+from .models import Category, Product, Cylinder, Owing
 from anticipate.models import AntiOrder
 from orders.models import UserOrder, OrderStatus
 from users.models import Wallet, Outlet, Person
@@ -225,10 +225,18 @@ def showQwikPartnerCylindersReceivedEmpty(request):
             form.save(commit=False).outlet = outlet
             form.save()
 
-            # reg = Person.objects.get(username=customer.username)
-            #
-            # reg.holding = "Returned"
-            # reg.save()
+            owings = Owing.objects.filter(customer=customer)
+            for each in owings:
+                if cylinder == each.cylinder:
+                    each.delete()
+
+            owings = Owing.objects.filter(customer=customer)
+            reg = Person.objects.get(username=customer.username)
+            reg.holding = ""
+            for each in owings:
+                reg.holding = reg.holding + " " + each.cylinder
+                reg.save()
+
             messages.success(request, "The cylinder stage has been added successfully")
             return redirect('products:qwikpartner_cylinders_received_empty')
         else:
