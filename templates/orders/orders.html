@@ -12,12 +12,21 @@
 <div class=" app-content">
 	<div class="side-app">
     <br>
-    {% include 'partials/_alerts.html' %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <h5>{{message}}</h5>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+    {% endfor %}
+  {% endif %}
 		<!--Page Header-->
 		<div class="page-header">
 			<h4 class="page-title"><i class="fa fa-spinner text-dark-green mr-2 fa-1x"></i>Welcome to your orders' page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
 			<ol class="breadcrumb bg-white">
-        <li class="breadcrumb-item"><a href="{% url 'products:product_list' %}"><strong>Dashboard</strong></a></li>
+        <li class="breadcrumb-item"><a href="{% url 'qwikcust_board' %}"><strong>Dashboard</strong></a></li>
 				<li class="breadcrumb-item active" aria-current="page"><strong>Orders</strong></li>
 			</ol>
 		</div>
@@ -72,12 +81,13 @@
                   <th>PAYMENT STATUS</th>
                   <th>ACCUMULATED POINT</th>
                   <th>OUTLET</th>
-                  <th></th>
+                  <th>CHECKOUT</th>
+                  <th>INVOICE</th>
+                  <th>DELETE</th>
                 </tr>
               </thead>
               <tbody>
                 {% for order in userorders_page_obj %}
-                {% if order.payment_status == "Confirmed" %}
                 <tr class="">
                   <td>{{order.created}}</td>
                   <td>{{order.order_Id}}</td>
@@ -94,28 +104,25 @@
                   <td>{{order.payment_status}}</td>
                   <td>{{order.point}}</td>
                   <td>{{order.outlet}}</td>
-                  <td><a href="{% url 'orders:show_invoice' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
-                </tr>
-                {% else %}
-                <tr class="">
-                  <td>{{order.created}}</td>
-                  <td>{{order.order_Id}}</td>
-                  <td>₦{{order.get_total_cost|intcomma}}</td>
-                  <td>{{order.schedule_delivery}}</td>
-                  {% if order.payment_type == "Later on " %}
-                  <td>{{order.payment_type}}{{order.payment_date_later}}</td>
-                  {% elif order.payment_type == "Small Small" %}
-                  <td>{{order.payment_type}} on {{order.payment1_date}}({{order.payment1}}) | {{order.payment2_date}}({{order.payment2}}) | {{order.payment3_date}}({{order.payment3}})</td>
+                  {% if order.payment_status == "Confirmed" %}
+                  <td></td>
+                  <td class="text-center"><a href="{% url 'orders:show_invoice' order.id %}"><strong><i class="fa fa-receipt mr-1 fa-2x text-dark-green"></i></strong></a></td>
+                  {% if order.user_order_status == "Undelivered" %}
+                  <td class="text-center"><a href="orders/delete/{{order.id}}"><strong><i class="fa fa-trash mr-1 fa-2x text-dark-green"></i></strong></a></td>
                   {% else %}
-                  <td>{{order.payment_type}}</td>
+                  <td>Delivered</td>
                   {% endif %}
-                  <td>{{order.payment_choice}}</td>
-                  <td>{{order.payment_status}}</td>
-                  <td>{{order.point}}</td>
-                  <td>{{order.outlet}}</td>
-                  <td><a href="{% url 'orders:show_order' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-check-circle mr-1 fa-1x"></i> Checkout</strong></button></a></td>
+                  {% else %}
+                  <td class="text-center"><a href="{% url 'orders:show_order' order.id %}"><strong><i class="fa fa-check-circle mr-1 fa-2x text-dark-green"></i></strong></a></td>
+                  <td class="text-center"><a href="{% url 'orders:show_invoice_unpaid' order.id %}"><strong><i class="fa fa-receipt mr-1 fa-2x text-dark-green"></i></strong></a></td>
+                  {% if order.user_order_status == "Undelivered" %}
+                  <td class="text-center"><a href="orders/delete/{{order.id}}"><strong><i class="fa fa-trash mr-1 fa-2x text-dark-green"></i></strong></a></td>
+                  {% else %}
+                  <td>Delivered</td>
+                  {% endif %}
+                  <td></td>
+                  {% endif %}
                 </tr>
-                {% endif %}
                 {% endfor %}
               </tbody>
             </table>

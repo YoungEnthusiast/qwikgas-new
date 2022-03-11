@@ -31,6 +31,7 @@ urlpatterns = [
     path('qwikpartner-dashboard/anticipatory-orders/invoice/<str:pk>/', views.showQwikPartnerAntiInvoice, name='show_partner_anti_invoice'),
     path('qwikvendor-dashboard/anticipatory-orders/invoice/<str:pk>/', views.showQwikVendorAntiInvoice, name='show_vendor_anti_invoice'),
     path('qwikcustomer-dashboard/anticipatory-orders/invoice/<str:pk>/', views.showAntiInvoice, name='show_anti_invoice'),
+    path('qwikcustomer-dashboard/anticipatory-orders/invoice/unpaid/<str:pk>/', views.showAntiInvoiceUnPaid, name='show_anti_invoice_unpaid'),
 
     # # path('visitor-order', views.order_visitor, name='order_visitor'),
     # # path('st---only2', views.addOrder, name='add_order'),

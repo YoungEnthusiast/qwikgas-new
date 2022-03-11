@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .models import OrderItem, UserOrder, OrderStatus, PayDelivery, PayLater, PaySmall
 from products.models import Category, Owing
@@ -72,6 +72,15 @@ def showOrders(request):
     total_userorders = filtered_userorders.qs.count()
     context['total_userorders'] = total_userorders
     return render(request, 'orders/orders.html', context=context)
+
+@login_required
+def deleteOrder(request, id):
+    order = UserOrder.objects.get(id=id)
+    obj = get_object_or_404(UserOrder, id=id)
+    if request.method =="POST":
+        obj.delete()
+        return redirect('orders:orders')
+    return render(request, 'orders/order_confirm_delete.html', {'order': order})
 
 @login_required
 def showOrder(request, pk, **kwargs):
@@ -171,6 +180,13 @@ def showInvoice(request, pk, **kwargs):
     order_items = OrderItem.objects.filter(order__id=pk)
     context = {'order': order, 'order_items': order_items}
     return render(request, 'orders/invoice.html', context)
+
+@login_required
+def showInvoiceUnPaid(request, pk, **kwargs):
+    order = UserOrder.objects.get(id=pk)
+    order_items = OrderItem.objects.filter(order__id=pk)
+    context = {'order': order, 'order_items': order_items}
+    return render(request, 'orders/invoice_unpaid.html', context)
 
 @login_required
 @permission_required('users.view_vendor')
@@ -445,6 +461,10 @@ def addOrderStatusQwikPartner(request, id):
             reg.save()
 
             user = reg.order.order.user
+
+            reg2 = UserOrder.objects.get(id=order_item.order.id)
+            reg2.user_order_status = "Delivered"
+            reg2.save()
 
             owing_entry = Owing()
             owing_entry.customer = user

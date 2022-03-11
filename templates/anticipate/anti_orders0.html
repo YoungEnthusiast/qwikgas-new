@@ -80,6 +80,7 @@
               </thead>
               <tbody>
                 {% for order in antiorders_page_obj %}
+                {% if order.payment2 != None %}
                 <tr class="">
                   <td>{{order.created}}</td>
                   <td>{{order.order_Id}}</td>
@@ -93,12 +94,41 @@
                   <td>{{order.payment_ref}}</td>
                   <td>{{order.payment1|intcomma}} on {{order.payment1_date}}|{{order.payment2}} on {{order.payment2_date}}|{{order.payment3}} on {{order.payment3_date}}</td>
                   <td>{{order.transaction}}</td>
-                  {% if order.transaction == "Closed" %}
                   <td><a href="{% url 'anticipate:show_anti_invoice' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
-                  {% else %}
-                  <td><a href="{% url 'anticipate:show_anti_invoice_unpaid' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
-                  {% endif %}
                 </tr>
+                {% elif order.payment3 != None %}
+                <tr class="">
+                  <td>{{order.created}}</td>
+                  <td>{{order.order_Id}}</td>
+                  <td>{{order.product.product_Id}}</td>
+                  <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
+                  <td>₦{{order.static_price|intcomma}}</td>
+                  <td>{{order.quantity}}</td>
+                  <td>₦{{order.static_total_cost|intcomma}}</td>
+                  <td>{{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</td>
+                  <td>{{order.payment_choice}}</td>
+                  <td>{{order.payment_ref}}</td>
+                  <td>{{order.payment1}} on {{order.payment1_date}}|{{order.payment2}} on {{order.payment2_date}}|{{order.payment3}} on {{order.payment3_date}}</td>
+                  <td>{{order.transaction}}</td>
+                  <td><a href="{% url 'anticipate:show_anti_invoice' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
+                </tr>
+                {% else %}
+                <tr class="">
+                  <td>{{order.created}}</td>
+                  <td>{{order.order_Id}}</td>
+                  <td>{{order.product.product_Id}}</td>
+                  <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
+                  <td>₦{{order.static_price|intcomma}}</td>
+                  <td>{{order.quantity}}</td>
+                  <td>₦{{order.static_total_cost|intcomma}}</td>
+                  <td>{{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</td>
+                  <td>{{order.payment_choice}}</td>
+                  <td>{{order.payment_ref}}</td>
+                  <td>{{order.payment1|intcomma}} on {{order.payment1_date}}|{{order.payment2}} on {{order.payment2_date}}|{{order.payment3}} on {{order.payment3_date}}</td>
+                  <td>{{order.transaction}}</td>
+                  <td><a href="{% url 'anticipate:show_anti_invoice' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
+                </tr>
+                {% endif %}
                 {% endfor %}
               </tbody>
             </table>

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from users.models import Outlet, Person
 from .models import AntiOrder#, OrderStatus
 from products.models import Owing
@@ -180,3 +180,10 @@ def showAntiInvoice(request, pk, **kwargs):
     # order_items = OrderItem.objects.filter(order__id=pk)
     context = {'order': order}#, 'order_items': order_items}
     return render(request, 'anticipate/anti_invoice.html', context)
+
+@login_required
+def showAntiInvoiceUnPaid(request, pk, **kwargs):
+    order = AntiOrder.objects.get(id=pk)
+    # order_items = OrderItem.objects.filter(order__id=pk)
+    context = {'order': order}#, 'order_items': order_items}
+    return render(request, 'anticipate/anti_invoice_unpaid.html', context)

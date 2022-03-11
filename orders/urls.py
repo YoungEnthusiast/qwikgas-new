@@ -4,11 +4,13 @@ from . import views
 urlpatterns = [
     path('order', views.createOrder, name='order_create'),
     path('orders', views.showOrders, name='orders'),
+    path('orders/delete/<int:id>', views.deleteOrder),
     path('orders/checkout/<str:pk>/', views.showOrder, name='show_order'),
     path('orders/checkout/pay-later', views.addPayLater, name='qwikcustomer_pay_later'),
-    path('orders/checkout/pay-small-small', views.addPaySmall, name='qwikcustomer_pay_small'),    
+    path('orders/checkout/pay-small-small', views.addPaySmall, name='qwikcustomer_pay_small'),
 
     path('orders/invoice/<str:pk>/', views.showInvoice, name='show_invoice'),
+    path('orders/invoice//unpaid/<str:pk>/', views.showInvoiceUnPaid, name='show_invoice_unpaid'),
     path('qwikvendor-dashboard/orders/invoice/<str:pk>/', views.showQwikVendorInvoice, name='show_vendor_invoice'),
     path('qwikpartner-dashboard/orders/invoice/<str:pk>/', views.showQwikPartnerInvoice, name='show_partner_invoice'),
     path('qwika-dashboard/orders/invoice/<str:pk>/', views.showQwikAdminInvoice, name='show_admin_invoice'),
