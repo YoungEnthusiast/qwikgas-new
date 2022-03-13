@@ -16,7 +16,6 @@ from cart.forms import CartAddProductForm
 from django.core.paginator import Paginator
 #from django.db.models import Q
 from django.db.models import Sum
-from users.models import Person
 
 @login_required
 def product_list(request, category_slug=None):
@@ -225,6 +224,13 @@ def showQwikPartnerCylindersReceivedEmpty(request):
             form.save(commit=False).outlet = outlet
             form.save()
 
+            try:
+                reg = Product.objects.get(product_Id=cylinder)
+                reg.partner_product_status = "Received Empty from QwikCustomer"
+                reg.save()
+            except:
+                pass
+
             owings = Owing.objects.filter(customer=customer)
             for each in owings:
                 if cylinder == each.cylinder:
@@ -355,6 +361,14 @@ def showQwikVendorCylindersDispatchedToPlant(request):
             form.save(commit=False).category = category
             form.save(commit=False).outlet = outlet
             form.save()
+
+            try:
+                reg = Product.objects.get(product_Id=cylinder)
+                reg.vendor_product_status = "Dispatched to Plant"
+                reg.save()
+            except:
+                pass
+
             messages.success(request, "The cylinder stage has been added successfully")
             return redirect('products:qwikvendor_cylinders_dispatched_to_plant')
         else:

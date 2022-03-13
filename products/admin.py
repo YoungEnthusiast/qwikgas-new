@@ -9,7 +9,7 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['created', 'product_Id', 'category', 'vendor_product_status']
+    list_display = ['created', 'product_Id', 'category', 'partner_product_status', 'vendor_product_status']
     # search_fields = ['type', 'price']
     list_filter = ['category']
     list_display_links = ['product_Id']

@@ -38,12 +38,7 @@ class Category(models.Model):
 class Product(models.Model):
     VENDOR_CHOICES = [
         ('Dispatched to Plant','Dispatched to Plant'),
-        ('Returned Empty to QwikLet', 'Returned Empty to QwikLet'),
-        ('Delivered Filled to QwikLet', 'Delivered Filled to QwikLet'),
         ('Released Filled to QwikPartner', 'Released Filled to QwikPartner'),
-        ('Delivered to QwikCustomer', 'Delivered to QwikCustomer'),
-        ('Returned Filled to QwikLet', 'Returned Filled to QwikLet'),
-        ('Delivered to QwikCustomer', 'Delivered to QwikCustomer'),
 
         ('Dispatched Empty','Dispatched Empty'),
         ('Received Empty', 'Received Empty'),
@@ -51,14 +46,7 @@ class Product(models.Model):
         ('Received Filled', 'Received Filled'),
     ]
     PARTNER_CHOICES = [
-        ('Returned Empty to QwikLet','Returned Empty to QwikLet'),
         ('Received Empty from QwikCustomer', 'Received Empty from QwikCustomer'),
-        ('Delivered Filled to QwikLet', 'Delivered Filled to QwikLet'),
-        ('Dispatched Filled to QwikCustomer', 'Dispatched Filled to QwikCustomer'),
-        ('Delivered to QwikCustomer', 'Delivered to QwikCustomer'),
-        ('Returned Filled to QwikLet', 'Returned Filled to QwikLet'),
-        ('Dispatched to Plant', 'Dispatched to Plant'),
-        ('Delivered Empty to Plant', 'Delivered Empty to Plant'),
 
         ('Returned Empty','Returned Empty'),
         ('Received Empty', 'Received Empty'),

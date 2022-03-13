@@ -82,7 +82,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-sm-12 mb-2">
-                                {{ form.product|as_crispy_field }}
+                                {{ form.cylinder|as_crispy_field }}
                             </div>
                         </div>
                         <div class="form-row">
@@ -108,11 +108,6 @@
                         <div class="form-row">
                             <div class="form-group col-sm-12 mb-2">
                                 {{ form.payment_type3|as_crispy_field }}
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-sm-12 mb-2">
-                                {{ form.payment_date_small|as_crispy_field }}
                             </div>
                         </div>
                         <div class="form-row">
@@ -187,7 +182,7 @@
                     <td>{{order.created}}</td>
                     <td>{{order.user}}</td>
                     <td>{{order.order_Id}}</td>
-                    <td>{{order.product.product_Id}}</td>
+                    <td>{% for order in order.cylinder.all %}{{order.cylinder}} {% endfor %}</td>
                     <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
                     <td>₦{{order.static_price|intcomma}}</td>
                     <td>{{order.quantity}}</td>
@@ -206,7 +201,7 @@
                     <td>{{order.created}}</td>
                     <td>{{order.user}}</td>
                     <td>{{order.order_Id}}</td>
-                    <td>{{order.product.product_Id}}</td>
+                    <td>{% for order in order.cylinder.all %}{{order.cylinder}} {% endfor %}</td>
                     <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
                     <td>₦{{order.static_price|intcomma}}</td>
                     <td>{{order.quantity}}</td>
@@ -225,7 +220,7 @@
                     <td>{{order.created}}</td>
                     <td>{{order.user}}</td>
                     <td>{{order.order_Id}}</td>
-                    <td>{{order.product.product_Id}}</td>
+                    <td>{% for order in order.cylinder.all %}{{order.cylinder}} {% endfor %}</td>
                     <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
                     <td>₦{{order.static_price|intcomma}}</td>
                     <td>{{order.quantity}}</td>
@@ -244,7 +239,7 @@
                     <td>{{order.created}}</td>
                     <td>{{order.user}}</td>
                     <td>{{order.order_Id}}</td>
-                    <td>{{order.product.product_Id}}</td>
+                    <td>{% for order in order.cylinder.all %}{{order.cylinder}} {% endfor %}</td>
                     <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
                     <td>₦{{order.static_price|intcomma}}</td>
                     <td>{{order.quantity}}</td>

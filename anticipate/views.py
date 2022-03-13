@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from users.models import Outlet, Person
 from .models import AntiOrder#, OrderStatus
-from products.models import Owing
+from products.models import Owing, Product, Cylinder
 # from products.models import Category
 # from users.models import Wallet, Person, Outlet
 from .filters import AntiOrderFilter, AntiOrderFilter2#, OrderItemFilter, OrderItemFilter2, OrderStatusFilter, OrderStatusFilter2
 from django.contrib import messages
 # from django.core.mail import send_mail
 from .forms import AntiOrderForm, AntiOrderFormVen, AntiOrderFormPar, AntiOrderFormPar2
+from django.forms import inlineformset_factory
 import random
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required, permission_required
@@ -47,6 +48,55 @@ def showQwikVendorAntiOrders(request):
     context['total_antiorders'] = total_antiorders
     return render(request, 'anticipate/qwikvendor_anti_orders.html', context=context)
 
+# @login_required
+# @permission_required('users.view_partner')
+# def showQwikPartnerAntiOrders(request):
+#     context = {}
+#     filtered_antiorders = AntiOrderFilter2(
+#         request.GET,
+#         queryset = AntiOrder.objects.filter(outlet__partner=request.user)
+#     )
+#     context['filtered_antiorders'] = filtered_antiorders
+#     paginated_filtered_antiorders = Paginator(filtered_antiorders.qs, 10)
+#     page_number = request.GET.get('page')
+#     antiorders_page_obj = paginated_filtered_antiorders.get_page(page_number)
+#     context['antiorders_page_obj'] = antiorders_page_obj
+#     total_antiorders = filtered_antiorders.qs.count()
+#     context['total_antiorders'] = total_antiorders
+#
+#     form = AntiOrderForm()
+#     if request.method == 'POST':
+#         form = AntiOrderForm(request.POST, request.FILES, None)
+#         if form.is_valid():
+#             outlet = Outlet.objects.get(partner=request.user)
+#             form.save(commit=False).outlet = outlet
+#             form.save(commit=False).order_Id = str(random.randint(10000000,99999999))
+#             form.save()
+#             user = form.cleaned_data.get('user')
+#             product = form.cleaned_data.get('product')
+#             reg = AntiOrder.objects.filter(user=user)[0]
+#             reg.static_price = reg.product.category.price
+#             reg.static_total_cost = reg.total_cost()
+#             reg.save()
+#             owing_entry = Owing()
+#             owing_entry.customer = user
+#             owing_entry.cylinder = product.product_Id
+#             owing_entry.save()
+#
+#             owings = Owing.objects.filter(customer=user)
+#             reg = Person.objects.get(username=user.username)
+#             reg.holding = ""
+#             for each in owings:
+#                 reg.holding = reg.holding + " " + each.cylinder
+#                 reg.save()
+#
+#             messages.success(request, "The anticipatory order has been added successfully")
+#             return redirect('anticipate:qwikpartner_anti_orders')
+#         else:
+#             messages.error(request, "Please review form input fields below")
+#     context['form'] = form
+#     return render(request, 'anticipate/qwikpartner_anti_orders.html', context=context)
+
 @login_required
 @permission_required('users.view_partner')
 def showQwikPartnerAntiOrders(request):
@@ -68,26 +118,44 @@ def showQwikPartnerAntiOrders(request):
         form = AntiOrderForm(request.POST, request.FILES, None)
         if form.is_valid():
             outlet = Outlet.objects.get(partner=request.user)
+
+            user = form.cleaned_data.get('user')
+            cylinder = form.cleaned_data.get('cylinder')
+
+            # try:
+            #     product = Product.objects.get(product_Id=cylinder)
+            #     category = product.category.type
+            #     category = "Qwik"
+            #     price = product.category.price
+            #     # outlet = product.outlet.outlet
+            # except:
+            #     # outlet = "None"
+            #     category = "None"
+            #     price = "None"
+
             form.save(commit=False).outlet = outlet
             form.save(commit=False).order_Id = str(random.randint(10000000,99999999))
+            # form.save(commit=False).category = category
+            # form.save(commit=False).outlet_static = outlet
+            # form.save(commit=False).static_price = str(price)
             form.save()
-            user = form.cleaned_data.get('user')
-            product = form.cleaned_data.get('product')
-            reg = AntiOrder.objects.filter(user=user)[0]
-            reg.static_price = reg.product.category.price
-            reg.static_total_cost = reg.total_cost()
-            reg.save()
-            owing_entry = Owing()
-            owing_entry.customer = user
-            owing_entry.cylinder = product.product_Id
-            owing_entry.save()
+            # reg = AntiOrder.objects.filter(user=user)[0]
+            # reg.static_price = reg.product.category.price
+            # reg.static_total_cost = reg.total_cost()
+            # reg.save()
 
-            owings = Owing.objects.filter(customer=user)
-            reg = Person.objects.get(username=user.username)
-            reg.holding = ""
-            for each in owings:
-                reg.holding = reg.holding + " " + each.cylinder
-                reg.save()
+
+            # owing_entry = Owing()
+            # owing_entry.customer = user
+            # owing_entry.cylinder = product.product_Id
+            # owing_entry.save()
+            #
+            # owings = Owing.objects.filter(customer=user)
+            # reg = Person.objects.get(username=user.username)
+            # reg.holding = ""
+            # for each in owings:
+            #     reg.holding = reg.holding + " " + each.cylinder
+            #     reg.save()
 
             messages.success(request, "The anticipatory order has been added successfully")
             return redirect('anticipate:qwikpartner_anti_orders')

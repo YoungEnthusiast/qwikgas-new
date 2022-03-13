@@ -1,6 +1,7 @@
 from django import forms
 from users.models import Person
 from .models import AntiOrder#, VisitorOrder, OrderStatus
+from products.models import Cylinder
 from django.forms.widgets import NumberInput
 from django.core.exceptions import ValidationError
 import datetime
@@ -20,13 +21,13 @@ class AntiOrderForm(forms.ModelForm):
 		('PoS', 'PoS'),
         ('Cash', 'Cash'),
 	]
+    cylinder = forms.ModelMultipleChoiceField(queryset=Cylinder.objects.filter(vendor_product_status="Released Filled to QwikPartner"))
     user = forms.ModelChoiceField(queryset=Person.objects.filter(type="QwikCustomer"))
     payment_type1 = forms.ChoiceField(label='Payment Type', choices=PAYMENT_TYPE1, widget=forms.RadioSelect, required = False)
     payment_type2 = forms.ChoiceField(label='', choices=PAYMENT_TYPE2, widget=forms.RadioSelect, required = False)
     payment_type3 = forms.ChoiceField(label='', choices=PAYMENT_TYPE3, widget=forms.RadioSelect, required = False)
     payment_choice = forms.ChoiceField(label='Payment Choice', choices=PAYMENT_CHOICES, required = False)
     payment_date_later = forms.DateField(label='Committed Payment Date', widget=NumberInput(attrs={'type': 'date'}), required = False)
-    payment_date_small = forms.DateField(label='Committed Payment Date', widget=NumberInput(attrs={'type': 'date'}), required = False)
     payment1_date = forms.DateField(label='1st Payment Date', widget=NumberInput(attrs={'type': 'date'}), required = False)
     payment2_date = forms.DateField(label='2nd Payment Date', widget=NumberInput(attrs={'type': 'date'}), required = False)
     payment3_date = forms.DateField(label='3rd Payment Date', widget=NumberInput(attrs={'type': 'date'}), required = False)
