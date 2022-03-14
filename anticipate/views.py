@@ -122,23 +122,29 @@ def showQwikPartnerAntiOrders(request):
             user = form.cleaned_data.get('user')
             cylinder = form.cleaned_data.get('cylinder')
 
-            # try:
-            #     product = Product.objects.get(product_Id=cylinder)
-            #     category = product.category.type
-            #     category = "Qwik"
-            #     price = product.category.price
-            #     # outlet = product.outlet.outlet
-            # except:
-            #     # outlet = "None"
-            #     category = "None"
-            #     price = "None"
-
             form.save(commit=False).outlet = outlet
             form.save(commit=False).order_Id = str(random.randint(10000000,99999999))
             # form.save(commit=False).category = category
             # form.save(commit=False).outlet_static = outlet
             # form.save(commit=False).static_price = str(price)
             form.save()
+
+            try:
+                point = Wallet.objects.filter(user=request.user).aggregate(Sum('point'))['point__sum']
+            except:
+                point = 0
+
+
+            reg = AntiOrder.objects.filter(user=user)[0]
+            total = 0
+
+
+            for each in reg.cylinder.all:
+                total += each.category.price
+            reg.static_total_cost2 = total
+            reg.save()
+
+            {% for order in order.cylinder.all %}{{order.category.type}} {% endfor %}
             # reg = AntiOrder.objects.filter(user=user)[0]
             # reg.static_price = reg.product.category.price
             # reg.static_total_cost = reg.total_cost()

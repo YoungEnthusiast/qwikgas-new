@@ -46,8 +46,12 @@ class AntiOrder(models.Model):
     outlet = models.ForeignKey('users.Outlet', on_delete=models.SET_NULL, null=True, blank=True)
     # address = models.PointField(null=True, verbose_name="Delivery Address")
     transaction = models.CharField(max_length=12, choices=TRANSACTION_CHOICES, default='Open', blank=True, null=True, verbose_name="Transaction Status")
-    static_price = models.CharField(max_length=11, blank=True, null=True)
-    static_total_cost = models.CharField(max_length=13, blank=True, null=True)
+
+
+    static_price = models.DecimalField(max_digits=11, blank=True, null=True, decimal_places=2)
+    static_total_cost = models.DecimalField(max_digits=13, blank=True, null=True, decimal_places=2)
+    static_price2 = models.DecimalField(max_digits=11, blank=True, null=True, decimal_places=2)
+    static_total_cost2 = models.DecimalField(max_digits=13, blank=True, null=True, decimal_places=2)
     # point = models.PositiveIntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
