@@ -12,6 +12,7 @@ from django.forms import inlineformset_factory
 import random
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required, permission_required
+from django.db.models import Sum
 # from django.template.loader import render_to_string
 # from decimal import Decimal
 
@@ -124,44 +125,31 @@ def showQwikPartnerAntiOrders(request):
 
             form.save(commit=False).outlet = outlet
             form.save(commit=False).order_Id = str(random.randint(10000000,99999999))
-            # form.save(commit=False).category = category
-            # form.save(commit=False).outlet_static = outlet
-            # form.save(commit=False).static_price = str(price)
             form.save()
-
-            try:
-                point = Wallet.objects.filter(user=request.user).aggregate(Sum('point'))['point__sum']
-            except:
-                point = 0
-
 
             reg = AntiOrder.objects.filter(user=user)[0]
             total = 0
+            total_cylinder = " "
 
 
-            for each in reg.cylinder.all:
+            for each in reg.cylinder.all():
                 total += each.category.price
+                total_cylinder = total_cylinder + " " + each.product_Id
             reg.static_total_cost2 = total
             reg.save()
 
-            {% for order in order.cylinder.all %}{{order.category.type}} {% endfor %}
-            # reg = AntiOrder.objects.filter(user=user)[0]
-            # reg.static_price = reg.product.category.price
-            # reg.static_total_cost = reg.total_cost()
-            # reg.save()
-
-
-            # owing_entry = Owing()
-            # owing_entry.customer = user
+            owing_entry = Owing()
+            owing_entry.customer = user
             # owing_entry.cylinder = product.product_Id
-            # owing_entry.save()
-            #
-            # owings = Owing.objects.filter(customer=user)
-            # reg = Person.objects.get(username=user.username)
-            # reg.holding = ""
-            # for each in owings:
-            #     reg.holding = reg.holding + " " + each.cylinder
-            #     reg.save()
+            owing_entry.cylinder = total_cylinder
+            owing_entry.save()
+
+            owings = Owing.objects.filter(customer=user)
+            reg = Person.objects.get(username=user.username)
+            reg.holding = ""
+            for each in owings:
+                reg.holding = reg.holding + " " + each.cylinder
+                reg.save()
 
             messages.success(request, "The anticipatory order has been added successfully")
             return redirect('anticipate:qwikpartner_anti_orders')

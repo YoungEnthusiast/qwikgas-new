@@ -163,9 +163,11 @@
                     <th>CYLINDER ID(OLD)</th>
                     <th>PRODUCT TYPE(OLD)</th>
                     <th>PRODUCT TYPE(NEW)</th>
-                    <th>PRICE</th>
+                    <th>PRICE (OLD)</th>
+                    <th>PRICE (NEW)</th>
                     <th>QUANTITY</th>
-                    <th>TOTAL COST</th>
+                    <th>TOTAL COST(OLD)</th>
+                    <th>TOTAL COST(NEW)</th>
                     <th>PAYMENT TYPE</th>
                     <th>PAYMENT CHOICE</th>
                     <th>PAYMENT REFERENCE</th>
@@ -187,9 +189,10 @@
                     <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
                     <td>{% for order in order.cylinder.all %}{{order.category.type}} {% endfor %}</td>
                     <td>₦{{order.static_price|intcomma}}</td>
+                    <td>{% for order in order.cylinder.all %}{{order.category.price}} {% endfor %}</td>
                     <td>{{order.quantity}}</td>
                     <td>₦{{order.static_total_cost|intcomma}}</td>
-                    <td>₦{{order.static_total_cost|intcomma}}</td>
+                    <td>₦{{order.static_total_cost2|intcomma}}</td>
                     <td>{{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</td>
                     <td>{{order.payment_choice}}</td>
                     <td>{{order.payment_ref}}</td>
