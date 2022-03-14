@@ -160,8 +160,10 @@
                     <th>DATE/TIME</th>
                     <th>CUSTOMER</th>
                     <th>ORDER ID</th>
-                    <th>CYLINDER ID</th>
-                    <th>PRODUCT TYPE</th>
+                    <th>CYLINDER ID(OLD)</th>
+                    <th>CYLINDER ID(NEW)</th>
+                    <th>PRODUCT TYPE(OLD)</th>
+                    <th>PRODUCT TYPE(NEW)</th>
                     <th>PRICE</th>
                     <th>QUANTITY</th>
                     <th>TOTAL COST</th>
@@ -182,8 +184,10 @@
                     <td>{{order.created}}</td>
                     <td>{{order.user}}</td>
                     <td>{{order.order_Id}}</td>
-                    <td>{% for order in order.cylinder.all %}{{order.cylinder}} {% endfor %}</td>
+                    <td>{{order.product.product_Id}}</td>
+                    <td>{% for order in order.cylinder.all %}{{order.product_Id}} {% endfor %}</td>
                     <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
+                    <td>{% for order in order.cylinder.all %}{{order.category.type}} {% endfor %}</td>
                     <td>₦{{order.static_price|intcomma}}</td>
                     <td>{{order.quantity}}</td>
                     <td>₦{{order.static_total_cost|intcomma}}</td>
@@ -201,8 +205,10 @@
                     <td>{{order.created}}</td>
                     <td>{{order.user}}</td>
                     <td>{{order.order_Id}}</td>
-                    <td>{% for order in order.cylinder.all %}{{order.cylinder}} {% endfor %}</td>
+                    <td>{{order.product.product_Id}}</td>
+                    <td>{% for order in order.cylinder.all %}{{order.product_Id}} {% endfor %}</td>
                     <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
+                    <td>{% for order in order.cylinder.all %}{{order.category.type}} {% endfor %}</td>
                     <td>₦{{order.static_price|intcomma}}</td>
                     <td>{{order.quantity}}</td>
                     <td>₦{{order.static_total_cost|intcomma}}</td>
@@ -220,8 +226,10 @@
                     <td>{{order.created}}</td>
                     <td>{{order.user}}</td>
                     <td>{{order.order_Id}}</td>
-                    <td>{% for order in order.cylinder.all %}{{order.cylinder}} {% endfor %}</td>
+                    <td>{{order.product.product_Id}}</td>
+                    <td>{% for order in order.cylinder.all %}{{order.product_Id}} {% endfor %}</td>
                     <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
+                    <td>{% for order in order.cylinder.all %}{{order.category.type}} {% endfor %}</td>
                     <td>₦{{order.static_price|intcomma}}</td>
                     <td>{{order.quantity}}</td>
                     <td>₦{{order.static_total_cost|intcomma}}</td>
@@ -239,8 +247,10 @@
                     <td>{{order.created}}</td>
                     <td>{{order.user}}</td>
                     <td>{{order.order_Id}}</td>
-                    <td>{% for order in order.cylinder.all %}{{order.cylinder}} {% endfor %}</td>
+                    <td>{{order.product.product_Id}}</td>
+                    <td>{% for order in order.cylinder.all %}{{order.product_Id}} {% endfor %}</td>
                     <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
+                    <td>{% for order in order.cylinder.all %}{{order.category.type}} {% endfor %}</td>
                     <td>₦{{order.static_price|intcomma}}</td>
                     <td>{{order.quantity}}</td>
                     <td>₦{{order.static_total_cost|intcomma}}</td>

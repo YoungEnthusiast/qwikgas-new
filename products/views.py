@@ -487,6 +487,13 @@ def showQwikVendorCylindersReleasedFilledToQwikPartner(request):
             form.save(commit=False).category = category
             form.save(commit=False).outlet = outlet
             form.save()
+
+            try:
+                reg = Product.objects.get(product_Id=cylinder)
+                reg.vendor_product_status = "Released Filled to QwikPartner"
+                reg.save()
+            except:
+                pass
             messages.success(request, "The cylinder stage has been added successfully")
             return redirect('products:qwikvendor_cylinders_released_filled_to_qwikpartner')
         else:
