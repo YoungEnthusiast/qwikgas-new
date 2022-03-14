@@ -75,6 +75,7 @@ class OrderStatus(models.Model):
         ('Cancelled', 'Cancelled')
     ]
     order = models.ForeignKey(OrderItem, on_delete=models.SET_NULL, null=True, related_name='order_status')
+    cylinder = models.ManyToManyField('products.Product', related_name='order_status_cylinders')
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='order_status_products', verbose_name="Cylinder")
     order_status = models.CharField(max_length=30, choices=STATUS_CHOICES, null=True, verbose_name="Select Present Order Status")
     employee = models.CharField(max_length=20, null=True, blank=True)

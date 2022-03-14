@@ -1,6 +1,6 @@
 from django import forms
 #from django.contrib.gis import forms
-# from products.models import Product
+from products.models import Product
 from .models import UserOrder, OrderStatus, PayDelivery, PayLater, PaySmall
 from django.forms.widgets import NumberInput
 from django.core.exceptions import ValidationError
@@ -59,11 +59,11 @@ class AddOrderFormPartner(forms.ModelForm):
     STATUS_CHOICES = [
         ('Delivered','Delivered'),
     ]
-    # product = forms.ModelChoiceField(queryset=OrderStatus.objects.filter(order__order__outlet__partner=request.user))
+    cylinder = forms.ModelMultipleChoiceField(queryset=Product.objects.filter(vendor_product_status="Released Filled to QwikPartner"))
     order_status = forms.ChoiceField(label='Select Present Order Status', choices=STATUS_CHOICES)
     class Meta:
         model = OrderStatus
-        fields = ['product', 'order_status']
+        fields = ['cylinder', 'order_status']
 
 class PayDeliveryForm(forms.ModelForm):
     PAYMENT_CHOICES = [

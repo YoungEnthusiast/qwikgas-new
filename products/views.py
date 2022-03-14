@@ -233,15 +233,22 @@ def showQwikPartnerCylindersReceivedEmpty(request):
 
             owings = Owing.objects.filter(customer=customer)
             for each in owings:
-                if cylinder == each.cylinder:
-                    each.delete()
+                each.cylinder = each.cylinder.replace(cylinder, "")
+                each.save()
 
             owings = Owing.objects.filter(customer=customer)
             reg = Person.objects.get(username=customer.username)
             reg.holding = ""
+            reg.save()
+            reg1 = Person.objects.get(username=customer.username)
             for each in owings:
-                reg.holding = reg.holding + " " + each.cylinder
-                reg.save()
+                reg1.holding = reg1.holding + "" + each.cylinder
+                reg1.save()
+
+            owings_2 = Owing.objects.filter(customer=customer)
+            for each in owings_2:
+                if each.cylinder == "":
+                    each.delete()
 
             messages.success(request, "The cylinder stage has been added successfully")
             return redirect('products:qwikpartner_cylinders_received_empty')

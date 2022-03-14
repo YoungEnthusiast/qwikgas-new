@@ -129,27 +129,28 @@ def showQwikPartnerAntiOrders(request):
 
             reg = AntiOrder.objects.filter(user=user)[0]
             total = 0
-            total_cylinder = " "
+            total_cylinder = ""
 
 
             for each in reg.cylinder.all():
                 total += each.category.price
-                total_cylinder = total_cylinder + " " + each.product_Id
+                total_cylinder = total_cylinder + "" + each.product_Id
             reg.static_total_cost2 = total
             reg.save()
 
             owing_entry = Owing()
             owing_entry.customer = user
-            # owing_entry.cylinder = product.product_Id
             owing_entry.cylinder = total_cylinder
             owing_entry.save()
 
             owings = Owing.objects.filter(customer=user)
             reg = Person.objects.get(username=user.username)
             reg.holding = ""
+            reg.save()
+            reg1 = Person.objects.get(username=user.username)
             for each in owings:
-                reg.holding = reg.holding + " " + each.cylinder
-                reg.save()
+                reg1.holding = reg1.holding + "" + each.cylinder
+                reg1.save()
 
             messages.success(request, "The anticipatory order has been added successfully")
             return redirect('anticipate:qwikpartner_anti_orders')
