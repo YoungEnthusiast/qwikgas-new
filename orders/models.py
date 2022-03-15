@@ -1,7 +1,3 @@
-# from __future__ import unicode_literals
-#
-# from django.contrib.gis.db import models
-# from django.contrib.gis.geos import Point
 from django.db import models
 from products.models import Product
 
@@ -63,11 +59,6 @@ class OrderItem(models.Model):
         else:
             return self.price * self.quantity
 
-    # def toJSON(self):
-    #     return json.dumps(self, default=lambda o: o.__dict__,
-    #         sort_keys=True, indent=4)
-
-
 class OrderStatus(models.Model):
     STATUS_CHOICES = [
         ('Out for Delivery','Out for Delivery'),
@@ -78,6 +69,7 @@ class OrderStatus(models.Model):
     cylinder = models.ManyToManyField('products.Product', related_name='order_status_cylinders')
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='order_status_products', verbose_name="Cylinder")
     order_status = models.CharField(max_length=30, choices=STATUS_CHOICES, null=True, verbose_name="Select Present Order Status")
+    static_total_cost2 = models.DecimalField(max_digits=13, blank=True, null=True, decimal_places=2)
     employee = models.CharField(max_length=20, null=True, blank=True)
     who7_2 = models.CharField(max_length=9, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)

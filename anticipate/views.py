@@ -49,55 +49,6 @@ def showQwikVendorAntiOrders(request):
     context['total_antiorders'] = total_antiorders
     return render(request, 'anticipate/qwikvendor_anti_orders.html', context=context)
 
-# @login_required
-# @permission_required('users.view_partner')
-# def showQwikPartnerAntiOrders(request):
-#     context = {}
-#     filtered_antiorders = AntiOrderFilter2(
-#         request.GET,
-#         queryset = AntiOrder.objects.filter(outlet__partner=request.user)
-#     )
-#     context['filtered_antiorders'] = filtered_antiorders
-#     paginated_filtered_antiorders = Paginator(filtered_antiorders.qs, 10)
-#     page_number = request.GET.get('page')
-#     antiorders_page_obj = paginated_filtered_antiorders.get_page(page_number)
-#     context['antiorders_page_obj'] = antiorders_page_obj
-#     total_antiorders = filtered_antiorders.qs.count()
-#     context['total_antiorders'] = total_antiorders
-#
-#     form = AntiOrderForm()
-#     if request.method == 'POST':
-#         form = AntiOrderForm(request.POST, request.FILES, None)
-#         if form.is_valid():
-#             outlet = Outlet.objects.get(partner=request.user)
-#             form.save(commit=False).outlet = outlet
-#             form.save(commit=False).order_Id = str(random.randint(10000000,99999999))
-#             form.save()
-#             user = form.cleaned_data.get('user')
-#             product = form.cleaned_data.get('product')
-#             reg = AntiOrder.objects.filter(user=user)[0]
-#             reg.static_price = reg.product.category.price
-#             reg.static_total_cost = reg.total_cost()
-#             reg.save()
-#             owing_entry = Owing()
-#             owing_entry.customer = user
-#             owing_entry.cylinder = product.product_Id
-#             owing_entry.save()
-#
-#             owings = Owing.objects.filter(customer=user)
-#             reg = Person.objects.get(username=user.username)
-#             reg.holding = ""
-#             for each in owings:
-#                 reg.holding = reg.holding + " " + each.cylinder
-#                 reg.save()
-#
-#             messages.success(request, "The anticipatory order has been added successfully")
-#             return redirect('anticipate:qwikpartner_anti_orders')
-#         else:
-#             messages.error(request, "Please review form input fields below")
-#     context['form'] = form
-#     return render(request, 'anticipate/qwikpartner_anti_orders.html', context=context)
-
 @login_required
 @permission_required('users.view_partner')
 def showQwikPartnerAntiOrders(request):
@@ -131,7 +82,6 @@ def showQwikPartnerAntiOrders(request):
             total = 0
             total_cylinder = ""
 
-
             for each in reg.cylinder.all():
                 total += each.category.price
                 total_cylinder = total_cylinder + "" + each.product_Id
@@ -158,6 +108,24 @@ def showQwikPartnerAntiOrders(request):
             messages.error(request, "Please review form input fields below")
     context['form'] = form
     return render(request, 'anticipate/qwikpartner_anti_orders.html', context=context)
+
+@login_required
+@permission_required('users.view_admin')
+def showQwikAdminAntiOrders(request):
+    context = {}
+    filtered_antiorders = AntiOrderFilter2(
+        request.GET,
+        queryset = AntiOrder.objects.all()
+    )
+    context['filtered_antiorders'] = filtered_antiorders
+    paginated_filtered_antiorders = Paginator(filtered_antiorders.qs, 10)
+    page_number = request.GET.get('page')
+    antiorders_page_obj = paginated_filtered_antiorders.get_page(page_number)
+    context['antiorders_page_obj'] = antiorders_page_obj
+    total_antiorders = filtered_antiorders.qs.count()
+    context['total_antiorders'] = total_antiorders
+
+    return render(request, 'anticipate/qwikadmin_anti_orders.html', context=context)
 
 @login_required
 @permission_required('users.view_partner')
@@ -250,3 +218,21 @@ def showAntiInvoiceUnPaid(request, pk, **kwargs):
     # order_items = OrderItem.objects.filter(order__id=pk)
     context = {'order': order}#, 'order_items': order_items}
     return render(request, 'anticipate/anti_invoice_unpaid.html', context)
+
+@login_required
+@permission_required('users.view_admin')
+def showQwikAdminAntiSales(request):
+    context = {}
+    filtered_antiorders = AntiOrderFilter2(
+        request.GET,
+        queryset = AntiOrder.objects.all()
+    )
+    context['filtered_antiorders'] = filtered_antiorders
+    paginated_filtered_antiorders = Paginator(filtered_antiorders.qs, 10)
+    page_number = request.GET.get('page')
+    antiorders_page_obj = paginated_filtered_antiorders.get_page(page_number)
+    context['antiorders_page_obj'] = antiorders_page_obj
+    total_antiorders = filtered_antiorders.qs.count()
+    context['total_antiorders'] = total_antiorders
+
+    return render(request, 'anticipate/qwikadmin_anti_sales.html', context=context)

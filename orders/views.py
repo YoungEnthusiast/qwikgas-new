@@ -422,12 +422,26 @@ def addOrderStatusQwikVendor(request, id):
     if request.method == 'POST':
         form = AddOrderFormVendor(request.POST or None)
         if form.is_valid():
-            form.save()
+            product = form.cleaned_data.get('product')
             status = form.cleaned_data.get('order_status')
-            reg = OrderStatus.objects.all()[0]
-            reg.order = order_item
-            reg.employee = request.user.first_name
+            form.save(commit=False).order = order_item
+            form.save(commit=False).employee = request.user.first_name
+            form.save()
+
+            user = order_item.order.user
+            #
+            reg2 = UserOrder.objects.get(id=order_item.order.id)
+            reg2.user_order_status = "Out for Delivery"
+            reg2.save()
+
+            reg = OrderStatus.objects.filter(order__order__user=user)[0]
+            total = 0
+
+            for each in reg.cylinder.all():
+                total += each.category.price
+            reg.static_total_cost2 = total
             reg.save()
+
             # email = reg.user.email
             # name = reg.user.first_name
             # order_Id = reg.order_Id

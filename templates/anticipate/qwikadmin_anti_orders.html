@@ -1,4 +1,5 @@
-{% extends 'board_vendor.html' %}
+{% extends 'board_admin.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% load humanize %}
 {% block title %}
@@ -15,9 +16,9 @@
     {% include 'partials/_alerts.html' %}
 		<!--Page Header-->
 		<div class="page-header">
-			<h4 class="page-title"><i class="fa fa-spinner text-dark-green mr-2 fa-1x"></i>Welcome to all customers anticipatory orders' page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+      <h4 class="page-title"><i class="fa fa-spinner text-dark-green mr-2 fa-1x"></i>Welcome to all customers anticipatory orders' page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
 			<ol class="breadcrumb bg-white">
-        <li class="breadcrumb-item"><a href="{% url 'qwikvendor_board' %}"><strong>Dashboard</strong></a></li>
+        <li class="breadcrumb-item"><a href="{% url 'qwikadmin_board' %}"><strong>Dashboard</strong></a></li>
 				<li class="breadcrumb-item active" aria-current="page"><strong>Orders</strong></li>
 			</ol>
 		</div>
@@ -70,6 +71,7 @@
                     <th>CYLINDER ID(OLD)</th>
                     <th>PRODUCT TYPE(OLD)</th>
                     <th>PRODUCT TYPE(NEW)</th>
+                    <th>OUTLET</th>
                     <th>PRICE (OLD)</th>
                     <th>PRICE (NEW)</th>
                     <th>QUANTITY</th>
@@ -82,7 +84,6 @@
                     <th>TRANSACTION STATUS</th>
                     <th>CYLINDER ALLOTED</th>
                     <th></th>
-                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -94,6 +95,7 @@
                     <td>{{order.product.product_Id}}</td>
                     <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
                     <td>{% for order in order.cylinder.all %}{{order.category.type}} {% endfor %}</td>
+                    <td>{{order.outlet}}</td>
                     <td>₦{{order.static_price|intcomma}}</td>
                     <td>{% for order in order.cylinder.all %}{{order.category.price}} {% endfor %}</td>
                     <td>{{order.quantity}}</td>
@@ -105,12 +107,7 @@
                     <td>{{order.payment1|intcomma}} on {{order.payment1_date}}|{{order.payment2}} on {{order.payment2_date}}|{{order.payment3}} on {{order.payment3_date}}</td>
                     <td>{{order.transaction}}</td>
                     <td>{% for order in order.cylinder.all %}{{order.product_Id}} {% endfor %}</td>
-                    {% if order.transaction == "Open" %}
-                    <td class="text-center"><a href="update/{{order.id}}"><button type="button" class="btn btn-sm btn-dark-green"><strong> <i class="fa fa-edit fa-1x text-white"></i> Update</strong></button></a></td>
-                    {% else %}
-                    <td></td>
-                    {% endif %}
-                    <td><a href="{% url 'anticipate:show_vendor_anti_invoice' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
+                    <td><a href="{% url 'anticipate:show_partner_anti_invoice' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
                   </tr>
                   {% endfor %}
                 </tbody>

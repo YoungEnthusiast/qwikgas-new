@@ -25,7 +25,7 @@
               </a>
 
               <div class="text-right ml-auto">
-                <h1 class="mb-1 text-dark-green">Invoice {{order.order_Id}}</h2>
+                <h1 class="mb-1 text-dark-green">Invoice {{order.order_Id}}</h1>
                 <p class="mb-1 h2"><span class="font-weight-semibold">Invoice Date:</span> {{order.created}}</p>
               </div>
             </div>
@@ -51,11 +51,11 @@
             </div>
 
             <div class="row text-center h1">
-              <p><strong class="text-dark-green">Cylinder ID:</strong> {{order.product}}</p>
+              <p><strong class="text-dark-green">Cylinder ID(S):</strong> {% for order in order.cylinder.all %}{{order.product_Id}} {% endfor %}</p>
               <p><strong class="text-dark-green">Product:</strong> {{order.product.category}}</p>
               <p><strong class="text-dark-green">Quantity:</strong> {{order.quantity}}</p>
-              <p><strong class="text-dark-green">Unit Price:</strong> ₦{{order.static_price|intcomma}}</p>
-              <p><strong class="text-dark-green">Total Cost:</strong> ₦{{order.static_total_cost|intcomma}}</p>
+              <p><strong class="text-dark-green">Unit Price:</strong> {% for order in order.cylinder.all %}₦{{order.category.price}} {% endfor %}</p>
+              <p><strong class="text-dark-green">Total Cost:</strong> ₦{{order.static_total_cost2|intcomma}}</p>
               <p><strong class="text-dark-green">Payment Type:</strong> {{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</p>
               <p><strong class="text-dark-green">Payment Choice:</strong> {{order.payment_choice}}</p>
               <p><strong class="text-dark-green">1st Payment:</strong> {% if order.payment1 != None %} ₦{{order.payment1|intcomma}} on {{order.payment1_date}} {% else %} {% endif %}  </p>
