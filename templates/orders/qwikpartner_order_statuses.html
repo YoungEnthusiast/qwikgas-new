@@ -43,7 +43,7 @@
                   <th>QUANTITY</th>
                   <th>TOTAL COST</th>
                   <th>ORDER STATUS</th>
-                  <th>UPDATED BY</th>
+                  <th>CYLINDER(S) ALLOTED</th>
                 </tr>
               </thead>
               <tbody class="">
@@ -56,7 +56,7 @@
                   <td>1</td>
                   <td>{{order.product.category.price|intcomma}}</td>
                   <td>{{order.order_status}}</td>
-                  <td>{{order.employee}}</td>
+                  <td>{% for order in order.cylinder.all %}{{order.product_Id}} {% endfor %}</td>
                 </tr>
                 {% endfor %}
               </tbody>
