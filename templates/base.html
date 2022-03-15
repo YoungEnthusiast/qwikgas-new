@@ -22,6 +22,9 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="icon" type="image/x-icon" href="{% static 'img/logo.ico' %}" />
 
+    <link rel="stylesheet" href="{% static 'css/floating-wpp.css' %}">
+    <link rel="stylesheet" href="{% static 'css/floating-wpp.min.css' %}">
+
     {% block title %}
     {% endblock title %}
   </head>
@@ -30,6 +33,7 @@
     <div id="layoutDefault">
       <div id="layoutDefault_content">
         <main>
+          <div id="myButton"></div>
           {% include 'partials/_navbar.html' %}
 
           {% block content %}
@@ -38,6 +42,7 @@
 
           {% include 'partials/_footer.html' %}
         </main>
+
       </div>
     </div>
 
@@ -120,6 +125,9 @@
     <script src="{% static 'js/custom.js' %}"></script>
 		<script src="{% static 'js/scripts.js' %}"></script>
 
+    <script src="{% static 'js/floating-wpp.js' %}"></script>
+    <script src="{% static 'js/floating-wpp.min.js' %}"></script>
+
 
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
@@ -127,6 +135,22 @@
     <script type="text/javascript">
 
     $("[data-toggle=popover]").popover();
+    </script>
+
+    <script type="text/javascript">
+    $(function () {
+        $('#myButton').floatingWhatsApp({
+            phone: '+2348035646519',
+            popupMessage: 'How may we help you at QwikGas?',
+            message: "I'd like to know about your different packages",
+            showPopup: true,
+            showOnIE: false,
+            headerTitle: 'You are welcome!',
+            headerColor: '#83C229',
+            backgroundColor: '',
+            buttonImage: '<img src="{% static 'img/whatsapp.svg' %}" />'
+        });
+    });
     </script>
 
 
