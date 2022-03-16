@@ -1,8 +1,9 @@
 {% extends 'board_admin.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% load humanize %}
 {% block title %}
-  <title>Anticipatory Sales</title>
+  <title>Anticipatory Credits</title>
   <meta name="description" content="">
 
 {% endblock title %}
@@ -15,10 +16,10 @@
     {% include 'partials/_alerts.html' %}
 		<!--Page Header-->
 		<div class="page-header">
-      <h4 class="page-title"><i class="fa fa-spinner text-dark-green mr-2 fa-1x"></i>Welcome to all anticipatory sales' page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+      <h4 class="page-title"><i class="fa fa-spinner text-dark-green mr-2 fa-1x"></i>Welcome to all anticipatory credit sales' page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
 			<ol class="breadcrumb bg-white">
         <li class="breadcrumb-item"><a href="{% url 'qwikadmin_board' %}"><strong>Dashboard</strong></a></li>
-				<li class="breadcrumb-item active" aria-current="page"><strong>Sales</strong></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>Credits</strong></li>
 			</ol>
 		</div>
 		<!--page header-->
@@ -28,18 +29,18 @@
       <div class="col-xl-12">
         <div class="card">
           <div class="card-header bg-white">
-            <div class="card-title text-dark-green">Anticipatory Sales</div>
+            <div class="card-title text-dark-green">Anticipatory Credits</div>
           </div>
 
           <div class="card-body">
             <div class="text-center">
               {% if total_antiorders > 1 %}
                 <div class="form-group col-md-12">
-                  <h3 class="form-group text-dark-green">Total Sales: {{total_antiorders}}</h3>
+                  <h3 class="form-group text-dark-green">Total Orders: {{total_antiorders}}</h3>
                 </div>
                 {% else %}
                 <div class="form-group col-md-12">
-                  <h3 class="form-group text-dark-green">Total Sale: {{total_antiorders}}</h3>
+                  <h3 class="form-group text-dark-green">Total Order: {{total_antiorders}}</h3>
                 </div>
                 {% endif %}
             </div>
@@ -49,13 +50,17 @@
                 <thead>
                   <tr class="text-dark-green">
                     <th>DATE/TIME</th>
-                    <th>CUSTOMER NAME</th>
+                    <th>CUSTOMER</th>
                     <th>CUSTOMER ID</th>
-                    <th>TOTAL COST(OLD)</th>
-                    <th>TOTAL COST(NEW)</th>
+                    <th>TOTAL AMOUNT(OLD)</th>
+                    <th>TOTAL AMOUNT(NEW)</th>
                     <th>PAYMENT TYPE</th>
                     <th>PAYMENT CHOICE</th>
-                    <th>PAYMENT STATUS</th>
+                    <th>PAYMENT REFERENCE</th>
+                    <th>PAYMENT</th>
+                    <th>TRANSACTION STATUS</th>
+                    <th>CYLINDER ALLOTED</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -68,7 +73,11 @@
                     <td>₦{{order.static_total_cost2|intcomma}}</td>
                     <td>{{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</td>
                     <td>{{order.payment_choice}}</td>
+                    <td>{{order.payment_ref}}</td>
+                    <td>{{order.payment1|intcomma}} on {{order.payment1_date}}|{{order.payment2}} on {{order.payment2_date}}|{{order.payment3}} on {{order.payment3_date}}</td>
                     <td>{{order.transaction}}</td>
+                    <td>{% for order in order.cylinder.all %}{{order.product_Id}} {% endfor %}</td>
+                    <td><a href="{% url 'anticipate:show_partner_anti_invoice' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
                   </tr>
                   {% endfor %}
                 </tbody>

@@ -43,8 +43,8 @@
                 {% endif %}
             </div>
             <div class="table-responsive ">
-              <table class="users table card-table border table-striped table-vcenter text-nowrap mb-0">
-                <thead class="bg-cylinder text-white">
+              <table class="table card-table table-vcenter text-nowrap">
+                <thead class="text-dark-green">
                   <tr>
                     <th>DATE/TIME</th>
                     <th>CUSTOMER NAME</th>
@@ -55,16 +55,16 @@
                     <th>PAYMENT STATUS</th>
                   </tr>
                 </thead>
-                <tbody class="text-dark table-success">
+                <tbody class="">
                   {% for order in orders_page_obj %}
                   <tr class="">
                     <td>{{order.created}}</td>
-                    <td>{{order.user.first_name}} {{order.order.user.last_name}}</td>
-                    <td>{{order.order_Id}}</td>
+                    <td>{{order.user.first_name}} {{order.user.last_name}}</td>
+                    <td>{{order.user.username}}</td>
                     <td>{{order.get_total_cost|intcomma}}</td>
-                    <th>{{order.schedule_delivery}}</th>
+                    <td>{{order.payment_type}}</td>
+                    <th>{{order.payment_choice}}</th>
                     <td>{{order.payment_status}}</td>
-                    <td>{{order.outlet}}</td>
                   </tr>
                   {% endfor %}
                 </tbody>
