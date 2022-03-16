@@ -29,30 +29,14 @@
       <div class="col-xl-12">
         <div class="card">
           <div class="card-header bg-white">
-            <div class="card-title text-dark-green">Anticipatory sales Till Date</div>
+            <div class="card-title text-dark-green">Anticipatory Sales</div>
           </div>
-          <br>
-          <div class="text-center">
-            <h2 class="form-group text-dark-green">Filter By</h2>
-          </div>
-
-          <div class="col-md-12">
-            <div class="box-element bg-dark-green" id="form-wrapper">
-              <form method="get" class="form-inline text-white">
-                {% for field in filtered_antiorders.form %}
-                  <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
-                {% endfor %}
-                <input type="submit" class="btn btn-primary" value="Go">
-              </form>
-            </div>
-          </div>
-
 
           <div class="card-body">
             <div class="text-center">
               {% if total_antiorders > 1 %}
                 <div class="form-group col-md-12">
-                  <h3 class="form-group text-dark-green">Total sales: {{total_antiorders}}</h3>
+                  <h3 class="form-group text-dark-green">Total Sales: {{total_antiorders}}</h3>
                 </div>
                 {% else %}
                 <div class="form-group col-md-12">
@@ -68,53 +52,24 @@
                     <th>DATE/TIME</th>
                     <th>CUSTOMER NAME</th>
                     <th>CUSTOMER ID</th>
-                    <th>TOTAL COST</th>
-                    <th>PAYMENT TYPE</th>
-                    <th>PAYMENT CHOICE</th>
-                    <th>PAYMENT STATUS</th>
-
-
-                    <th>ORDER ID</th>
-                    <th>CYLINDER ID(OLD)</th>
-                    <th>PRODUCT TYPE(OLD)</th>
-                    <th>PRODUCT TYPE(NEW)</th>
-                    <th>OUTLET</th>
-                    <th>PRICE (OLD)</th>
-                    <th>PRICE (NEW)</th>
-                    <th>QUANTITY</th>
                     <th>TOTAL COST(OLD)</th>
                     <th>TOTAL COST(NEW)</th>
                     <th>PAYMENT TYPE</th>
                     <th>PAYMENT CHOICE</th>
-                    <th>PAYMENT REFERENCE</th>
-                    <th>PAYMENT</th>
-                    <th>TRANSACTION STATUS</th>
-                    <th>CYLINDER ALLOTED</th>
-                    <th></th>
+                    <th>PAYMENT STATUS</th>
                   </tr>
                 </thead>
                 <tbody>
                   {% for order in antiorders_page_obj %}
                   <tr class="">
                     <td>{{order.created}}</td>
-                    <td>{{order.user}}</td>
-                    <td>{{order.order_Id}}</td>
-                    <td>{{order.product.product_Id}}</td>
-                    <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
-                    <td>{% for order in order.cylinder.all %}{{order.category.type}} {% endfor %}</td>
-                    <td>{{order.outlet}}</td>
-                    <td>₦{{order.static_price|intcomma}}</td>
-                    <td>{% for order in order.cylinder.all %}{{order.category.price}} {% endfor %}</td>
-                    <td>{{order.quantity}}</td>
+                    <td>{{order.user.first_name}} {{order.user.last_name}}</td>
+                    <td>{{order.user.username}}</td>
                     <td>₦{{order.static_total_cost|intcomma}}</td>
                     <td>₦{{order.static_total_cost2|intcomma}}</td>
                     <td>{{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</td>
                     <td>{{order.payment_choice}}</td>
-                    <td>{{order.payment_ref}}</td>
-                    <td>{{order.payment1|intcomma}} on {{order.payment1_date}}|{{order.payment2}} on {{order.payment2_date}}|{{order.payment3}} on {{order.payment3_date}}</td>
                     <td>{{order.transaction}}</td>
-                    <td>{% for order in order.cylinder.all %}{{order.product_Id}} {% endfor %}</td>
-                    <td><a href="{% url 'anticipate:show_partner_anti_invoice' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
                   </tr>
                   {% endfor %}
                 </tbody>

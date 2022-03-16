@@ -265,6 +265,24 @@ def showQwikAdminOrders(request):
     return render(request, 'orders/qwikadmin_orders.html', context=context)
 
 @login_required
+@permission_required('users.view_admin')
+def showQwikAdminSales(request):
+    context = {}
+    filtered_orders = UserOrderFilter2(
+        request.GET,
+        queryset = UserOrder.objects.all()
+    )
+    context['filtered_orders'] = filtered_orders
+    paginated_filtered_orders = Paginator(filtered_orders.qs, 10)
+    page_number = request.GET.get('page')
+    orders_page_obj = paginated_filtered_orders.get_page(page_number)
+    context['orders_page_obj'] = orders_page_obj
+    total_orders = filtered_orders.qs.count()
+    context['total_orders'] = total_orders
+
+    return render(request, 'orders/qwikadmin_sales.html', context=context)
+
+@login_required
 def showOrderItems(request):
     context = {}
     filtered_order_items = OrderItemFilter(
