@@ -55,12 +55,12 @@
                     <th>TOTAL AMOUNT(OLD)</th>
                     <th>TOTAL AMOUNT(NEW)</th>
                     <th>PAYMENT TYPE</th>
-                    <th>PAYMENT CHOICE</th>
-                    <th>PAYMENT REFERENCE</th>
-                    <th>PAYMENT</th>
-                    <th>TRANSACTION STATUS</th>
-                    <th>CYLINDER ALLOTED</th>
-                    <th></th>
+                    <th>PAYMENT OPTION</th>
+                    <th>1ST PAYMENT/DATE</th>
+                    <th>2ND PAYMENT/DATE</th>
+                    <th>3RD PAYMENT/DATE</th>
+                    <th>BALANCE</th>
+                    <th>REMARK</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -73,11 +73,11 @@
                     <td>₦{{order.static_total_cost2|intcomma}}</td>
                     <td>{{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</td>
                     <td>{{order.payment_choice}}</td>
-                    <td>{{order.payment_ref}}</td>
-                    <td>{{order.payment1|intcomma}} on {{order.payment1_date}}|{{order.payment2}} on {{order.payment2_date}}|{{order.payment3}} on {{order.payment3_date}}</td>
-                    <td>{{order.transaction}}</td>
-                    <td>{% for order in order.cylinder.all %}{{order.product_Id}} {% endfor %}</td>
-                    <td><a href="{% url 'anticipate:show_partner_anti_invoice' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
+                    <td>{{order.payment1|intcomma}} on {{order.payment1_date}}</td>
+                    <td>{{order.payment2|intcomma}} on {{order.payment2_date}}</td>
+                    <td>{{order.payment3|intcomma}} on {{order.payment3_date}}</td>
+                    <td></td>
+                    <td></td>
                   </tr>
                   {% endfor %}
                 </tbody>
