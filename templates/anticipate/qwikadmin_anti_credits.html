@@ -36,11 +36,11 @@
             <div class="text-center">
               {% if total_antiorders > 1 %}
                 <div class="form-group col-md-12">
-                  <h3 class="form-group text-dark-green">Total Orders: {{total_antiorders}}</h3>
+                  <h3 class="form-group text-dark-green">Total: {{total_antiorders}}</h3>
                 </div>
                 {% else %}
                 <div class="form-group col-md-12">
-                  <h3 class="form-group text-dark-green">Total Order: {{total_antiorders}}</h3>
+                  <h3 class="form-group text-dark-green">Total: {{total_antiorders}}</h3>
                 </div>
                 {% endif %}
             </div>
@@ -76,8 +76,12 @@
                     <td>{{order.payment1|intcomma}} on {{order.payment1_date}}</td>
                     <td>{{order.payment2|intcomma}} on {{order.payment2_date}}</td>
                     <td>{{order.payment3|intcomma}} on {{order.payment3_date}}</td>
-                    <td></td>
-                    <td></td>
+                    <td>{{order.balance|intcomma}}</td>
+                    {% if order.transaction == "Open" %}
+                    <td>Not Fully Paid</td>
+                    {% else %}
+                    <td>Settled</td>
+                    {% endif %}
                   </tr>
                   {% endfor %}
                 </tbody>

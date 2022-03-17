@@ -48,7 +48,7 @@ def createOrder(request):
                 #     fail_silently=False,
                 #     html_message = render_to_string('orders/order_email.html', {'name': str(first_name)})
                 # )
-                messages.success(request, "Order completed! You can checkout below")
+                messages.success(request, "Please checkout your order on the topmost row of the orders' table below")
                 return redirect('orders:orders')
         else:
             messages.error(request, "Please review form input fields below")

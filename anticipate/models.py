@@ -43,6 +43,8 @@ class AntiOrder(models.Model):
     payment2_date = models.DateField(blank=True, null=True, verbose_name="2nd Payment Date")
     payment3 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name="3rd Payment")
     payment3_date = models.DateField(blank=True, null=True, verbose_name="3rd Payment Date")
+    payment_total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
     outlet = models.ForeignKey('users.Outlet', on_delete=models.SET_NULL, null=True, blank=True)
     # address = models.PointField(null=True, verbose_name="Delivery Address")
     transaction = models.CharField(max_length=12, choices=TRANSACTION_CHOICES, default='Open', blank=True, null=True, verbose_name="Transaction Status")

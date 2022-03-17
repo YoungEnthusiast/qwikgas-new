@@ -74,8 +74,13 @@ def showQwikPartnerAntiOrders(request):
             user = form.cleaned_data.get('user')
             cylinder = form.cleaned_data.get('cylinder')
 
+            payment1 = form.cleaned_data.get('payment1')
+            payment2 = form.cleaned_data.get('payment2')
+            payment3 = form.cleaned_data.get('payment3')
+
             form.save(commit=False).outlet = outlet
             form.save(commit=False).order_Id = str(random.randint(10000000,99999999))
+            form.save(commit=False).payment_total = payment1
             form.save()
 
             reg = AntiOrder.objects.filter(user=user)[0]
@@ -94,13 +99,17 @@ def showQwikPartnerAntiOrders(request):
             owing_entry.save()
 
             owings = Owing.objects.filter(customer=user)
-            reg = Person.objects.get(username=user.username)
-            reg.holding = ""
-            reg.save()
+            reg2 = Person.objects.get(username=user.username)
+            reg2.holding = ""
+            reg2.save()
             reg1 = Person.objects.get(username=user.username)
             for each in owings:
                 reg1.holding = reg1.holding + "" + each.cylinder
                 reg1.save()
+
+            reg3 = AntiOrder.objects.filter(user=user)[0]
+            reg3.balance = reg3.static_total_cost2 - reg3.payment_total
+            reg3.save()
 
             messages.success(request, "The anticipatory order has been added successfully")
             return redirect('anticipate:qwikpartner_anti_orders')
@@ -153,7 +162,16 @@ def updateQwikPartnerAntiOrders(request, id):
     if request.method=='POST':
         form = AntiOrderFormPar(request.POST, instance=order)
         if form.is_valid():
+            # user = form.cleaned_data.get('user')
+            payment2 = form.cleaned_data.get('payment2')
+
             form.save()
+
+            reg3 = AntiOrder.objects.get(id=id)
+            reg3.payment_total = reg3.payment_total + payment2
+            reg3.balance = reg3.static_total_cost2 - reg3.payment_total
+            reg3.save()
+
             # reg = AntiOrder.objects.filter(id=product.id)[0]
             # reg.vendor_product = request.user.first_name
             # reg.save()
@@ -169,7 +187,12 @@ def updateQwikPartnerAntiOrders3rd(request, id):
     if request.method=='POST':
         form = AntiOrderFormPar2(request.POST, instance=order)
         if form.is_valid():
+            payment3 = form.cleaned_data.get('payment3')
             form.save()
+            reg3 = AntiOrder.objects.get(id=id)
+            reg3.payment_total = reg3.payment_total + payment3
+            reg3.balance = reg3.static_total_cost2 - reg3.payment_total
+            reg3.save()
             # reg = AntiOrder.objects.filter(id=product.id)[0]
             # reg.vendor_product = request.user.first_name
             # reg.save()
