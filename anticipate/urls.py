@@ -28,6 +28,7 @@ urlpatterns = [
     path('qwikpartner-dashboard/anticipatory-orders/', views.showQwikPartnerAntiOrders, name='qwikpartner_anti_orders'),
     path('qwika-dashboard/anticipatory-orders/', views.showQwikAdminAntiOrders, name='qwikadmin_anti_orders'),
     path('qwika-dashboard/anticipatory-credits/', views.showQwikAdminAntiCredits, name='qwikadmin_anti_credits'),
+    path('qwika-dashboard/anticipatory-payments/', views.showQwikAdminAntiPayments, name='qwikadmin_anti_payments'),
     path('qwika-dashboard/anticipatory-sales/', views.showQwikAdminAntiSales, name='qwikadmin_anti_sales'),
     path('qwikpartner-dashboard/anticipatory-orders/update/<int:id>', views.updateQwikPartnerAntiOrders, name='qwikpartner_update_anti_order'),
     path('qwikpartner-dashboard/anticipatory-orders/payment-update/<int:id>', views.updateQwikPartnerAntiOrders3rd, name='qwikpartner_update_anti_order_3rd'),

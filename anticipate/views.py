@@ -155,6 +155,24 @@ def showQwikAdminAntiCredits(request):
     return render(request, 'anticipate/qwikadmin_anti_credits.html', context=context)
 
 @login_required
+@permission_required('users.view_admin')
+def showQwikAdminAntiPayments(request):
+    context = {}
+    filtered_antiorders = AntiOrderFilter2(
+        request.GET,
+        queryset = AntiOrder.objects.all()
+    )
+    context['filtered_antiorders'] = filtered_antiorders
+    paginated_filtered_antiorders = Paginator(filtered_antiorders.qs, 10)
+    page_number = request.GET.get('page')
+    antiorders_page_obj = paginated_filtered_antiorders.get_page(page_number)
+    context['antiorders_page_obj'] = antiorders_page_obj
+    total_antiorders = filtered_antiorders.qs.count()
+    context['total_antiorders'] = total_antiorders
+
+    return render(request, 'anticipate/qwikadmin_anti_payments.html', context=context)
+
+@login_required
 @permission_required('users.view_partner')
 def updateQwikPartnerAntiOrders(request, id):
     order = AntiOrder.objects.get(id=id)

@@ -1,0 +1,103 @@
+{% extends 'board_admin.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>Anticipatory Payments</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+		<!--Page Header-->
+		<div class="page-header">
+      <h4 class="page-title"><i class="fa fa-spinner text-dark-green mr-2 fa-1x"></i>Welcome to anticipatory payments' page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+			<ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="{% url 'qwikadmin_board' %}"><strong>Dashboard</strong></a></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>Payments</strong></li>
+			</ol>
+		</div>
+		<!--page header-->
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card">
+          <div class="card-header bg-white">
+            <div class="card-title text-dark-green">Anticipatory Payments</div>
+          </div>
+
+          <div class="card-body">
+            <div class="text-center">
+              {% if total_antiorders > 1 %}
+                <div class="form-group col-md-12">
+                  <h3 class="form-group text-dark-green">Total: {{total_antiorders}}</h3>
+                </div>
+                {% else %}
+                <div class="form-group col-md-12">
+                  <h3 class="form-group text-dark-green">Total: {{total_antiorders}}</h3>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="table-responsive">
+              <table class="table card-table table-vcenter text-nowrap">
+                <thead>
+                  <tr class="text-dark-green">
+                    <th>DATE/TIME</th>
+                    <th>CUSTOMER</th>
+                    <th>CUSTOMER ID</th>
+                    <th>TOTAL AMOUNT(OLD)</th>
+                    <th>TOTAL AMOUNT(NEW)</th>
+                    <th>PAYMENT TYPE</th>
+                    <th>PAYMENT OPTION</th>
+                    <th>PAYMENT STAGE</th>
+                    <th>BALANCE</th>
+                    <th>REMARK</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for order in antiorders_page_obj %}
+                  <tr class="">
+                    <td>{{order.created}}</td>
+                    <td>{{order.user.first_name}} {{order.user.last_name}}</td>
+                    <td>{{order.user.username}}</td>
+                    <td>₦{{order.static_total_cost|intcomma}}</td>
+                    <td>₦{{order.static_total_cost2|intcomma}}</td>
+                    <td>{{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</td>
+                    <td>{{order.payment_choice}}</td>
+                    <td>{{order.payment1|intcomma}} on {{order.payment1_date}}</td>
+                    <td>{{order.payment2|intcomma}} on {{order.payment2_date}}</td>
+                    <td>{{order.payment3|intcomma}} on {{order.payment3_date}}</td>
+                    <td>{{order.balance|intcomma}}</td>
+                    {% if order.transaction == "Open" %}
+                    <td>Not Fully Paid</td>
+                    {% else %}
+                    <td>Settled</td>
+                    {% endif %}
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <nav aria-label="...">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
+                  {% if antiorders_page_obj.has_previous %}
+                    <li class="page-item"><a class="text-dark-green page-link" href="{% my_url antiorders_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{antiorders_page_obj.previous_page_number}}</a></li>
+                  {% endif %}
+                  <li class="page-item active" aria-current="page"><a class="bg-dark-green page-link" href="{% my_url antiorders_page_obj.number 'page' request.GET.urlencode %}">{{antiorders_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+                  {% if antiorders_page_obj.has_next %}
+                    <li class="page-item"><a class="text-dark-green page-link" href="{% my_url antiorders_page_obj.next_page_number 'page' request.GET.urlencode %}">{{antiorders_page_obj.next_page_number}}</a></li>
+                  {% endif %}
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url antiorders_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endblock content%}
