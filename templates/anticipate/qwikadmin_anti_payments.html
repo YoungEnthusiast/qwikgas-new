@@ -55,8 +55,6 @@
                     <th>PAYMENT TYPE</th>
                     <th>PAYMENT OPTION</th>
                     <th>PAYMENT STAGE</th>
-                    <th>BALANCE</th>
-                    <th>REMARK</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -69,14 +67,8 @@
                     <td>₦{{order.static_total_cost2|intcomma}}</td>
                     <td>{{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</td>
                     <td>{{order.payment_choice}}</td>
-                    <td>{{order.payment1|intcomma}} on {{order.payment1_date}}</td>
-                    <td>{{order.payment2|intcomma}} on {{order.payment2_date}}</td>
-                    <td>{{order.payment3|intcomma}} on {{order.payment3_date}}</td>
-                    <td>{{order.balance|intcomma}}</td>
-                    {% if order.transaction == "Open" %}
-                    <td>Not Fully Paid</td>
-                    {% else %}
-                    <td>Settled</td>
+                    {% if order.payment3 != None %}
+                    <td>3rd</td>
                     {% endif %}
                   </tr>
                   {% endfor %}
