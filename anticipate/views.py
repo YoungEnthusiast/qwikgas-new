@@ -294,4 +294,12 @@ def showQwikAdminAntiSales(request):
     total_antiorders = filtered_antiorders.qs.count()
     context['total_antiorders'] = total_antiorders
 
+    anti_sale1 = AntiOrder.objects.all().aggregate(Sum('static_total_cost'))['static_total_cost__sum']
+    anti_sale2 = AntiOrder.objects.all().aggregate(Sum('static_total_cost2'))['static_total_cost2__sum']
+
+    anti_sale = anti_sale1 + anti_sale2
+    anti_sales = round(anti_sale,2)
+
+    context['anti_sales'] = anti_sales
+
     return render(request, 'anticipate/qwikadmin_anti_sales.html', context=context)

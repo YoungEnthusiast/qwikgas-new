@@ -11,6 +11,7 @@ from cart.cart import Cart
 import random
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required, permission_required
+from django.db.models import Sum
 # from django.template.loader import render_to_string
 from decimal import Decimal
 
@@ -21,6 +22,7 @@ def createOrder(request):
         form = UserOrderForm(request.POST, request.FILES)
         if form.is_valid():
             form.save(commit=False).user = request.user
+            form.save(commit=False).total_cost = get_total_cost()
             try:
                 reg1 = UserOrder.objects.filter(user=request.user, payment_status="Unconfirmed")[0]
                 messages.error(request, "Please you cannot make a new order until you checkout the previous one in your orders below")
@@ -284,6 +286,24 @@ def showQwikAdminCredits(request):
 
 @login_required
 @permission_required('users.view_admin')
+def showQwikAdminPayments(request):
+    context = {}
+    filtered_orders = UserOrderFilter2(
+        request.GET,
+        queryset = UserOrder.objects.filter(payment_status="Confirmed")
+    )
+    context['filtered_orders'] = filtered_orders
+    paginated_filtered_orders = Paginator(filtered_orders.qs, 10)
+    page_number = request.GET.get('page')
+    orders_page_obj = paginated_filtered_orders.get_page(page_number)
+    context['orders_page_obj'] = orders_page_obj
+    total_orders = filtered_orders.qs.count()
+    context['total_orders'] = total_orders
+
+    return render(request, 'orders/qwikadmin_payments.html', context=context)
+
+@login_required
+@permission_required('users.view_admin')
 def showQwikAdminSales(request):
     context = {}
     filtered_orders = UserOrderFilter2(
@@ -297,6 +317,11 @@ def showQwikAdminSales(request):
     context['orders_page_obj'] = orders_page_obj
     total_orders = filtered_orders.qs.count()
     context['total_orders'] = total_orders
+
+    sale = UserOrder.objects.all().aggregate(Sum('total_cost'))['total_cost__sum']
+    sales = round(sale,2)
+
+    context['sales'] = sales
 
     return render(request, 'orders/qwikadmin_sales.html', context=context)
 

@@ -69,6 +69,10 @@
                     <td>{{order.payment_choice}}</td>
                     {% if order.payment3 != None %}
                     <td>3rd</td>
+                    {% elif order.payment2 != None %}
+                    <td>2nd</td>
+                    {% elif order.payment1 != None %}
+                    <td>1st</td>
                     {% endif %}
                   </tr>
                   {% endfor %}

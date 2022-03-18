@@ -37,11 +37,11 @@ class AntiOrder(models.Model):
     # payment_date_small = models.DateField(blank=True, null=True, verbose_name="Committed Payment Date")
     payment_choice = models.CharField(max_length=13, choices=PAYMENT_CHOICES, null=True, verbose_name="Payment Choice")
     payment_ref = models.CharField(max_length=40, blank=True, null=True, verbose_name="Payment Reference")
-    payment1 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name="1st Payment")
+    payment1 = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True, verbose_name="1st Payment")
     payment1_date = models.DateField(blank=True, null=True, verbose_name="1st Payment Date")
-    payment2 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name="2nd Payment")
+    payment2 = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True, verbose_name="2nd Payment")
     payment2_date = models.DateField(blank=True, null=True, verbose_name="2nd Payment Date")
-    payment3 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name="3rd Payment")
+    payment3 = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True, verbose_name="3rd Payment")
     payment3_date = models.DateField(blank=True, null=True, verbose_name="3rd Payment Date")
     payment_total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
@@ -51,7 +51,7 @@ class AntiOrder(models.Model):
 
 
     static_price = models.DecimalField(max_digits=11, blank=True, null=True, decimal_places=2)
-    static_total_cost = models.DecimalField(max_digits=13, blank=True, null=True, decimal_places=2)
+    static_total_cost = models.DecimalField(max_digits=13, default=0.00, blank=True, null=True, decimal_places=2)
     static_price2 = models.DecimalField(max_digits=11, blank=True, null=True, decimal_places=2)
     static_total_cost2 = models.DecimalField(max_digits=13, blank=True, null=True, decimal_places=2)
     # point = models.PositiveIntegerField(default=0)

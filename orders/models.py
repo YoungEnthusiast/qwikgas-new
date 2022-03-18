@@ -20,6 +20,7 @@ class UserOrder(models.Model):
     payment3 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name="3rd Payment")
     payment3_date = models.DateField(blank=True, null=True, verbose_name="3rd Payment Date")
     payment_choice = models.CharField(max_length=13, blank=True, null=True, verbose_name="Payment Choice")
+    total_cost = models.DecimalField(max_digits=13, default=0.00, blank=True, null=True, decimal_places=2)
     payment_status = models.CharField(max_length=12, choices=PAID_CHOICES, default='Unconfirmed', null=True, verbose_name="Payment Status")
     user_order_status = models.CharField(max_length=11, default='Undelivered', null=True)
     point = models.PositiveIntegerField(default=0)
