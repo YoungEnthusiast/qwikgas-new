@@ -138,6 +138,26 @@ def showQwikAdminAntiOrders(request):
 
 @login_required
 @permission_required('users.view_admin')
+def showQwikAdminSalesGraph(request):
+    sales = AntiOrder.objects.all().order_by('created')
+    created_list = [""]
+    static_total_cost2_list = [0]
+    # total = 0.00
+    for each in sales:
+        if each.created.strftime('%d, %b %Y') in created_list:
+            total = static_total_cost2_list[-1]
+            total = int(total) + int(each.static_total_cost2)
+            static_total_cost2_list.pop()
+            static_total_cost2_list.append(int(total))
+        else:
+            created_list.append(each.created.strftime('%d, %b %Y'))
+            static_total_cost2_list.append(int(each.static_total_cost2))
+
+
+    return render(request, 'anticipate/qwikadmin_sales_graph.html',  {'created_list': created_list, 'static_total_cost2_list': static_total_cost2_list})
+
+@login_required
+@permission_required('users.view_admin')
 def showQwikAdminAntiCredits(request):
     context = {}
     filtered_antiorders = AntiOrderFilter2(
@@ -151,6 +171,11 @@ def showQwikAdminAntiCredits(request):
     context['antiorders_page_obj'] = antiorders_page_obj
     total_antiorders = filtered_antiorders.qs.count()
     context['total_antiorders'] = total_antiorders
+
+    anti_balance = AntiOrder.objects.all().aggregate(Sum('balance'))['balance__sum']
+    anti_balances = round(anti_balance,2)
+
+    context['anti_balances'] = anti_balances
 
     return render(request, 'anticipate/qwikadmin_anti_credits.html', context=context)
 

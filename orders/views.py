@@ -22,7 +22,7 @@ def createOrder(request):
         form = UserOrderForm(request.POST, request.FILES)
         if form.is_valid():
             form.save(commit=False).user = request.user
-            form.save(commit=False).total_cost = get_total_cost()
+            # form.save(commit=False).total_cost = get_total_cost()
             try:
                 reg1 = UserOrder.objects.filter(user=request.user, payment_status="Unconfirmed")[0]
                 messages.error(request, "Please you cannot make a new order until you checkout the previous one in your orders below")
@@ -38,6 +38,10 @@ def createOrder(request):
                                              price=item['price'],
                                              quantity=item['quantity'])
                 cart.clear()
+
+                reg1 = UserOrder.objects.filter(user=request.user)[0]
+                reg1.total_cost = reg1.get_total_cost()
+                reg1.save()
                 # customer = ProductCustomer.objects.get(user=request.user)
                 # first_name = customer.user.first_name
                 # last_name = customer.user.last_name
@@ -281,6 +285,11 @@ def showQwikAdminCredits(request):
     context['orders_page_obj'] = orders_page_obj
     total_orders = filtered_orders.qs.count()
     context['total_orders'] = total_orders
+
+    balance = UserOrder.objects.filter(payment_status="Unconfirmed").aggregate(Sum('total_cost'))['total_cost__sum']
+    balances = round(balance,2)
+
+    context['balances'] = balances
 
     return render(request, 'orders/qwikadmin_credits.html', context=context)
 
