@@ -718,41 +718,8 @@ def showQwikVendorBoard(request):
 @login_required
 @permission_required('users.view_partner')
 def showQwikPartnerBoard(request):
-    cylinders = Product.objects.all().count()
-    returned_empties = Product.objects.filter(partner_product_status="Returned Empty").count()
-    received_empties = Product.objects.filter(partner_product_status="Received Empty").count()
-    delivered_to_plants = Product.objects.filter(partner_product_status="Delivered to Plant").count()
-    received_filleds = Product.objects.filter(partner_product_status="Received Filled").count()
-    delivered_to_qwikcustomers = Product.objects.filter(partner_product_status="Delivered to QwikCustomer").count()
 
-    perc_returned_empties = round((returned_empties/cylinders)*100,1)
-    perc_received_empties = round((received_empties/cylinders)*100,1)
-    perc_delivered_to_plants = round((delivered_to_plants/cylinders)*100,1)
-    perc_received_filleds = round((received_filleds/cylinders)*100,1)
-    perc_delivered_to_qwikcustomers = round((delivered_to_qwikcustomers/cylinders)*100,1)
-
-    returned_empty = round(perc_returned_empties/100,2)
-    received_empty = round(perc_received_empties/100,2)
-    delivered_to_plant = round(perc_delivered_to_plants/100,2)
-    received_filled = round(perc_received_filleds/100,2)
-    delivered_to_qwikcustomer = round(perc_delivered_to_qwikcustomers/100,2)
-
-
-    return render(request, 'users/qwikpartner_board.html', {'returned_empties':returned_empties,
-                                                            'received_empties':received_empties,
-                                                            'delivered_to_plants':delivered_to_plants,
-                                                            'received_filleds':received_filleds,
-                                                            'delivered_to_qwikcustomers':delivered_to_qwikcustomers,
-                                                            'perc_returned_empties':perc_returned_empties,
-                                                            'perc_received_empties':perc_received_empties,
-                                                            'perc_delivered_to_plants':perc_delivered_to_plants,
-                                                            'perc_received_filleds':perc_received_filleds,
-                                                            'perc_delivered_to_qwikcustomers':perc_delivered_to_qwikcustomers,
-                                                            'returned_empty':returned_empty,
-                                                            'received_empty':received_empty,
-                                                            'delivered_to_plant':delivered_to_plant,
-                                                            'received_filled':received_filled,
-                                                            'delivered_to_qwikcustomer':delivered_to_qwikcustomer})
+    return render(request, 'users/qwikpartner_board.html')
 
 @login_required
 @permission_required('users.view_admin')

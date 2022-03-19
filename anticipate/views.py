@@ -153,7 +153,6 @@ def showQwikAdminSalesGraph(request):
             created_list.append(each.created.strftime('%d, %b %Y'))
             static_total_cost2_list.append(int(each.static_total_cost2))
 
-
     return render(request, 'anticipate/qwikadmin_sales_graph.html',  {'created_list': created_list, 'static_total_cost2_list': static_total_cost2_list})
 
 @login_required
