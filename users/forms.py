@@ -136,6 +136,8 @@ class CustomRegisterFormQwikCust(UserChangeForm):
             self.fields['first_name'].widget.attrs['disabled'] = 'disabled'
             self.fields['last_name'].required = False
             self.fields['last_name'].widget.attrs['disabled'] = 'disabled'
+            self.fields['holding'].required = False
+            self.fields['holding'].widget.attrs['disabled'] = 'disabled'
             self.fields['referrer'].required = False
             self.fields['referrer'].widget.attrs['disabled'] = 'disabled'
             self.fields['first_name'].label = 'First Name'
@@ -165,6 +167,13 @@ class CustomRegisterFormQwikCust(UserChangeForm):
         else:
             return self.cleaned_data.get('last_name', None)
 
+    def clean_holding(self):
+        instance = getattr(self, 'instance', None)
+        if instance:
+            return instance.holding
+        else:
+            return self.cleaned_data.get('holding', None)
+
     def clean_referrer(self):
         instance = getattr(self, 'instance', None)
         if instance:
@@ -174,7 +183,7 @@ class CustomRegisterFormQwikCust(UserChangeForm):
 
     class Meta:
         model = Person
-        fields = ['first_name', 'last_name', 'email', 'username', 'com_name', 'dob', 'phone_number', 'gender', 'state', 'city', 'lg', 'outlet', 'about_me', 'address', 'referrer', 'photograph']
+        fields = ['first_name', 'last_name', 'email', 'username', 'holding', 'com_name', 'dob', 'phone_number', 'gender', 'state', 'city', 'lg', 'outlet', 'about_me', 'address', 'referrer', 'photograph']
 
 class CustomRegisterFormQwikVendor(UserChangeForm):
     GENDER_CHOICES = [

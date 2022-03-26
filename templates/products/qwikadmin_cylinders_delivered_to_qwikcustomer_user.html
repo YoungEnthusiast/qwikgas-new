@@ -230,7 +230,7 @@
                 {% for product in cylinders_page_obj %}
                 <tr class="">
                   <td>{{product.created}}</td>
-                  <td>{{product.order.order.user.first_name}} {{product.order.order.user.last_name}}</td>
+                  <td>{{product.customer.first_name}} {{product.order.order.user.last_name}}</td>
                   <td>{{product.order.order.user.username}}</td>
                   <td>{{product.product.category}}</td>
                   <td>{{product.product.product_Id}}</td>

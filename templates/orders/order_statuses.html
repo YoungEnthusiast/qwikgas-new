@@ -129,13 +129,13 @@
                   <th>CUSTOMER</th>
                   <th>ORDER ID</th>
                   <th>OUTLET</th>
-                  <th>PRODUCT TYPE</th>
-                  <th>CYLINDER ID</th>
+                  <th>PRODUCT TYPE(OLD)</th>
+                  <th>PRODUCT TYPE(NEW)</th>
+                  <th>CYLINDER ID (OLD)</th>
                   <th>QUANTITY</th>
                   <th>TOTAL COST</th>
-                  <th>OUTLET</th>
                   <th>ORDER STATUS</th>
-                  <th>UPDATED BY</th>
+                  <th>CYLINDER(S) ALLOTED</th>
                 </tr>
               </thead>
               <tbody>
@@ -146,12 +146,12 @@
                   <td>{{order.order.order.order_Id}}</td>
                   <td>{{order.order.order.outlet}}</td>
                   <td>{{order.product.category.type}} ({{order.product.category.mass}})</td>
+                  <td>{% for order in order.cylinder.all %}{{order.category.type}}<br>{% endfor %}</td>
                   <td>{{order.product.product_Id}}</td>
-                  <td>1</td>
-                  <td>{{order.product.category.price|intcomma}}</td>
-                  <td>{{order.outlet_o_static}}</td>
+                  <td>{{order.order.quantity}}</td>
+                  <td>{{order.order.order.total_cost}}</td>
                   <td>{{order.order_status}}</td>
-                  <td>{{order.employee}}</td>
+                  <td>{% for order in order.cylinder.all %}{{order.product_Id}}<br>{% endfor %}</td>
                 </tr>
                 {% endfor %}
               </tbody>
