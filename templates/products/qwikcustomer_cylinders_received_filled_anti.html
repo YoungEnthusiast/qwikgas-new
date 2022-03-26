@@ -111,8 +111,10 @@
               <thead class="text-dark-green">
                 <tr>
                   <th>Date & Time</th>
-                  <th>Product Type</th>
-                  <th>Cylinder ID</th>
+                  <th>Product Type (OLD)</th>
+                  <th>Product Type (NEW)</th>
+                  <th>Cylinder ID (OLD)</th>
+                  <th>Cylinder ID (NEW)</th>
                 </tr>
               </thead>
               <tbody class="">
@@ -120,7 +122,9 @@
                 <tr class="">
                   <td>{{product.created}}</td>
                   <td>{{product.product.category}}</td>
+                  <td>{% for product in product.cylinder.all %}{{product.category.type}}<br>{% endfor %}</td>
                   <td>{{product.product.product_Id}}</td>
+                  <td>{% for product in product.cylinder.all %}{{product.product_Id}}<br>{% endfor %}</td>
                 </tr>
                 {% endfor %}
               </tbody>

@@ -171,7 +171,9 @@ def showQwikAdminAntiCredits(request):
     total_antiorders = filtered_antiorders.qs.count()
     context['total_antiorders'] = total_antiorders
 
-    anti_balance = AntiOrder.objects.all().aggregate(Sum('balance'))['balance__sum']
+    anti_balance = 0
+    if anti_balance != 0:
+        anti_balance = AntiOrder.objects.all().aggregate(Sum('balance'))['balance__sum']
     anti_balances = round(anti_balance,2)
 
     context['anti_balances'] = anti_balances
@@ -318,8 +320,14 @@ def showQwikAdminAntiSales(request):
     total_antiorders = filtered_antiorders.qs.count()
     context['total_antiorders'] = total_antiorders
 
-    anti_sale1 = AntiOrder.objects.all().aggregate(Sum('static_total_cost'))['static_total_cost__sum']
-    anti_sale2 = AntiOrder.objects.all().aggregate(Sum('static_total_cost2'))['static_total_cost2__sum']
+    anti_sale1 = 0
+    anti_sale2 = 0
+
+    if anti_sale1 != 0:
+        anti_sale1 = AntiOrder.objects.all().aggregate(Sum('static_total_cost'))['static_total_cost__sum']
+
+    if anti_sale2 != 0:
+        anti_sale2 = AntiOrder.objects.all().aggregate(Sum('static_total_cost2'))['static_total_cost2__sum']
 
     anti_sale = anti_sale1 + anti_sale2
     anti_sales = round(anti_sale,2)

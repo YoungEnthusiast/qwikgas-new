@@ -28,7 +28,6 @@
                     <th>Image</th>
                     <th>Product</th>
                     <th>Quantity</th>
-                    <th>Product Id</th>
                     <th></th>
                     <th>Unit price</th>
                     <th>Price</th>
@@ -45,7 +44,6 @@
                         </td>
                         <td>{{ product.category.type }}</td>
                         <td>{{ item.quantity }}</td>
-                        <td>{{ product.product_Id }}</td>
                         <td><a href="{% url "cart:cart_remove" product.id %}"><i class="fa fa-trash text-dark-green fa-1x"></i></a></td>
                         <td>₦{{ item.price|intcomma }}</td>
                         <td>₦{{ item.total_price|intcomma }}</td>
@@ -54,7 +52,7 @@
                   {% endfor %}
                   <tr class="total">
                       <td>Total</td>
-                      <td colspan="5"></td>
+                      <td colspan="4"></td>
                       <td><strong>₦{{ cart.get_total_price|intcomma }}</strong></td>
                   </tr>
                 </tbody>
