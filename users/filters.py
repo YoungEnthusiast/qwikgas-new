@@ -3,6 +3,22 @@ from django_filters import CharFilter, DateFilter
 from .models import Person, Wallet, Outlet
 from django.forms.widgets import NumberInput
 
+# from django.db.models import Q
+# import django_filters
+#
+#
+# class LocationFilter(django_filters.FilterSet):
+#     q = django_filters.CharFilter(method='my_custom_filter',label="Search")
+#
+#     class Meta:
+#         model = Location
+#         fields = ['q']
+#
+#     def my_custom_filter(self, queryset, name, value):
+#         return queryset.filter(
+#             Q(loc__icontains=value) | Q(loc_mansioned__icontains=value) | Q(loc_country__icontains=value) | Q(loc_modern__icontains=value)
+#         )
+
 class WalletFilter(filters.FilterSet):
     transaction_type = CharFilter(field_name='transaction_type', lookup_expr='icontains', label="Transaction Type")
     # dob = forms.DateField(widget=NumberInput(attrs={'type': 'date'}), required=False)

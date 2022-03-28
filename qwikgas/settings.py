@@ -116,6 +116,16 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'yustaoab@gmail.com'
 EMAIL_HOST_PASSWORD = 'twnqanloovwgjrsq'
 
+#MY EMAIL SETTING
+# EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'mail.qwikgas.ai'  #Hosted on namecheap Ex: mail.pure.com
+# EMAIL_USE_TLS = False
+# EMAIL_PORT = 26 #This will be different based on your Host, for Namecheap I use this`
+# EMAIL_HOST_USER = '' # Ex: info@pure.com
+# EMAIL_HOST_PASSWORD = '' # for the email you created through cPanel. The password for that
+#
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
