@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from users.models import Outlet, Person
-from .models import AntiOrder#, OrderStatus
+from .models import AntiOrder
+from orders.models import UserOrder
 from products.models import Owing, Product, Cylinder
 # from products.models import Category
 # from users.models import Wallet, Person, Outlet
@@ -153,7 +154,51 @@ def showQwikAdminSalesGraph(request):
             created_list.append(each.created.strftime('%d, %b %Y'))
             static_total_cost2_list.append(int(each.static_total_cost2))
 
-    return render(request, 'anticipate/qwikadmin_sales_graph.html',  {'created_list': created_list, 'static_total_cost2_list': static_total_cost2_list})
+    sales_user = UserOrder.objects.all().order_by('created')
+    created_user_list = [""]
+    total_cost_list = [0]
+    # total = 0.00
+    for each_user in sales_user:
+        if each_user.created.strftime('%d, %b %Y') in created_user_list:
+            total_user = total_cost_list[-1]
+            total_user = int(total_user) + int(each_user.total_cost)
+            total_cost_list.pop()
+            total_cost_list.append(int(total_user))
+        else:
+            created_user_list.append(each_user.created.strftime('%d, %b %Y'))
+            total_cost_list.append(int(each_user.total_cost))
+
+    sales_joint = AntiOrder.objects.all().order_by('created')
+    created_joint_list = [""]
+    total_joint_cost_list = [0]
+    # total = 0.00
+    for each_joint in sales_joint:
+        if each_joint.created.strftime('%d, %b %Y') in created_joint_list:
+            total_joint = total_joint_cost_list[-1]
+            total_joint = int(total_joint) + int(each_joint.static_total_cost2)
+            total_joint_cost_list.pop()
+            total_joint_cost_list.append(int(total_joint))
+        else:
+            created_joint_list.append(each_joint.created.strftime('%d, %b %Y'))
+            total_joint_cost_list.append(int(each_joint.static_total_cost2))
+
+    sales_joint2 = UserOrder.objects.all().order_by('created')
+
+    for each_joint2 in sales_joint2:
+        if each_joint2.created.strftime('%d, %b %Y') in created_joint_list:
+            total_joint2 = total_joint_cost_list[-1]
+            total_joint2 = int(total_joint2) + int(each_joint2.total_cost)
+            total_joint_cost_list.pop()
+            total_joint_cost_list.append(int(total_joint2))
+        else:
+            created_joint_list.append(each_joint2.created.strftime('%d, %b %Y'))
+            total_joint_cost_list.append(int(each_joint2.total_cost))
+
+    return render(request, 'anticipate/qwikadmin_sales_graph.html',  {'created_list': created_list,
+                                                                        'created_user_list': created_user_list,
+                                                                        'created_joint_list': created_joint_list,
+                                                                        'static_total_cost2_list': static_total_cost2_list,
+                                                                        'total_cost_list': total_cost_list, 'total_joint_cost_list': total_joint_cost_list})
 
 @login_required
 @permission_required('users.view_admin')

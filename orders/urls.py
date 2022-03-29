@@ -34,4 +34,5 @@ urlpatterns = [
     # path('visitor-order', views.order_visitor, name='order_visitor'),
     # path('st---only2', views.addOrder, name='add_order'),
     path('qwikcustomer-address/order/<int:id>', views.showAddressCust, name='qwikcust_address'),
+    # path('qwika-dashboard/sales-graph-user/', views.showQwikAdminSalesGraphUser, name='qwikadmin_sales_graph_user'),
 ]

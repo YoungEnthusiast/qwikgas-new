@@ -64,7 +64,7 @@
                   },
                   title: {
                     display: true,
-                    text: "TOTAL SALES PER DAY"
+                    text: "ANTICIPATORY SALES PER DAY"
                   }
                 }
               });
@@ -76,7 +76,112 @@
 
       </script>
     </div>
+
+    <div class="col-md-6">
+      <div id="container" style="width: 100%;">
+      <canvas id="qwikadmin_sales_graph_user"></canvas>
+      </div>
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+      <script>
+
+      $(function () {
+
+        var created_user_list = {{ created_user_list|safe }}
+        var total_cost_list = {{ total_cost_list|safe }}
+
+        var $populationChart = $("#qwikadmin_sales_graph_user");
+        $.ajax({
+          url: $populationChart.data("url"),
+          success: function (data) {
+
+            var ctx = $populationChart[0].getContext("2d");
+
+            new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: created_user_list,
+                datasets: [{
+                  label: 'Amount (₦)',
+                  backgroundColor: '#007541',
+                  data: total_cost_list,
+                }]
+              },
+              options: {
+                responsive: true,
+                legend: {
+                  position: 'top',
+                },
+                title: {
+                  display: true,
+                  text: "USER ORDER SALES PER DAY"
+                }
+              }
+            });
+
+          }
+        });
+
+      });
+
+    </script>
   </div>
+  </div>
+
+  <div class="row">
+
+  <div class="col-md-12">
+    <div id="container" style="width: 100%;">
+    <canvas id="qwikadmin_sales_graph_joint"></canvas>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+    <script>
+
+    $(function () {
+
+      var created_joint_list = {{ created_joint_list|safe }}
+      var total_joint_cost_list = {{ total_joint_cost_list|safe }}
+
+      var $populationChart = $("#qwikadmin_sales_graph_joint");
+      $.ajax({
+        url: $populationChart.data("url"),
+        success: function (data) {
+
+          var ctx = $populationChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: created_joint_list,
+              datasets: [{
+                label: 'Amount (₦)',
+                backgroundColor: '#007541',
+                data: total_joint_cost_list,
+              }]
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: "USER ORDER SALES PER DAY"
+              }
+            }
+          });
+
+        }
+      });
+
+    });
+
+  </script>
+</div>
+</div>
 
 
   </div>
