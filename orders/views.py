@@ -812,3 +812,22 @@ def showAddressCust(request, id):
             # messages.success(request, "Order Status has been updated successfully")
             # return redirect('orders:qwikvendor_order_items')
     return render(request, 'orders/qwikcustomer_address.html', {'form': form})
+
+# @login_required
+# @permission_required('users.view_admin')
+# def showQwikAdminSalesGraphUser(request):
+#     sales = UserOrder.objects.all().order_by('created')
+#     created_list = [""]
+#     total_cost_list = [0]
+#     # total = 0.00
+#     for each in sales:
+#         if each.created.strftime('%d, %b %Y') in created_list:
+#             total = total_cost_list[-1]
+#             total = int(total) + int(each.total_cost)
+#             total_cost_list.pop()
+#             total_cost_list.append(int(total))
+#         else:
+#             created_list.append(each.created.strftime('%d, %b %Y'))
+#             total_cost_list.append(int(each.total_cost))
+#
+#     return render(request, 'orders/qwikadmin_sales_graph_user.html',  {'created_list': created_list, 'total_cost_list': total_cost_list})

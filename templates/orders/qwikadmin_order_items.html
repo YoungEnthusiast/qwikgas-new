@@ -15,11 +15,11 @@
     {% include 'partials/_alerts.html' %}
 		<!--Page Header-->
 		<div class="page-header">
-			<h4 class="page-title"><i class="fa fa-spinner text-dark-green mr-2 fa-1x"></i>Welcome to customers orders' page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+			<h4 class="page-title"><i class="fa fa-spinner text-dark-green mr-2 fa-1x"></i>Welcome to customers order_items' page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
 			<ol class="breadcrumb bg-white">
         <li class="breadcrumb-item"><a href="{% url 'qwikadmin_board' %}"><strong>Dashboard</strong></a></li>
-        <li class="breadcrumb-item"><a href="{% url 'orders:qwikadmin_orders' %}"><strong>Orders</strong></a></li>
-				<li class="breadcrumb-item active" aria-current="page"><strong>New Orders</strong></li>
+        <li class="breadcrumb-item"><a href="{% url 'orders:qwikadmin_order_items' %}"><strong>Order Items</strong></a></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>New Order Items</strong></li>
 			</ol>
 		</div>
 		<!--page header-->
@@ -28,7 +28,7 @@
       <div class="col-xl-12">
         <div class="card">
           <div class="card-header bg-lemon-green">
-            <div class="card-title text-dark-green">Orders</div>
+            <div class="card-title text-dark-green">order_items</div>
           </div>
           <br>
           <div class="text-center">
@@ -37,7 +37,7 @@
           <div class="col-md-12">
             <div class="box-element bg-dark-green" id="form-wrapper">
               <form method="get" class="form-inline text-white">
-                {% for field in filtered_orders.form %}
+                {% for field in filtered_order_items.form %}
                   <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
                 {% endfor %}
                 <input type="submit" class="btn btn-primary" value="Go">
@@ -46,13 +46,13 @@
           </div>
           <div class="card-body">
             <div class="text-center">
-              {% if total_orders > 1 %}
+              {% if total_order_items > 1 %}
                 <div class="form-group col-md-12">
-                  <h3 class="form-group text-dark-green">Total: {{total_orders}}</h3>
+                  <h3 class="form-group text-dark-green">Total: {{total_order_items}}</h3>
                 </div>
                 {% else %}
                 <div class="form-group col-md-12">
-                  <h3 class="form-group text-dark-green">Total: {{total_orders}}</h3>
+                  <h3 class="form-group text-dark-green">Total: {{total_order_items}}</h3>
                 </div>
                 {% endif %}
             </div>
@@ -71,7 +71,7 @@
                   </tr>
                 </thead>
                 <tbody class="text-dark table-success">
-                  {% for order in orders_page_obj %}
+                  {% for order in order_items_page_obj %}
                   <tr class="">
                     <td>{{order.created}}</td>
                     <td>{{order.user.first_name}} {{order.order.user.last_name}}</td>
@@ -80,7 +80,7 @@
                     <td>{{order.payment_status}}</td>
                     <td>{{order.outlet}}</td>
                     <td>{{order.address}}</td>
-                    <td><a href="{% url 'orders:show_invoice' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
+                    <td><a href=""><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
                   </tr>
                   {% endfor %}
                 </tbody>
@@ -88,14 +88,14 @@
               <nav aria-label="...">
                 <ul class="pagination justify-content-center">
                   <li class="page-item"><a class="text-dark-green page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
-                  {% if orders_page_obj.has_previous %}
-                    <li class="page-item"><a class="text-dark-green page-link" href="{% my_url orders_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{orders_page_obj.previous_page_number}}</a></li>
+                  {% if order_items_page_obj.has_previous %}
+                    <li class="page-item"><a class="text-dark-green page-link" href="{% my_url order_items_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{order_items_page_obj.previous_page_number}}</a></li>
                   {% endif %}
-                  <li class="page-item active" aria-current="page"><a class="bg-dark-green page-link" href="{% my_url orders_page_obj.number 'page' request.GET.urlencode %}">{{orders_page_obj.number}}<span class="sr-only">(current)</span></a></li>
-                  {% if orders_page_obj.has_next %}
-                    <li class="page-item"><a class="text-dark-green page-link" href="{% my_url orders_page_obj.next_page_number 'page' request.GET.urlencode %}">{{orders_page_obj.next_page_number}}</a></li>
+                  <li class="page-item active" aria-current="page"><a class="bg-dark-green page-link" href="{% my_url order_items_page_obj.number 'page' request.GET.urlencode %}">{{order_items_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+                  {% if order_items_page_obj.has_next %}
+                    <li class="page-item"><a class="text-dark-green page-link" href="{% my_url order_items_page_obj.next_page_number 'page' request.GET.urlencode %}">{{order_items_page_obj.next_page_number}}</a></li>
                   {% endif %}
-                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url orders_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url order_items_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
                 </ul>
               </nav>
             </div>
