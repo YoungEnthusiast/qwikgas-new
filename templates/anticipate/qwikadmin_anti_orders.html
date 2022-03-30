@@ -94,19 +94,19 @@
                     <td>{{order.order_Id}}</td>
                     <td>{{order.product.product_Id}}</td>
                     <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
-                    <td>{% for order in order.cylinder.all %}{{order.category.type}} {% endfor %}</td>
+                    <td>{% for order in order.cylinder.all %}{{order.category.type}}<br> {% endfor %}</td>
                     <td>{{order.outlet}}</td>
                     <td>₦{{order.static_price|intcomma}}</td>
-                    <td>{% for order in order.cylinder.all %}{{order.category.price}} {% endfor %}</td>
+                    <td>{% for order in order.cylinder.all %}{{order.category.price}}<br> {% endfor %}</td>
                     <td>{{order.quantity}}</td>
                     <td>₦{{order.static_total_cost|intcomma}}</td>
                     <td>₦{{order.static_total_cost2|intcomma}}</td>
                     <td>{{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</td>
                     <td>{{order.payment_choice}}</td>
                     <td>{{order.payment_ref}}</td>
-                    <td>{{order.payment1|intcomma}} on {{order.payment1_date}}|{{order.payment2}} on {{order.payment2_date}}|{{order.payment3}} on {{order.payment3_date}}</td>
+                    <td>{{order.payment1|intcomma}} on {{order.payment1_date}}<br>{{order.payment2}} on {{order.payment2_date}}<br>{{order.payment3}} on {{order.payment3_date}}</td>
                     <td>{{order.transaction}}</td>
-                    <td>{% for order in order.cylinder.all %}{{order.product_Id}} {% endfor %}</td>
+                    <td>{% for order in order.cylinder.all %}{{order.product_Id}}<br> {% endfor %}</td>
                     <td><a href="{% url 'anticipate:show_partner_anti_invoice' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
                   </tr>
                   {% endfor %}

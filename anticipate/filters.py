@@ -1,7 +1,8 @@
 import django_filters as filters
-from django_filters import DateFilter#, CharFilter
+from django_filters import DateFilter, CharFilter
 from .models import AntiOrder#, OrderItem, OrderStatus
 from django.forms.widgets import NumberInput
+from django.db.models import Q
 
 class AntiOrderFilter(filters.FilterSet):
     start_date = DateFilter(input_formats=['%Y-%m-%d', '%d-%m-%Y', '%Y/%m/%d', '%d/%m/%Y'], field_name="created", lookup_expr='gte', label='Dates Above', widget=NumberInput(attrs={'type': 'date'}))
@@ -13,14 +14,12 @@ class AntiOrderFilter(filters.FilterSet):
         fields = []
 
 class AntiOrderFilter2(filters.FilterSet):
-    # address = CharFilter(field_name='address', lookup_expr='icontains', label="Address")
     start_date = DateFilter(input_formats=['%Y-%m-%d', '%d-%m-%Y', '%Y/%m/%d', '%d/%m/%Y'], field_name="created", lookup_expr='gte', label='Dates Above', widget=NumberInput(attrs={'type': 'date'}))
     start_date2 = DateFilter(input_formats=['%Y-%m-%d', '%d-%m-%Y', '%Y/%m/%d', '%d/%m/%Y'], field_name="created", lookup_expr='lte', label='Dates Below', widget=NumberInput(attrs={'type': 'date'}))
-    #created = DateFilter(label="Exact Date", input_formats=['%Y-%m-%d', '%d-%m-%Y', '%Y/%m/%d', '%d/%m/%Y'], lookup_expr='icontains', widget=TextInput(attrs={'placeholder': 'E.g. 1-1-2021'}))
+    q = CharFilter(method='my_custom_filter',label="Others")
 
     class Meta:
         model = AntiOrder
-        fields = ['user']
-
-    def __init__(self, *args, **kwargs):
-        super(AntiOrderFilter2, self).__init__(*args, **kwargs)
+        fields = ['outlet', 'cylinder']
+    def my_custom_filter(self, queryset, name, value):
+        return queryset.filter(Q(user__username__icontains=value) | Q(user__first_name__icontains=value) | Q(user__last_name__icontains=value) | Q(payment_choice__icontains=value) | Q(payment_type1__icontains=value) | Q(payment_type2__icontains=value) | Q(payment_type3__icontains=value) | Q(transaction__icontains=value))

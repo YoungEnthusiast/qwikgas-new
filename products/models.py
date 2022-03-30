@@ -107,8 +107,7 @@ class Cylinder(models.Model):
         ('Delivered to QwikCustomer', 'Delivered to QwikCustomer'),
         ('Returned Filled to QwikLet', 'Returned Filled to QwikLet'),
         ('Delivered to QwikCustomer', 'Delivered to QwikCustomer'),
-        ('Agree', 'Agree'),
-        ('Disagree', 'Disagree'),
+
     ]
     PARTNER_CHOICES = [
         ('Received Empty from QwikCustomer', 'Received Empty from QwikCustomer'),

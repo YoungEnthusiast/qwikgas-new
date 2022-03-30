@@ -16,15 +16,20 @@ class UserOrderFilter2(filters.FilterSet):
     # address = CharFilter(field_name='address', lookup_expr='icontains', label="Address")
     start_date = DateFilter(input_formats=['%Y-%m-%d', '%d-%m-%Y', '%Y/%m/%d', '%d/%m/%Y'], field_name="created", lookup_expr='gte', label='Dates Above', widget=NumberInput(attrs={'type': 'date'}))
     start_date2 = DateFilter(input_formats=['%Y-%m-%d', '%d-%m-%Y', '%Y/%m/%d', '%d/%m/%Y'], field_name="created", lookup_expr='lte', label='Dates Below', widget=NumberInput(attrs={'type': 'date'}))
-    #created = DateFilter(label="Exact Date", input_formats=['%Y-%m-%d', '%d-%m-%Y', '%Y/%m/%d', '%d/%m/%Y'], lookup_expr='icontains', widget=TextInput(attrs={'placeholder': 'E.g. 1-1-2021'}))
+    start_date3 = DateFilter(input_formats=['%Y-%m-%d', '%d-%m-%Y', '%Y/%m/%d', '%d/%m/%Y'], field_name="schedule_delivery", lookup_expr='gte', label='Dates Above', widget=NumberInput(attrs={'type': 'date'}))
+
+    q = CharFilter(method='my_custom_filter',label="Others")
 
     class Meta:
         model = UserOrder
-        fields = ['user', 'order_Id', 'payment_status']
+        fields = ['outlet']
 
     def __init__(self, *args, **kwargs):
         super(UserOrderFilter2, self).__init__(*args, **kwargs)
-        # self.filters['outlet'].label="Outlet"
+        self.filters['outlet'].label="Outlet"
+    def my_custom_filter(self, queryset, name, value):
+        return queryset.filter(Q(user__username__icontains=value) | Q(user__first_name__icontains=value) | Q(user__last_name__icontains=value) | Q(payment_type__icontains=value) | Q(payment_status__icontains=value) | Q(order_Id__icontains=value))
+
 
 class OrderItemFilter(filters.FilterSet):
     # outlet_o_static = CharFilter(field_name='outlet_o_static', lookup_expr='icontains', label="Outlet")
