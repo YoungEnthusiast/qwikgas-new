@@ -147,13 +147,22 @@ def showQwikAdminSalesGraph(request):
     for each in sales:
         if each.created.strftime('%d, %b %Y') in created_list:
             total = static_total_cost2_list[-1]
-            total = int(total) + int(each.static_total_cost2)
-            static_total_cost2_list.pop()
-            static_total_cost2_list.append(int(total))
+            try:
+                total = int(total) + int(each.static_total_cost2)
+                static_total_cost2_list.pop()
+                static_total_cost2_list.append(int(total))
+            except:
+                each.static_total_cost2 = 0
+                total = int(total) + int(each.static_total_cost2)
+                static_total_cost2_list.pop()
+                static_total_cost2_list.append(int(total))
         else:
             created_list.append(each.created.strftime('%d, %b %Y'))
-            static_total_cost2_list.append(int(each.static_total_cost2))
-
+            try:
+                static_total_cost2_list.append(int(each.static_total_cost2))
+            except:
+                each.static_total_cost2 = 0
+                static_total_cost2_list.append(int(each.static_total_cost2))
     sales_user = UserOrder.objects.all().order_by('created')
     created_user_list = [""]
     total_cost_list = [0]
@@ -161,12 +170,23 @@ def showQwikAdminSalesGraph(request):
     for each_user in sales_user:
         if each_user.created.strftime('%d, %b %Y') in created_user_list:
             total_user = total_cost_list[-1]
-            total_user = int(total_user) + int(each_user.total_cost)
-            total_cost_list.pop()
-            total_cost_list.append(int(total_user))
+            try:
+                total_user = int(total_user) + int(each_user.total_cost)
+                total_cost_list.pop()
+                total_cost_list.append(int(total_user))
+            except:
+                each_user.total_cost = 0
+                total_user = int(total_user) + int(each_user.total_cost)
+                total_cost_list.pop()
+                total_cost_list.append(int(total_user))
+
         else:
             created_user_list.append(each_user.created.strftime('%d, %b %Y'))
-            total_cost_list.append(int(each_user.total_cost))
+            try:
+                total_cost_list.append(int(each_user.total_cost))
+            except:
+                each_user.total_cost = 0
+                total_cost_list.append(int(each_user.total_cost))
 
     sales_joint = AntiOrder.objects.all().order_by('created')
     created_joint_list = [""]
@@ -175,12 +195,22 @@ def showQwikAdminSalesGraph(request):
     for each_joint in sales_joint:
         if each_joint.created.strftime('%d, %b %Y') in created_joint_list:
             total_joint = total_joint_cost_list[-1]
-            total_joint = int(total_joint) + int(each_joint.static_total_cost2)
-            total_joint_cost_list.pop()
-            total_joint_cost_list.append(int(total_joint))
+            try:
+                total_joint = int(total_joint) + int(each_joint.static_total_cost2)
+                total_joint_cost_list.pop()
+                total_joint_cost_list.append(int(total_joint))
+            except:
+                each_joint.static_total_cost2 = 0
+                total_joint = int(total_joint) + int(each_joint.static_total_cost2)
+                total_joint_cost_list.pop()
+                total_joint_cost_list.append(int(total_joint))
         else:
             created_joint_list.append(each_joint.created.strftime('%d, %b %Y'))
-            total_joint_cost_list.append(int(each_joint.static_total_cost2))
+            try:
+                total_joint_cost_list.append(int(each_joint.static_total_cost2))
+            except:
+                each_joint.static_total_cost2 = 0
+                total_joint_cost_list.append(int(each_joint.static_total_cost2))
 
     sales_joint2 = UserOrder.objects.all().order_by('created')
 
@@ -188,12 +218,21 @@ def showQwikAdminSalesGraph(request):
         if each_joint2.created.strftime('%d, %b %Y') in created_joint_list:
             d_index = created_joint_list.index(each_joint2.created.strftime('%d, %b %Y'))
             total_joint2 = total_joint_cost_list[d_index]
-            total_joint2 = int(total_joint2) + int(each_joint2.total_cost)
+            try:
+                total_joint2 = int(total_joint2) + int(each_joint2.total_cost)
+            except:
+                each_joint2.total_cost = 0
+                total_joint2 = int(total_joint2) + int(each_joint2.total_cost)
+
             del total_joint_cost_list[d_index]
             total_joint_cost_list.insert(d_index, int(total_joint2))
         else:
             created_joint_list.append(each_joint2.created.strftime('%d, %b %Y'))
-            total_joint_cost_list.append(int(each_joint2.total_cost))
+            try:
+                total_joint_cost_list.append(int(each_joint2.total_cost))
+            except:
+                each_joint2.total_cost = 0
+                total_joint_cost_list.append(int(each_joint2.total_cost))
 
     return render(request, 'anticipate/qwikadmin_sales_graph.html',  {'created_list': created_list,
                                                                         'created_user_list': created_user_list,
