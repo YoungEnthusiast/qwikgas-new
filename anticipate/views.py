@@ -297,7 +297,11 @@ def updateQwikPartnerAntiOrders(request, id):
             form.save()
 
             reg3 = AntiOrder.objects.get(id=id)
-            reg3.payment_total = reg3.payment_total + payment2
+            try:
+                reg3.payment_total = reg3.payment_total + payment2
+            except:
+                reg3.payment_total = 0 + payment2
+            # reg3.payment_total = reg3.payment_total + payment2
             reg3.balance = reg3.static_total_cost2 - reg3.payment_total
             reg3.save()
 
