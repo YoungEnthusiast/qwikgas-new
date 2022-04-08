@@ -154,7 +154,7 @@ class ProductFormPartner(forms.ModelForm):
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ['type', 'mass', 'price', 'image', 'description']
+        fields = ['type', 'mass', 'price', 'image', 'description', 'tare', 'water', 'test', 'working']
 
 class ProductFormAdmin(forms.ModelForm):
     class Meta:

@@ -40,6 +40,7 @@
                     <th>NAME</th>
                     <th>MASS</th>
                     <th>PRICE</th>
+                    <th>UPDATED</th>
                     <th></th>
                     <th></th>
                   </tr>
@@ -51,6 +52,7 @@
                     <td>{{product.type}}</td>
                     <td>{{product.mass}}</td>
                     <td>{{product.price|intcomma}}</td>
+                    <td>{{product.updated}}</td>
                     <td class="text-center"><a href="update/{{product.id}}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-eye fa-1x text-white"></i> View</strong><strong> <i class="fa fa-edit fa-1x text-white"></i> Edit</strong></button></a></td>
                     <td class="text-center"><a href="delete/{{product.id}}"><button type="button" class="btn btn-sm btn-danger text-white"><strong><i class="fa fa-trash fa-1x text-white"></i> &nbspDelete</strong></button></a></td>
                   </tr>

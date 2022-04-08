@@ -3,14 +3,14 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 class Category(models.Model):
-    type = models.CharField(max_length=20, db_index=True, unique=True)
-    mass = models.CharField(max_length=6, db_index=True, unique=True)
+    type = models.CharField(max_length=20, db_index=True, unique=True, verbose_name="Product Type")
+    mass = models.CharField(max_length=6, db_index=True, unique=True, verbose_name="LPG Weight")
     slug = models.SlugField(max_length=200, db_index=True)
     price = models.DecimalField(max_digits=11, null=True, decimal_places=2)
-    tare = models.CharField(max_length=6, db_index=True, unique=True, null=True)
-    working = models.CharField(max_length=6, db_index=True, null=True)
-    test = models.CharField(max_length=6, db_index=True, null=True)
-    water = models.CharField(max_length=6, db_index=True,  null=True)
+    tare = models.CharField(max_length=6, db_index=True, unique=True, null=True, verbose_name="Tare Weight")
+    working = models.CharField(max_length=6, db_index=True, null=True, verbose_name="Working Pressure")
+    test = models.CharField(max_length=6, db_index=True, null=True, verbose_name="Test Pressure")
+    water = models.CharField(max_length=6, db_index=True, null=True, verbose_name="Water Capacity")
     image = models.ImageField(upload_to='categories_img/%Y/%m/%d', null=True, blank=True)
     description = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
