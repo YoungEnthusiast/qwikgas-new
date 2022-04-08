@@ -134,7 +134,7 @@
   <div class="row">
     <div class="col-xl-12">
       <div class="card">
-        <div class="card-header bg-lemon-green">
+        <div class="card-header">
           <div class="card-title text-dark-green">All Wallet Histories Till Date</div>
         </div>
         <br>
@@ -169,8 +169,8 @@
           <a href="{% url 'wallet_credit' %}"><button type="button" class="btn btn-dark-green text-white col-md-12"><strong><i class="fa fa-plus-circle fa-1x mr-1 text-white"></i>Credit Customer</strong></button></a>
 
           <div class="table-responsive ">
-            <table class="users table card-table border table-striped table-vcenter text-nowrap mb-0">
-              <thead class="bg-cylinder text-white">
+            <table class="table card-table table-vcenter text-nowrap">
+              <thead class="text-dark-green">
                 <tr>
                   <th>DATE</th>
                   <th>CUSTOMER</th>
@@ -183,14 +183,14 @@
                   <th>BALANCE</th>
                 </tr>
               </thead>
-              <tbody class="text-dark table-success">
+              <tbody class="">
                 {% for wallet in wallets_page_obj %}
                 {% if wallet.amount_debited != None %}
                 <tr class="">
                   <td>{{wallet.created}}</td>
                   <td>{{wallet.user.first_name}} {{wallet.user.last_name}}</td>
                   <td>{{wallet.transaction_type}}</td>
-                  <td><strong class="text-danger">-</strong>₦{{wallet.amount_debited|intcomma}}</td>
+                  <td><strong class="text-danger">-₦{{wallet.amount_debited|intcomma}}</strong></td>
                   <td></td>
                   <td></td>
                   <td></td>
@@ -203,7 +203,7 @@
                   <td>{{wallet.user.first_name}} {{wallet.user.last_name}}</td>
                   <td>{{wallet.transaction_type}}</td>
                   <td></td>
-                  <td><strong class="text-dark-green">+</strong>₦{{wallet.amount_credited|intcomma}}</td>
+                  <td><strong class="text-dark-green">+₦{{wallet.amount_credited|intcomma}}</strong></td>
                   <td></td>
                   <td></td>
                   <td></td>
@@ -216,7 +216,7 @@
                   <td>{{wallet.transaction_type}}</td>
                   <td></td>
                   <td></td>
-                  <td><strong class="text-dark-green">+</strong>₦{{wallet.referral|intcomma}}</td>
+                  <td><strong class="text-dark-green">+₦{{wallet.referral|intcomma}}</strong></td>
                   <td></td>
                   <td></td>
                   <td>₦{{wallet.current_balance|intcomma}}</td>
@@ -229,7 +229,7 @@
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td><strong class="text-dark-green">+</strong>₦{{wallet.first|intcomma}}</td>
+                  <td><strong class="text-dark-green">+₦{{wallet.first|intcomma}}</strong></td>
                   <td></td>
                   <td>₦{{wallet.current_balance|intcomma}}</td>
                 </tr>
@@ -242,7 +242,7 @@
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td><strong class="text-dark-green">+</strong>₦{{wallet.point|intcomma}}</td>
+                  <td><strong class="text-dark-green">+₦{{wallet.point|intcomma}}</strong></td>
                   <td>₦{{wallet.current_balance|intcomma}}</td>
                 </tr>
                 {% endif %}

@@ -33,7 +33,7 @@ class Lg(models.Model):
             return str(self.id)
 
 class Outlet(models.Model):
-    manager = models.ForeignKey('users.Person', on_delete=models.SET_NULL, null=True, related_name="outlet_manager")
+    manager = models.ForeignKey('users.Person', on_delete=models.SET_NULL, null=True, verbose_name="QwikVendor", related_name="outlet_manager")
     partner = models.ForeignKey('users.Person', on_delete=models.SET_NULL, null=True, related_name="outlet_partner")
     outlet = models.CharField(max_length=20, unique=True, null=True)
     address = models.CharField(max_length=200, null=True)

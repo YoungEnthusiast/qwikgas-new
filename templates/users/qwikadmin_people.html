@@ -152,7 +152,9 @@
                 <thead class="bg-cylinder text-white">
                   <tr>
                     <th>DATE</th>
-                    <th>USER</th>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>TYPE</th>
                     <th>NUMBER</th>
                     <th>OUTLET</th>
                     <th></th>
@@ -164,7 +166,9 @@
                 {% for person in people_page_obj %}
                   <tr class="">
                     <td>{{person.created}}</td>
+                    <td>{{person.username}}</td>
                     <td>{{person.first_name}} {{person.last_name}}</td>
+                    <td>{{person.type}}</td>
                     <td>{{person.phone_number}}</td>
                     <td>{{person.outlet}}</td>
                     <td class="text-center"><a href="user/update/{{person.id}}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-eye fa-1x text-white"></i> View</strong><strong> <i class="fa fa-edit fa-1x text-white"></i> Edit</strong></button></a></td>

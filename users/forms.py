@@ -394,7 +394,7 @@ class CustomRegisterFormQwikAdmin(UserChangeForm):
 
     class Meta:
         model = Person
-        fields = ['first_name', 'last_name', 'email', 'username', 'phone_number', 'holding', 'dob', 'gender', 'state', 'city', 'lg', 'outlet', 'type', 'about_me', 'address', 'outlet', 'photograph']
+        fields = ['first_name', 'last_name', 'email', 'username', 'phone_number', 'holding', 'dob', 'gender', 'state', 'city', 'lg', 'outlet', 'type', 'about_me', 'address', 'outlet', 'photograph', 'referrer']
 
 class AdminCreditForm(forms.ModelForm):
     class Meta:

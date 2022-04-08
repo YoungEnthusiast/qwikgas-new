@@ -434,40 +434,40 @@ def showQwikAdminWallets(request):
         debits = round(debit,2)
         context['debits'] = debits
     except:
-        debit = 0.00
-        debits = 0.00
+        debit = 0
+        debits = 0
         context['debits'] = debits
     try:
         credit = Wallet.objects.all().aggregate(Sum('amount_credited'))['amount_credited__sum']
         credits = round(credit,2)
         context['credits'] = credits
     except:
-        credit = 0.00
-        credits = 0.00
+        credit = 0
+        credits = 0
         context['credits'] = credits
     try:
         referral = Wallet.objects.all().aggregate(Sum('referral'))['referral__sum']
         referrals = round(referral,2)
         context['referrals'] = referrals
     except:
-        referral = 0.00
-        referrals = 0.00
+        referral = 0
+        referrals = 0
         context['referrals'] = referrals
     try:
         first = Wallet.objects.all().aggregate(Sum('first'))['first__sum']
         firsts = round(first,2)
         context['firsts'] = firsts
     except:
-        first = 0.00
-        firsts = 0.00
+        first = 0
+        firsts = 0
         context['firsts'] = firsts
     try:
         point = Wallet.objects.all().aggregate(Sum('point'))['point__sum']
         points = round(point,2)
         context['points'] = points
     except:
-        point = 0.00
-        points = 0.00
+        point = 0
+        points = 0
         context['points'] = points
 
     all = debit + credit + referral + first + point
