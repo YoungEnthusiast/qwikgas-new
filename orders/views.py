@@ -330,13 +330,13 @@ def showQwikAdminSales(request):
     total_orders = filtered_orders.qs.count()
     context['total_orders'] = total_orders
 
-    sale = 0
-
-    if sale != 0:
+    try:
         sale = UserOrder.objects.all().aggregate(Sum('total_cost'))['total_cost__sum']
-    sales = round(sale,2)
+    except:
+        sale = 0
+    # sales = round(sale,2)
 
-    context['sales'] = sales
+    context['sale'] = sale
 
     return render(request, 'orders/qwikadmin_sales.html', context=context)
 
@@ -489,6 +489,23 @@ def showQwikPartnerOrderStatuses(request):
     total_order_statuses = filtered_order_statuses.qs.count()
     context['total_order_statuses'] = total_order_statuses
     return render(request, 'orders/qwikpartner_order_statuses.html', context=context)
+
+@login_required
+@permission_required('users.view_admin')
+def showQwikAdminOrderStatuses(request):
+    context = {}
+    filtered_order_statuses = OrderStatusFilter(
+        request.GET,
+        queryset = OrderStatus.objects.all()
+    )
+    context['filtered_order_statuses'] = filtered_order_statuses
+    paginated_filtered_order_statuses = Paginator(filtered_order_statuses.qs, 10)
+    page_number = request.GET.get('page')
+    order_statuses_page_obj = paginated_filtered_order_statuses.get_page(page_number)
+    context['order_statuses_page_obj'] = order_statuses_page_obj
+    total_order_statuses = filtered_order_statuses.qs.count()
+    context['total_order_statuses'] = total_order_statuses
+    return render(request, 'orders/qwikadmin_order_statuses.html', context=context)
 
 @login_required
 @permission_required('users.view_vendor')

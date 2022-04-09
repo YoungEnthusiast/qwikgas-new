@@ -68,6 +68,7 @@
                     <th>DATE/TIME</th>
                     <th>CUSTOMER</th>
                     <th>ORDER ID</th>
+                    <th>OUTLET</th>
                     <th>CYLINDER ID(OLD)</th>
                     <th>PRODUCT TYPE(OLD)</th>
                     <th>PRODUCT TYPE(NEW)</th>
@@ -92,6 +93,7 @@
                     <td>{{order.created}}</td>
                     <td>{{order.user}}</td>
                     <td>{{order.order_Id}}</td>
+                    <td>{{order.outlet}}</td>
                     <td>{{order.product.product_Id}}</td>
                     <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
                     <td>{% for order in order.cylinder.all %}{{order.category.type}}<br> {% endfor %}</td>

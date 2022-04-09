@@ -1,0 +1,84 @@
+{% extends 'board_admin.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>Order Items Statuses</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+		<!--Page Header-->
+		<div class="page-header">
+			<h4 class="page-title"><i class="fa fa-clock text-dark-green mr-2 fa-1x"></i>Welcome to orders tracking page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+			<ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="{% url 'qwikadmin_board' %}"><strong>Dashboard</strong></a></li>
+        <li class="breadcrumb-item"><a href="{% url 'orders:qwikadmin_orders' %}"><strong>Orders</strong></a></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>Stages and Timeline</strong></li>
+			</ol>
+		</div>
+		<!--page header-->
+
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title text-dark-green">All Order Tracking Stages and Timeline</div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive ">
+            <table class="table card-table table-vcenter text-nowrap">
+              <thead class="text-dark-green">
+                <tr>
+                  <th>DATE ADDED</th>
+                  <th>CUSTOMER</th>
+                  <th>ORDER ID</th>
+                  <th>CYLINDER ID (OLD)</th>
+                  <th>QUANTITY</th>
+                  <th>TOTAL COST(OLD)</th>
+                  <th>TOTAL COST(NEW)</th>
+                  <th>ORDER STATUS</th>
+                  <th>CYLINDER(S) ALLOTED</th>
+                </tr>
+              </thead>
+              <tbody class="">
+                {% for order in order_statuses_page_obj %}
+                <tr class="">
+                  <td>{{order.created}}</td>
+                  <td>{{order.order.order.user.first_name}} {{order.order.user.last_name}}</td>
+                  <td>{{order.order.order.order_Id}}</td>
+                  <td>{{order.product.product_Id}}</td>
+                  <td>1</td>
+                  <td>{{order.product.category.price|intcomma}}</td>
+                  <td>₦{{order.static_total_cost2|intcomma}}</td>
+                  <td>{{order.order_status}}</td>
+                  <td>{% for order in order.cylinder.all %}{{order.product_Id}} {% endfor %}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <nav aria-label="...">
+              <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="text-dark-green page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
+                {% if order_statuses_page_obj.has_previous %}
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url order_statuses_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{order_statuses_page_obj.previous_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item active" aria-current="page"><a class="bg-dark-green page-link" href="{% my_url order_statuses_page_obj.number 'page' request.GET.urlencode %}">{{order_statuses_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+                {% if order_statuses_page_obj.has_next %}
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url order_statuses_page_obj.next_page_number 'page' request.GET.urlencode %}">{{order_statuses_page_obj.next_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item"><a class="text-dark-green page-link" href="{% my_url order_statuses_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content%}

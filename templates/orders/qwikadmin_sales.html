@@ -18,7 +18,7 @@
 			<h4 class="page-title"><i class="fa fa-spinner text-dark-green mr-2 fa-1x"></i>Welcome to sales' page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
 			<ol class="breadcrumb bg-white">
         <li class="breadcrumb-item"><a href="{% url 'qwikadmin_board' %}"><strong>Dashboard</strong></a></li>
-				<li class="breadcrumb-item active" aria-current="page"><strong>Orders</strong></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>Sales</strong></li>
 			</ol>
 		</div>
 		<!--page header-->
@@ -36,7 +36,7 @@
               </div>
               <div class="col-md-7  mt-4 mt-sm-0">
                 <h6 class="media-heading fw-500"></h6>
-                <span class="text-cylinder h1">₦</span><span class="counter num-font mb-0 text-cylinder h1">{{sales|intcomma}}</span>
+                <span class="text-cylinder h1">₦</span><span class="counter num-font mb-0 text-cylinder h1">{{sale|intcomma}}</span>
                 <p class="text-muted mb-0">Total Sales (User)</p>
               </div>
             </div>

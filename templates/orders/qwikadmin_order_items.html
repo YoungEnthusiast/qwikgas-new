@@ -61,26 +61,30 @@
                 <thead class="bg-cylinder text-white">
                   <tr>
                     <th>DATE ADDED</th>
-                    <th>CUSTOMER</th>
+                    <th>CUSTOMER ID</th>
+                    <th>CUSTOMER NAME</th>
                     <th>ORDER ID</th>
+                    <th>PRICE</th>
+                    <th>QUANTITY</th>
                     <th>TOTAL COST</th>
                     <th>PAYMENT STATUS</th>
                     <th>OUTLET</th>
-                    <th>ADDRESS</th>
-                    <th></th>
+                    <th>ORDER STATUS</th>
                   </tr>
                 </thead>
                 <tbody class="text-dark table-success">
                   {% for order in order_items_page_obj %}
                   <tr class="">
                     <td>{{order.created}}</td>
-                    <td>{{order.user.first_name}} {{order.order.user.last_name}}</td>
-                    <td>{{order.order_Id}}</td>
-                    <td>{{order.get_total_cost|intcomma}}</td>
-                    <td>{{order.payment_status}}</td>
-                    <td>{{order.outlet}}</td>
-                    <td>{{order.address}}</td>
-                    <td><a href=""><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
+                    <td>{{order.order.user.username}}</td>
+                    <td>{{order.order.user.first_name}} {{order.order.user.last_name}}</td>
+                    <td>{{order.order.order_Id}}</td>
+                    <td>{{order.product.category.price}}</td>
+                    <td>{{order.quantity}}</td>
+                    <td>{{order.order.get_total_cost|intcomma}}</td>
+                    <td>{{order.order.payment_status}}</td>
+                    <td>{{order.order.outlet}}</td>
+                    <td>New</td>
                   </tr>
                   {% endfor %}
                 </tbody>

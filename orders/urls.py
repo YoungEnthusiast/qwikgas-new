@@ -30,6 +30,7 @@ urlpatterns = [
     path('qwikvendor-dashboard/order-statuses/', views.showQwikVendorOrderStatuses, name='qwikvendor_order_statuses'),
     path('qwikcustomer-dashboard/order-statuses/', views.showOrderStatuses, name='order_statuses'),
     path('qwikpartner-dashboard/order-statuses/', views.showQwikPartnerOrderStatuses, name='qwikpartner_order_statuses'),
+    path('qwika-dashboard/order-statuses/', views.showQwikAdminOrderStatuses, name='qwikadmin_order_statuses'),
     path('qwikpartner-dashboard/orders/', views.showQwikPartnerOrders, name='qwikpartner_orders'),
     # path('visitor-order', views.order_visitor, name='order_visitor'),
     # path('st---only2', views.addOrder, name='add_order'),
