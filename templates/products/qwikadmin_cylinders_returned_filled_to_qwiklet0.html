@@ -243,18 +243,18 @@
                   <td>{{product.category}}</td>
                   <td>{{product.cylinder}}</td>
                   {% if product.who8 == "Returned Filled" %}
-                  <td>Returned Filled</td>
+                  <td>Returned Filled/<a href="{% url 'products:not_return_qwikadmin_cylinders_returned_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Not Return</span></a></td>
                   {% elif product.who8 == "Not Returned Filled" %}
-                  <td>Not Returned Filled</td>
+                  <td><a href="{% url 'products:return_qwikadmin_cylinders_returned_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Return</span></a>/Not Returned Filled</td>
                   {% else %}
-                  <td></td>
+                  <td><a href="{% url 'products:return_qwikadmin_cylinders_returned_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Return</span></a>/<a href="{% url 'products:not_return_qwikadmin_cylinders_returned_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Not Return</span></a></td>
                   {% endif %}
                   {% if product.who8_1 == "Accepted" %}
-                  <td>Accepted</td>
+                  <td>Accepted/<a href="{% url 'products:decline_qwikadmin_cylinders_returned_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Decline</span></a></td>
                   {% elif product.who8_1 == "Declined" %}
-                  <td>Declined</td>
+                  <td><a href="{% url 'products:accept_qwikadmin_cylinders_returned_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Accept</span></a>/Declined</td>
                   {% else %}
-                  <td></td>
+                  <td><a href="{% url 'products:accept_qwikadmin_cylinders_returned_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Accept</span></a>/<a href="{% url 'products:decline_qwikadmin_cylinders_returned_filled_to_qwiklet' product.id %}"><span class="text-dark-green">Decline</span></a></td>
                   {% endif %}
                   <td class="text-center"><a href="update/{{product.id}}"><button type="button" class="btn btn-sm btn-dark-green"><strong> <i class="fa fa-edit fa-1x text-white"></i> Edit</strong></button></a></td>
                   {% if product.who8_2 == "QwikAdmin" %}
