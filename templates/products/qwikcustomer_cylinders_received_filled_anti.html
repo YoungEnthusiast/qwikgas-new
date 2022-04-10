@@ -121,9 +121,9 @@
                 {% for product in cylinders_page_obj %}
                 <tr class="">
                   <td>{{product.created}}</td>
-                  <td>{{product.product.category}}</td>
+                  <td>{{product.category}}</td>
                   <td>{% for product in product.cylinder.all %}{{product.category.type}}<br>{% endfor %}</td>
-                  <td>{{product.product.product_Id}}</td>
+                  <td>{{product.product_Id}}</td>
                   <td>{% for product in product.cylinder.all %}{{product.product_Id}}<br>{% endfor %}</td>
                 </tr>
                 {% endfor %}

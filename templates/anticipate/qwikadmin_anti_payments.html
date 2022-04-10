@@ -50,8 +50,8 @@
                     <th>DATE/TIME</th>
                     <th>CUSTOMER</th>
                     <th>CUSTOMER ID</th>
-                    <th>TOTAL AMOUNT(OLD)</th>
-                    <th>TOTAL AMOUNT(NEW)</th>
+                    <th>OUTLET</th>
+                    <th>AMOUNT</th>
                     <th>PAYMENT TYPE</th>
                     <th>PAYMENT OPTION</th>
                     <th>PAYMENT STAGE</th>
@@ -63,8 +63,8 @@
                     <td>{{order.created}}</td>
                     <td>{{order.user.first_name}} {{order.user.last_name}}</td>
                     <td>{{order.user.username}}</td>
-                    <td>₦{{order.static_total_cost|intcomma}}</td>
-                    <td>₦{{order.static_total_cost2|intcomma}}</td>
+                    <td>{{order.outlet}}</td>
+                    <td>₦{{order.payment_total|intcomma}}</td>
                     <td>{{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</td>
                     <td>{{order.payment_choice}}</td>
                     {% if order.payment3 != None %}

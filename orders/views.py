@@ -286,10 +286,10 @@ def showQwikAdminCredits(request):
     total_orders = filtered_orders.qs.count()
     context['total_orders'] = total_orders
 
-    balance = 0
-
-    if balance !=0:
+    try:
         balance = UserOrder.objects.filter(payment_status="Unconfirmed").aggregate(Sum('total_cost'))['total_cost__sum']
+    except:
+        balance = 0
     balances = round(balance,2)
 
     context['balances'] = balances
