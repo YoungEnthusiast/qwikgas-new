@@ -2340,7 +2340,7 @@ def showQwikPartnerCylindersDeliveredToQwikCustomerUser(request):
     context = {}
     filtered_cylinders = CylinderFilter(
         request.GET,
-        queryset = OrderStatus.objects.filter(product__outlet__outlet=outlet_2, order_status="Delivered")
+        queryset = OrderStatus.objects.filter(order__order__outlet__outlet=outlet_2, order_status="Delivered")
         # queryset = Cylinder.objects.filter(cylinder__outlet__partner=request.user, partner_product_status="Received Empty from QwikCustomer")
     )
     context['filtered_cylinders'] = filtered_cylinders

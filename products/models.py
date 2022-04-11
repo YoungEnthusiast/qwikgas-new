@@ -47,10 +47,12 @@ class Product(models.Model):
     ]
     PARTNER_CHOICES = [
         ('Received Empty from QwikCustomer', 'Received Empty from QwikCustomer'),
-
         ('Returned Empty','Returned Empty'),
         ('Received Empty', 'Received Empty'),
         ('Received Filled', 'Received Filled'),
+
+        ('Selected', 'Selected'),
+        ('Unselected', 'Unselected'),
     ]
     CUSTOMER_CHOICES = [
         ('Returned Empty to QwikPartner','Returned Empty to QwikPartner'),
@@ -72,7 +74,7 @@ class Product(models.Model):
     vendor_product_status = models.CharField(max_length=30, choices=VENDOR_CHOICES, null=True, verbose_name="QwikVendor's Remark")
     vendor_product = models.CharField(max_length=20, null=True, blank=True)
     vendor_consent = models.BooleanField(max_length=5, default = False)
-    partner_product_status = models.CharField(max_length=35, choices=PARTNER_CHOICES, blank=True, null=True, verbose_name="QwikPartner's Remark")
+    partner_product_status = models.CharField(max_length=35, choices=PARTNER_CHOICES, default="Unselected", blank=True, null=True, verbose_name="QwikPartner's Remark")
     partner_product = models.CharField(max_length=20, null=True, blank=True)
     partner_consent = models.BooleanField(max_length=5, default = False)
     customer_product_status = models.CharField(max_length=35, choices=CUSTOMER_CHOICES, blank=True, null=True, verbose_name="QwikCustomer's Remark")

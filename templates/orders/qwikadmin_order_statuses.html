@@ -58,7 +58,7 @@
                   <td>{{order.product.category.price|intcomma}}</td>
                   <td>₦{{order.static_total_cost2|intcomma}}</td>
                   <td>{{order.order_status}}</td>
-                  <td>{% for order in order.cylinder.all %}{{order.product_Id}} {% endfor %}</td>
+                  <td>{% for order in order.cylinder.all %}{{order.product_Id}}<br>{% endfor %}</td>
                 </tr>
                 {% endfor %}
               </tbody>

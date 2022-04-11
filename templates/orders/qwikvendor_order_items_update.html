@@ -38,11 +38,6 @@
         {% csrf_token %}
         <div class="form-row">
             <div class="form-group col-sm-12 mb-2">
-                {{ form.cylinder|as_crispy_field }}
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-sm-12 mb-2">
                 {{ form.order_status|as_crispy_field }}
             </div>
         </div>

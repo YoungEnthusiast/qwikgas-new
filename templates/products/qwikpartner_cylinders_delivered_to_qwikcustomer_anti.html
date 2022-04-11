@@ -220,9 +220,10 @@
                   <th>Date & Time</th>
                   <th>Customer's Name</th>
                   <th>Customer's ID</th>
-                  <th>Product Type</th>
-                  <th>Product Type</th>
-                  <th>Cylinder ID</th>
+                  <th>Product Type (Old)</th>
+                  <th>Product Type (New)</th>
+                  <th>Cylinder ID (Old)</th>
+                  <th>Cylinder Alloted</th>
                 </tr>
               </thead>
               <tbody class="">
@@ -232,8 +233,9 @@
                   <td>{{product.user.first_name}} {{product.user.last_name}}</td>
                   <td>{{product.user.username}}</td>
                   <td>{{product.product.category}}</td>
-                  <td>{% for product in order.cylinder.all %}{{order.category.type}}<br>{% endfor %}</td>
+                  <td>{% for product in product.cylinder.all %}{{product.category.type}}<br>{% endfor %}</td>
                   <td>{{product.product.product_Id}}</td>
+                  <td>{% for product in product.cylinder.all %}{{product.product_Id}}<br>{% endfor %}</td>
                 </tr>
                 {% endfor %}
               </tbody>

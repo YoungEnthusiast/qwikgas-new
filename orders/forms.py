@@ -49,11 +49,11 @@ class AddOrderFormVendor(forms.ModelForm):
     STATUS_CHOICES = [
         ('Out for Delivery','Out for Delivery'),
     ]
-    cylinder = forms.ModelMultipleChoiceField(queryset=Product.objects.filter(partner_product_status="Received Empty from QwikCustomer"))
+    # cylinder = forms.ModelMultipleChoiceField(queryset=Product.objects.filter(partner_product_status="Received Empty from QwikCustomer"))
     order_status = forms.ChoiceField(label='Select Present Order Status', choices=STATUS_CHOICES)
     class Meta:
         model = OrderStatus
-        fields = ['cylinder', 'order_status']
+        fields = ['order_status']
 
 class AddOrderFormPartner(forms.ModelForm):
     STATUS_CHOICES = [

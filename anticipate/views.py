@@ -112,6 +112,16 @@ def showQwikPartnerAntiOrders(request):
             reg3.balance = reg3.static_total_cost2 - reg3.payment_total
             reg3.save()
 
+
+            reg4 = AntiOrder.objects.filter(user=user)[0]
+            reg5 = Product.objects.filter(vendor_product_status="Released Filled to QwikPartner", partner_product_status="Unselected")
+
+            for each1 in reg4.cylinder.all():
+                for each2 in reg5:
+                    if each2.product_Id == each1.product_Id:
+                        each2.partner_product_status = "Selected"
+                        each2.save()
+
             messages.success(request, "The anticipatory order has been added successfully")
             return redirect('anticipate:qwikpartner_anti_orders')
         else:

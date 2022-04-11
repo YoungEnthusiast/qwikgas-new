@@ -21,7 +21,7 @@ class AntiOrderForm(forms.ModelForm):
 		('PoS', 'PoS'),
         ('Cash', 'Cash'),
 	]
-    cylinder = forms.ModelMultipleChoiceField(queryset=Product.objects.filter(vendor_product_status="Released Filled to QwikPartner"))
+    cylinder = forms.ModelMultipleChoiceField(queryset=Product.objects.filter(vendor_product_status="Released Filled to QwikPartner", partner_product_status="Unselected"))
     user = forms.ModelChoiceField(queryset=Person.objects.filter(type="QwikCustomer"))
     payment_type1 = forms.ChoiceField(label='Payment Type', choices=PAYMENT_TYPE1, widget=forms.RadioSelect, required = False)
     payment_type2 = forms.ChoiceField(label='', choices=PAYMENT_TYPE2, widget=forms.RadioSelect, required = False)
