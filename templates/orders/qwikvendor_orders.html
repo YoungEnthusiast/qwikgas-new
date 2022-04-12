@@ -68,6 +68,7 @@
                   <th>PAYMENT CHOICE</th>
                   <th>PAYMENT STATUS</th>
                   <th></th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -86,7 +87,7 @@
                   {% endif %}
                   <td>{{order.payment_choice}}</td>
                   <td>{{order.payment_status}}</td>
-                  <td><a href="{% url 'orders:show_vendor_invoice' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
+                  <td class="text-center"><a href="result/update/{{first.id}}"><button type="button" class="btn btn-sm btn-dark-green text-white"><strong><i class="fa fa-check-circle fa-1x text-white"></i> &nbspConfirm</strong></button></a></td>                  <td><a href="{% url 'orders:show_vendor_invoice' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
                 </tr>
                 {% endfor %}
               </tbody>
