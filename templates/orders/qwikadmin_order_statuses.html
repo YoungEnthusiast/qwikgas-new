@@ -31,6 +31,19 @@
         <div class="card-header">
           <div class="card-title text-dark-green">All Order Tracking Stages and Timeline</div>
         </div>
+        <div class="text-center">
+          <h2 class="form-group text-dark-green">Filter By</h2>
+        </div>
+        <div class="col-md-12">
+          <div class="box-element bg-dark-green" id="form-wrapper">
+            <form method="get" class="form-inline text-white">
+              {% for field in filtered_order_statuses.form %}
+                <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
+              {% endfor %}
+              <input type="submit" class="btn btn-primary" value="Go">
+            </form>
+          </div>
+        </div>
         <div class="card-body">
           <div class="table-responsive ">
             <table class="table card-table table-vcenter text-nowrap">

@@ -68,12 +68,12 @@ class OrderStatusFilter(filters.FilterSet):
 
     class Meta:
         model = OrderStatus
-        fields = ['order__order__order_Id', 'product']
+        fields = ['order__order__order_Id', 'cylinder']
 
     def __init__(self, *args, **kwargs):
         super(OrderStatusFilter, self).__init__(*args, **kwargs)
         self.filters['order__order__order_Id'].label="Order Id"
-        self.filters['product'].label="Cylinder Id"
+        # self.filters['product'].label="Cylinder Id"
 
 class OrderStatusFilter2(filters.FilterSet):
     #employee = CharFilter(field_name='employee', lookup_expr='icontains', label="Updated By")
