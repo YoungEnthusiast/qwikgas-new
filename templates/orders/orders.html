@@ -108,7 +108,7 @@
                   <td></td>
                   <td class="text-center"><a href="{% url 'orders:show_invoice' order.id %}"><strong><i class="fa fa-receipt fa-2x text-dark-green"></i></strong></a></td>
                   {% if order.user_order_status == "Undelivered" %}
-                  <td class="text-center"><a href="orders/delete/{{order.id}}"><strong><i class="fa fa-trash fa-2x text-dark-green"></i></strong></a></td>
+                  <td class="text-center"><a href="orders/delete/{{order.id}}"><strong><i class="fa fa-trash fa-2x text-red"></i></strong></a></td>
                   {% else %}
                   <td>Delivered</td>
                   {% endif %}

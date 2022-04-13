@@ -839,7 +839,108 @@ def confirmOrderVendor(request, id):
         form = ConfirmFormVendor(request.POST, instance=order)
         if form.is_valid():
             form.save()
+            order2 = UserOrder.objects.get(id=id)
+            order2.payment_type = "QwikVendor"
+            # order2.payment_choice = order
+            order2.payment_status = "Confirmed"
+            order2.save()
+
+
+
+            user = order.user
+            referrer = order.user.referrer
+            count = UserOrder.objects.filter(payment_status="Confirmed", user=user).count()
+            if count == 1:
+                #total_paid = order.get_total_cost()
+                category = Category.objects.all().order_by('price')[0]
+                price = category.price
+                ref_perc = Decimal(0.05) * price
+                try:
+                    person2 = Person.objects.get(username=referrer)
+                except:
+                    person2 = None
+                try:
+                    wallet0 = Wallet.objects.filter(user=person2)[0]
+                    current_balance = wallet0.current_balance
+                    wallet_entry = Wallet()
+                    wallet_entry.user = person2
+                    wallet_entry.referral = ref_perc
+                    wallet_entry.current_balance = current_balance + ref_perc
+                    wallet_entry.transaction_type = "QwikReferral"
+                    wallet_entry.save()
+                except:
+                    current_balance = 0
+                    wallet_entry = Wallet()
+                    wallet_entry.user = person2
+                    wallet_entry.referral = ref_perc
+                    wallet_entry.current_balance = current_balance + ref_perc
+                    wallet_entry.transaction_type = "QwikReferral"
+                    wallet_entry.save()
+                try:
+                    wallet1 = Wallet.objects.filter(user=request.user)[0]
+                    current_balance1 = wallet1.current_balance
+                    wallet_entry1 = Wallet()
+                    wallet_entry1.user = request.user
+                    wallet_entry1.first = ref_perc
+                    wallet_entry1.current_balance = current_balance1 + ref_perc
+                    wallet_entry1.transaction_type = "QwikFirst"
+                    wallet_entry1.save()
+                except:
+                    current_balance1 = 0
+                    wallet_entry1 = Wallet()
+                    wallet_entry1.user = request.user
+                    wallet_entry1.first = ref_perc
+                    wallet_entry1.current_balance = current_balance1 + ref_perc
+                    wallet_entry1.transaction_type = "QwikFirst"
+                    wallet_entry1.save()
+            pk = order.id
+            order_items = OrderItem.objects.filter(order__id=pk)
+            order = UserOrder.objects.get(id=pk)
+            order_items = OrderItem.objects.filter(order__id=pk)
+            quantity = 0
+            for each in order_items:
+                quantity = quantity + each.quantity
+            try:
+                order1 = UserOrder.objects.filter(user=request.user)[1]
+                order.point = order1.point + quantity
+                order.save()
+            except:
+                order.point = quantity
+                order.save()
+            order3 = UserOrder.objects.get(id=pk)
+            if order3.point >= 11:
+                category = Category.objects.all().order_by('price')[0]
+                price = category.price
+                point_perc = Decimal(0.05) * price
+                try:
+                    wallet2 = Wallet.objects.filter(user=request.user)[0]
+                    current_balance2 = wallet2.current_balance
+                    wallet_entry3 = Wallet()
+                    wallet_entry3.user = request.user
+                    wallet_entry3.point = point_perc
+                    wallet_entry3.current_balance = current_balance2 + point_perc
+                    wallet_entry3.transaction_type = "QwikPoint"
+                    wallet_entry3.save()
+                except:
+                    current_balance2 = 0
+                    wallet_entry3 = Wallet()
+                    wallet_entry3.user = request.user
+                    wallet_entry3.first = point_perc
+                    wallet_entry3.current_balance = current_balance2 + ref_perc
+                    wallet_entry3.transaction_type = "QwikPoint"
+                    wallet_entry3.save()
+                order3.point = order3.point - 11
+                order3.save()
+
+
+
+
 
             messages.success(request, "The order has been confirmed successfully")
             return redirect('orders:qwikvendor_orders')
+
+
+
+
+
     return render(request, 'orders/qwikvendor_order_confirm.html', {'form': form, 'order': order})
