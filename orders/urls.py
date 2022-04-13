@@ -22,6 +22,7 @@ urlpatterns = [
     path('qwika-dashboard/payments/', views.showQwikAdminPayments, name='qwikadmin_payments'),
     path('qwika-dashboard/sales/', views.showQwikAdminSales, name='qwikadmin_sales'),
     path('qwikvendor-dashboard/orders/', views.showQwikVendorOrders, name='qwikvendor_orders'),
+    path('qwikvendor-dashboard/orders/update/<int:id>', views.confirmOrderVendor, name='qwikvendor_payment_status'),    
     path('qwikvendor-dashboard/order-items/', views.showQwikVendorOrderItems, name='qwikvendor_order_items'),
     path('qwikpartner-dashboard/order-items/', views.showQwikPartnerOrderItems, name='qwikpartner_order_items'),
     path('qwika-dashboard/order-items/', views.showQwikAdminOrderItems, name='qwikadmin_order_items'),

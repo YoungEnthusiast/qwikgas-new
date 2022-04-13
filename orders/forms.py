@@ -45,6 +45,15 @@ class UserOrderFormCust(forms.ModelForm):
         model = UserOrder
         fields = ['outlet', 'address']
 
+class ConfirmFormVendor(forms.ModelForm):
+    PAID_CHOICES = [
+        ('Unconfirmed', 'Unconfirmed'),
+        ('Confirmed', 'Confirmed')
+    ]
+    class Meta:
+        model = UserOrder
+        fields = ['payment_status']
+
 class AddOrderFormVendor(forms.ModelForm):
     STATUS_CHOICES = [
         ('Out for Delivery','Out for Delivery'),
