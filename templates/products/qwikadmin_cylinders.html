@@ -104,6 +104,8 @@
                   <li class="page-item"><a class="text-dark-green page-link" href="{% my_url products_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
                 </ul>
               </nav>
+              <a href="{% url 'products:qwikadmin_unselect_cylinders' %}"><button type="button" class="btn btn-dark-green text-white col-md-12"><strong><i class="fa fa-plus-circle fa-1x mr-1 text-white"></i>Add New Cylinder</strong></button></a>
+
             </div>
           </div>
         </div>

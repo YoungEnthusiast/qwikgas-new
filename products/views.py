@@ -556,6 +556,7 @@ def showQwikVendorCylindersReleasedFilledToQwikPartner(request):
             try:
                 reg = Product.objects.get(product_Id=cylinder)
                 reg.vendor_product_status = "Released Filled to QwikPartner"
+                reg.partner_product_status = "Unselected"
                 reg.save()
             except:
                 pass
@@ -3735,3 +3736,14 @@ def deleteCylinder(request, id):
         obj.delete()
         return redirect('products:qwikadmin_cylinders')
     return render(request, 'products/qwikadmin_cylinder_confirm_delete.html', {'product': product})
+
+@login_required
+@permission_required('users.view_admin')
+def unselectAll(request):
+    reg = Product.objects.all()
+    for each in reg:
+        each.partner_product_status = "Unselected"
+        each.save()
+    messages.success(request, "All Unselected!")
+    return redirect('products:qwikadmin_cylinders')
+    return render(request, 'products/qwikadmin_cylinders.html', {'product': product})

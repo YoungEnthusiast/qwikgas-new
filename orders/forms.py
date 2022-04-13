@@ -47,9 +47,9 @@ class UserOrderFormCust(forms.ModelForm):
 
 class ConfirmFormVendor(forms.ModelForm):
     PAID_CHOICES = [
-        ('Unconfirmed', 'Unconfirmed'),
         ('Confirmed', 'Confirmed')
     ]
+    payment_status = forms.ChoiceField(label='Payment Status', choices=PAID_CHOICES)
     class Meta:
         model = UserOrder
         fields = ['payment_status']
@@ -68,7 +68,7 @@ class AddOrderFormPartner(forms.ModelForm):
     STATUS_CHOICES = [
         ('Delivered','Delivered'),
     ]
-    cylinder = forms.ModelMultipleChoiceField(queryset=Product.objects.filter(vendor_product_status="Released Filled to QwikPartner"))
+    cylinder = forms.ModelMultipleChoiceField(queryset=Product.objects.filter(vendor_product_status="Released Filled to QwikPartner", partner_product_status="Unselected"))
     order_status = forms.ChoiceField(label='Select Present Order Status', choices=STATUS_CHOICES)
     class Meta:
         model = OrderStatus

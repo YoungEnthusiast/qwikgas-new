@@ -83,6 +83,7 @@ urlpatterns = [
     path('qwika-dashboard/cylinders/update/<int:id>', views.updateCylinder, name='qwikadmin_update_cylinders'),
     path('qwika-dashboard/cylinder/add-new', views.addCylinder, name='qwikadmin_cylinder'),
     path('qwika-dashboard/cylinders/delete/<int:id>', views.deleteCylinder),
+    path('qwika-dashboard/cylinders/un-selected', views.unselectAll, name='qwikadmin_unselect_cylinders'),
 
 
 ]

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .models import OrderItem, UserOrder, OrderStatus, PayDelivery, PayLater, PaySmall
-from products.models import Category, Owing
+from products.models import Category, Owing, Product
 from users.models import Wallet, Person, Outlet
 from .filters import UserOrderFilter, UserOrderFilter2, OrderItemFilter, OrderItemFilter2, OrderStatusFilter, OrderStatusFilter2
 from django.contrib import messages
@@ -587,8 +587,6 @@ def addOrderStatusQwikPartner(request, id):
             reg.static_total_cost2 = total
             reg.save()
 
-
-
             owing_entry = Owing()
             owing_entry.customer = user
             owing_entry.cylinder = total_cylinder
@@ -602,6 +600,15 @@ def addOrderStatusQwikPartner(request, id):
             for each in owings:
                 reg1.holding = reg1.holding + "" + each.cylinder
                 reg1.save()
+
+            reg4 = OrderStatus.objects.filter(order__order__user=user)[0]
+            reg5 = Product.objects.filter(vendor_product_status="Released Filled to QwikPartner", partner_product_status="Unselected")
+
+            for each1 in reg4.cylinder.all():
+                for each2 in reg5:
+                    if each2.product_Id == each1.product_Id:
+                        each2.partner_product_status = "Selected"
+                        each2.save()
 
             # email = reg.user.email
             # name = reg.user.first_name
@@ -844,12 +851,10 @@ def confirmOrderVendor(request, id):
             # order2.payment_choice = order
             order2.payment_status = "Confirmed"
             order2.save()
-
-
-
-            user = order.user
-            referrer = order.user.referrer
+            user = order2.user
+            referrer = order2.user.referrer
             count = UserOrder.objects.filter(payment_status="Confirmed", user=user).count()
+
             if count == 1:
                 #total_paid = order.get_total_cost()
                 category = Category.objects.all().order_by('price')[0]
@@ -877,10 +882,10 @@ def confirmOrderVendor(request, id):
                     wallet_entry.transaction_type = "QwikReferral"
                     wallet_entry.save()
                 try:
-                    wallet1 = Wallet.objects.filter(user=request.user)[0]
+                    wallet1 = Wallet.objects.filter(user=user)[0]
                     current_balance1 = wallet1.current_balance
                     wallet_entry1 = Wallet()
-                    wallet_entry1.user = request.user
+                    wallet_entry1.user = user
                     wallet_entry1.first = ref_perc
                     wallet_entry1.current_balance = current_balance1 + ref_perc
                     wallet_entry1.transaction_type = "QwikFirst"
@@ -888,7 +893,7 @@ def confirmOrderVendor(request, id):
                 except:
                     current_balance1 = 0
                     wallet_entry1 = Wallet()
-                    wallet_entry1.user = request.user
+                    wallet_entry1.user = user
                     wallet_entry1.first = ref_perc
                     wallet_entry1.current_balance = current_balance1 + ref_perc
                     wallet_entry1.transaction_type = "QwikFirst"
@@ -901,7 +906,7 @@ def confirmOrderVendor(request, id):
             for each in order_items:
                 quantity = quantity + each.quantity
             try:
-                order1 = UserOrder.objects.filter(user=request.user)[1]
+                order1 = UserOrder.objects.filter(user=user)[1]
                 order.point = order1.point + quantity
                 order.save()
             except:
@@ -913,10 +918,10 @@ def confirmOrderVendor(request, id):
                 price = category.price
                 point_perc = Decimal(0.05) * price
                 try:
-                    wallet2 = Wallet.objects.filter(user=request.user)[0]
+                    wallet2 = Wallet.objects.filter(user=user)[0]
                     current_balance2 = wallet2.current_balance
                     wallet_entry3 = Wallet()
-                    wallet_entry3.user = request.user
+                    wallet_entry3.user = user
                     wallet_entry3.point = point_perc
                     wallet_entry3.current_balance = current_balance2 + point_perc
                     wallet_entry3.transaction_type = "QwikPoint"
@@ -924,7 +929,7 @@ def confirmOrderVendor(request, id):
                 except:
                     current_balance2 = 0
                     wallet_entry3 = Wallet()
-                    wallet_entry3.user = request.user
+                    wallet_entry3.user = user
                     wallet_entry3.first = point_perc
                     wallet_entry3.current_balance = current_balance2 + ref_perc
                     wallet_entry3.transaction_type = "QwikPoint"
@@ -932,15 +937,6 @@ def confirmOrderVendor(request, id):
                 order3.point = order3.point - 11
                 order3.save()
 
-
-
-
-
             messages.success(request, "The order has been confirmed successfully")
             return redirect('orders:qwikvendor_orders')
-
-
-
-
-
     return render(request, 'orders/qwikvendor_order_confirm.html', {'form': form, 'order': order})
