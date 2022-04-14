@@ -3,7 +3,7 @@ from django.urls import reverse
 from .models import OrderItem, UserOrder, OrderStatus, PayDelivery, PayLater, PaySmall
 from products.models import Category, Owing, Product
 from users.models import Wallet, Person, Outlet
-from .filters import UserOrderFilter, UserOrderFilter2, OrderItemFilter, OrderItemFilter2, OrderStatusFilter, OrderStatusFilter2
+from .filters import UserOrderFilter, UserOrderFilterSales, UserOrderFilterPayments, UserOrderFilter2, OrderItemFilter, OrderItemFilter2, OrderStatusFilter, OrderStatusFilter2
 from django.contrib import messages
 from django.core.mail import send_mail
 from .forms import UserOrderForm, AddOrderFormVendor, ConfirmFormVendor, AddOrderFormPartner, UserOrderFormCust, PayDeliveryForm, PayLaterForm, PaySmallForm
@@ -274,7 +274,7 @@ def showQwikAdminOrders(request):
 @permission_required('users.view_admin')
 def showQwikAdminCredits(request):
     context = {}
-    filtered_orders = UserOrderFilter2(
+    filtered_orders = UserOrderFilterSales(
         request.GET,
         queryset = UserOrder.objects.all()
     )
@@ -300,7 +300,7 @@ def showQwikAdminCredits(request):
 @permission_required('users.view_admin')
 def showQwikAdminPayments(request):
     context = {}
-    filtered_orders = UserOrderFilter2(
+    filtered_orders = UserOrderFilterPayments(
         request.GET,
         queryset = UserOrder.objects.filter(payment_status="Confirmed")
     )
@@ -318,7 +318,7 @@ def showQwikAdminPayments(request):
 @permission_required('users.view_admin')
 def showQwikAdminSales(request):
     context = {}
-    filtered_orders = UserOrderFilter2(
+    filtered_orders = UserOrderFilterSales(
         request.GET,
         queryset = UserOrder.objects.all()
     )

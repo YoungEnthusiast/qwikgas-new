@@ -5,7 +5,7 @@ from orders.models import UserOrder
 from products.models import Owing, Product, Cylinder
 # from products.models import Category
 # from users.models import Wallet, Person, Outlet
-from .filters import AntiOrderFilter, AntiOrderFilter2#, OrderItemFilter, OrderItemFilter2, OrderStatusFilter, OrderStatusFilter2
+from .filters import AntiOrderFilter, AntiOrderFilter2, AntiOrderFilterSales, AntiOrderFilterCredits, AntiOrderFilterPayments
 from django.contrib import messages
 # from django.core.mail import send_mail
 from .forms import AntiOrderForm, AntiOrderFormVen, AntiOrderFormPar, AntiOrderFormPar2
@@ -257,7 +257,7 @@ def showQwikAdminSalesGraph(request):
 @permission_required('users.view_admin')
 def showQwikAdminAntiCredits(request):
     context = {}
-    filtered_antiorders = AntiOrderFilter2(
+    filtered_antiorders = AntiOrderFilterCredits(
         request.GET,
         queryset = AntiOrder.objects.all()
     )
@@ -283,7 +283,7 @@ def showQwikAdminAntiCredits(request):
 @permission_required('users.view_admin')
 def showQwikAdminAntiPayments(request):
     context = {}
-    filtered_antiorders = AntiOrderFilter2(
+    filtered_antiorders = AntiOrderFilterPayments(
         request.GET,
         queryset = AntiOrder.objects.all()
     )
@@ -411,7 +411,7 @@ def showAntiInvoiceUnPaid(request, pk, **kwargs):
 @permission_required('users.view_admin')
 def showQwikAdminAntiSales(request):
     context = {}
-    filtered_antiorders = AntiOrderFilter2(
+    filtered_antiorders = AntiOrderFilterSales(
         request.GET,
         queryset = AntiOrder.objects.all()
     )
