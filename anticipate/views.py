@@ -16,6 +16,8 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Sum
 # from django.template.loader import render_to_string
 # from decimal import Decimal
+import csv
+from django.http import HttpResponse
 
 @login_required
 def showAntiOrders(request):
@@ -438,3 +440,18 @@ def showQwikAdminAntiSales(request):
     context['anti_sales'] = anti_sales
 
     return render(request, 'anticipate/qwikadmin_anti_sales.html', context=context)
+
+def file_load_view(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachement; filename="report.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Student Name', 'Attendance'])
+
+    antis = []
+
+    antis0 = AntiOrder.objects.all()
+    for each in antis0:
+        writer.writerow([each.user, each.order_Id])
+
+    return response
