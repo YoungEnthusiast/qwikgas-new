@@ -14,10 +14,21 @@ import random
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Sum
-# from django.template.loader import render_to_string
-# from decimal import Decimal
+from django.template.loader import render_to_string
 import csv
 from django.http import HttpResponse
+# from weasyprint import HTML, CSS
+import tempfile
+
+import os
+
+os.add_dll_directory(r"C:\Program Files\GTK3-Runtime Win64\bin")
+
+from weasyprint import HTML, CSS
+
+HTML('https://weasyprint.org/').write_pdf('weasyprint-website.pdf')
+
+
 
 @login_required
 def showAntiOrders(request):
@@ -443,7 +454,7 @@ def showQwikAdminAntiSales(request):
 
 def file_load_view(request):
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachement; filename="report.csv"'
+    response['Content-Disposition'] = 'attachment; filename="report.csv"'
 
     writer = csv.writer(response)
     writer.writerow(['Student Name', 'Attendance'])
@@ -454,4 +465,20 @@ def file_load_view(request):
     for each in antis0:
         writer.writerow([each.user, each.order_Id])
 
+    return response
+
+def exportPDF(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'inine; attachment; filename=Report' + str(datetime.datetime.now()) + '.pdf'
+    response['Content-Transfer-Encoding'] = 'binary'
+    anti_orders = AntiOrder.objects.all()
+
+    html_string = render_to_string('anticipate/pdf-output.html', {'antiorders_page_obj': 'anti_orders'})
+    html = HTML(string=html_string)
+    result = html.write_pdf()
+    with tempfile.NamedTemporaryFile(delete=True) as output:
+        output.write(result)
+        output.flush()
+        output = open(output.name, 'rb')
+        response.write(output.read())
     return response

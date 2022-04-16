@@ -4,6 +4,18 @@
 {% load humanize %}
 {% block title %}
   <title>Anticipatory Orders</title>
+  <style media="screen">
+    @page{
+      size:"A4";
+      margin:2.5cm 1.5cm 3.5cm 1.5cm;
+      @top-center{
+        content:"Report";
+      }
+      @bottom-right{
+        content:"Page "counter(page) " of " counter(pages);
+      }
+    }
+  </style>
   <meta name="description" content="">
 
 {% endblock title %}
@@ -24,7 +36,6 @@
 		</div>
 		<!--page header-->
 
-
     <div class="row">
       <div class="col-xl-12">
         <div class="card">
@@ -36,19 +47,7 @@
             <h2 class="form-group text-dark-green">Filter By</h2>
           </div>
 
-          <div class="col-md-12">
-            <div class="box-element bg-dark-green" id="form-wrapper">
-              <form method="get" class="form-inline text-white">
-                {% for field in filtered_antiorders.form %}
-                  <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
-                {% endfor %}
-                <input type="submit" class="btn btn-primary" value="Go">
-              </form>
-            </div>
-          </div>
 
-          <a href="{% url 'anticipate:file' %}">CSV</a>
-          <a href="{% url 'anticipate:export_pdf' %}">PDF</a>
 
 
           <div class="card-body">
@@ -112,24 +111,11 @@
                     <td>{{order.payment1|intcomma}} on {{order.payment1_date}}<br>{{order.payment2}} on {{order.payment2_date}}<br>{{order.payment3}} on {{order.payment3_date}}</td>
                     <td>{{order.transaction}}</td>
                     <td>{% for order in order.cylinder.all %}{{order.product_Id}}<br> {% endfor %}</td>
-                    <td><a href="{% url 'anticipate:show_partner_anti_invoice' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
                   </tr>
                   {% endfor %}
                 </tbody>
               </table>
-              <nav aria-label="...">
-                <ul class="pagination justify-content-center">
-                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
-                  {% if antiorders_page_obj.has_previous %}
-                    <li class="page-item"><a class="text-dark-green page-link" href="{% my_url antiorders_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{antiorders_page_obj.previous_page_number}}</a></li>
-                  {% endif %}
-                  <li class="page-item active" aria-current="page"><a class="bg-dark-green page-link" href="{% my_url antiorders_page_obj.number 'page' request.GET.urlencode %}">{{antiorders_page_obj.number}}<span class="sr-only">(current)</span></a></li>
-                  {% if antiorders_page_obj.has_next %}
-                    <li class="page-item"><a class="text-dark-green page-link" href="{% my_url antiorders_page_obj.next_page_number 'page' request.GET.urlencode %}">{{antiorders_page_obj.next_page_number}}</a></li>
-                  {% endif %}
-                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url antiorders_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
-                </ul>
-              </nav>
+
             </div>
           </div>
         </div>

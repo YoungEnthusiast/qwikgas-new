@@ -12,6 +12,16 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+
+os.add_dll_directory(r"C:\Program Files\GTK3-Runtime Win64\bin")
+
+from weasyprint import HTML
+
+HTML('https://weasyprint.org/').write_pdf('weasyprint-website.pdf')
+
+
+
+
 import sys
 from pathlib import Path
 
@@ -63,6 +73,7 @@ INSTALLED_APPS = [
     'orders',
     'django_filters',
     'widget_tweaks',
+    # 'weasyprint',
     # 'django.contrib.gis',
     # 'mapwidgets',
     'anticipate'
