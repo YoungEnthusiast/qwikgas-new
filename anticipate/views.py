@@ -19,6 +19,7 @@ import csv
 from django.http import HttpResponse
 # from weasyprint import HTML, CSS
 import tempfile
+import datetime
 
 import os
 
@@ -26,7 +27,10 @@ os.add_dll_directory(r"C:\Program Files\GTK3-Runtime Win64\bin")
 
 from weasyprint import HTML, CSS
 
-HTML('https://weasyprint.org/').write_pdf('weasyprint-website.pdf')
+# HTML('https://weasyprint.org/').write_pdf('weasyprint-website.pdf')
+#
+# import ssl
+# ssl._create_default_https_context = ssl._create_unverified_context
 
 
 
@@ -452,18 +456,18 @@ def showQwikAdminAntiSales(request):
 
     return render(request, 'anticipate/qwikadmin_anti_sales.html', context=context)
 
-def file_load_view(request):
+def exportCSV(request):
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="report.csv"'
+    response['Content-Disposition'] = 'attachment; filename="Anticipatory.csv"'
 
     writer = csv.writer(response)
-    writer.writerow(['Student Name', 'Attendance'])
+    writer.writerow(['Date', 'Customer ID', 'outlet', 'Total Cost'])
 
     antis = []
 
     antis0 = AntiOrder.objects.all()
     for each in antis0:
-        writer.writerow([each.user, each.order_Id])
+        writer.writerow([each.created, each.user.username, each.outlet, each.static_total_cost2])
 
     return response
 

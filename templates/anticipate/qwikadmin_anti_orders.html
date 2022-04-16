@@ -46,11 +46,6 @@
               </form>
             </div>
           </div>
-
-          <a href="{% url 'anticipate:file' %}">CSV</a>
-          <a href="{% url 'anticipate:export_pdf' %}">PDF</a>
-
-
           <div class="card-body">
             <div class="text-center">
               {% if total_antiorders > 1 %}
@@ -117,6 +112,10 @@
                   {% endfor %}
                 </tbody>
               </table>
+              <div class="card-footer text-right bg-white">
+                <a href="{% url 'anticipate:export_csv' %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-download mr-1 fa-1x"></i> Export CSV</strong></button></a>
+                <a href="{% url 'anticipate:export_pdf' %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-download mr-1 fa-1x"></i> Export PDF</strong></button></a>
+              </div>
               <nav aria-label="...">
                 <ul class="pagination justify-content-center">
                   <li class="page-item"><a class="text-dark-green page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
