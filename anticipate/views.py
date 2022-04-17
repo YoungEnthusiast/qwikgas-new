@@ -468,7 +468,7 @@ def exportCSV(request):
 
     for each in antis:
         writer.writerow(
-            [each.created.strftime('%d, %b %Y'), each.user.username, each.outlet, "N", "N", '|'.join(c.category.type for c in each.cylinder.all()), "N"  '|'.join(str(c.category.price) for c in each.cylinder.all()), each.static_total_cost, each.static_total_cost2, each.payment_choice, each.transaction, '|'.join(c.product_Id for c in each.cylinder.all())]
+            [each.created.strftime('%d, %b %Y'), each.user.username, each.outlet, "N", "N", '|'.join(c.category.type for c in each.cylinder.all()), "N", '|'.join(str(c.category.price) for c in each.cylinder.all()), each.static_total_cost, each.static_total_cost2, each.payment_choice, each.transaction, '|'.join(c.product_Id for c in each.cylinder.all())]
         )
 
 
