@@ -20,12 +20,12 @@ from django.http import HttpResponse
 # from weasyprint import HTML, CSS
 import tempfile
 import datetime
-
-import os
-
-os.add_dll_directory(r"C:\Program Files\GTK3-Runtime Win64\bin")
-
-from weasyprint import HTML, CSS
+#
+# import os
+#
+# os.add_dll_directory(r"C:\Program Files\GTK3-Runtime Win64\bin")
+#
+# from weasyprint import HTML, CSS
 
 # HTML('https://weasyprint.org/').write_pdf('weasyprint-website.pdf')
 #
@@ -457,32 +457,37 @@ def showQwikAdminAntiSales(request):
     return render(request, 'anticipate/qwikadmin_anti_sales.html', context=context)
 
 def exportCSV(request):
+    antis = AntiOrder.objects.prefetch_related(
+        'cylinder'
+    )
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="Anticipatory.csv"'
 
     writer = csv.writer(response)
-    writer.writerow(['Date', 'Customer ID', 'outlet', 'Total Cost'])
+    writer.writerow(['Date', 'Customer ID', 'outlet', 'Cylinder ID (Old)', 'Product Type (Old)', 'Product Type (New)', 'Price (Old)', 'Price (New)', 'Total Cost (Old)', 'Total Cost (New)', 'Payment Choice', 'Transaction Status', 'Cylinder Alloted'])
 
-    antis = []
+    for each in antis:
+        writer.writerow(
+            [each.created.strftime('%d, %b %Y'), each.user.username, each.outlet, "N", "N", '|'.join(c.category.type for c in each.cylinder.all()), "N"  '|'.join(str(c.category.price) for c in each.cylinder.all()), each.static_total_cost, each.static_total_cost2, each.payment_choice, each.transaction, '|'.join(c.product_Id for c in each.cylinder.all())]
+        )
 
-    antis0 = AntiOrder.objects.all()
-    for each in antis0:
-        writer.writerow([each.created, each.user.username, each.outlet, each.static_total_cost2])
 
     return response
 
-def exportPDF(request):
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'inine; attachment; filename=Report' + str(datetime.datetime.now()) + '.pdf'
-    response['Content-Transfer-Encoding'] = 'binary'
-    anti_orders = AntiOrder.objects.all()
 
-    html_string = render_to_string('anticipate/pdf-output.html', {'antiorders_page_obj': 'anti_orders'})
-    html = HTML(string=html_string)
-    result = html.write_pdf()
-    with tempfile.NamedTemporaryFile(delete=True) as output:
-        output.write(result)
-        output.flush()
-        output = open(output.name, 'rb')
-        response.write(output.read())
-    return response
+
+# def exportPDF(request):
+#     response = HttpResponse(content_type='application/pdf')
+#     response['Content-Disposition'] = 'inine; attachment; filename=Report' + str(datetime.datetime.now()) + '.pdf'
+#     response['Content-Transfer-Encoding'] = 'binary'
+#     anti_orders = AntiOrder.objects.all()
+#
+#     html_string = render_to_string('anticipate/pdf-output.html', {'antiorders_page_obj': 'anti_orders'})
+#     html = HTML(string=html_string)
+#     result = html.write_pdf()
+#     with tempfile.NamedTemporaryFile(delete=True) as output:
+#         output.write(result)
+#         output.flush()
+#         output = open(output.name, 'rb')
+#         response.write(output.read())
+#     return response

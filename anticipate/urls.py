@@ -18,5 +18,5 @@ urlpatterns = [
     path('qwikcustomer-dashboard/anticipatory-orders/invoice/<str:pk>/', views.showAntiInvoice, name='show_anti_invoice'),
     path('qwikcustomer-dashboard/anticipatory-orders/invoice/unpaid/<str:pk>/', views.showAntiInvoiceUnPaid, name='show_anti_invoice_unpaid'),
     path('qwika-dashboard/export-csv', views.exportCSV, name='export_csv'),
-    path('qwika-dashboard/anticipatory-orders/export-pdf', views.exportPDF, name='export_pdf'),
+    # path('qwika-dashboard/anticipatory-orders/export-pdf', views.exportPDF, name='export_pdf'),
 ]
