@@ -205,6 +205,9 @@
                     {% elif order.payment3 != None and order.payment2 != None %}
                     <td class="text-center"><s>Update 2nd Payment</s></td>
                     <td class="text-center"><s>Update 3rd Payment</s></td>
+                    {% elif order.payment3 != None %}
+                    <td class="text-center"><s>Update 2nd Payment</s></td>
+                    <td class="text-center"><s>Update 3rd Payment</s></td>
                     {% elif order.payment2 == None and order.payment3 == None %}
                     <td class="text-center"><a href="update/{{order.id}}"><button type="button" class="btn btn-sm btn-dark-green"><strong> <i class="fa fa-edit fa-1x text-white"></i> Update 2nd Payment</strong></button></a></td>
                     <td class="text-center"><a href="payment-update/{{order.id}}"><button type="button" class="btn btn-sm btn-dark-green"><strong> <i class="fa fa-edit fa-1x text-white"></i> Update 3rd Payment</strong></button></a></td>

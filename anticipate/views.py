@@ -102,6 +102,8 @@ def showQwikPartnerAntiOrders(request):
             form.save(commit=False).outlet = outlet
             form.save(commit=False).order_Id = x
             form.save(commit=False).payment_total = payment1
+            form.save(commit=False).stage = "1st"
+
             form.save()
 
             reg = AntiOrder.objects.filter(user=user)[0]
@@ -338,6 +340,7 @@ def updateQwikPartnerAntiOrders(request, id):
         if form.is_valid():
             # user = form.cleaned_data.get('user')
             payment2 = form.cleaned_data.get('payment2')
+            form.save(commit=False).stage = "2nd"
 
             form.save()
 
@@ -366,6 +369,7 @@ def updateQwikPartnerAntiOrders3rd(request, id):
         form = AntiOrderFormPar2(request.POST, instance=order)
         if form.is_valid():
             payment3 = form.cleaned_data.get('payment3')
+            form.save(commit=False).stage = "3rd"
             form.save()
             reg3 = AntiOrder.objects.get(id=id)
             reg3.payment_total = reg3.payment_total + payment3
@@ -500,7 +504,24 @@ def exportCSVCredits(request):
 
     for each in antis:
         writer.writerow(
-            [each.created.strftime('%A, %d, %b %Y'), each.user.username, each.outlet, each.static_total_cost, each.static_total_cost2, each.payment_choice, each.payment1+"/"+each.payment1_date, each.payment2+"/"+each.payment2_date, each.payment3+"/"+each.payment3_date, each.balance, each.transaction]
+            [each.created.strftime('%A, %d, %b %Y'), each.user.username, each.outlet, each.static_total_cost, each.static_total_cost2, each.payment_choice, str(each.payment1)+"/"+str(each.payment1_date), str(each.payment2)+"/"+str(each.payment2_date), str(each.payment3)+"/"+str(each.payment3_date), each.balance, each.transaction]
+        )
+    return response
+
+def exportCSVPayments(request):
+    antis = AntiOrder.objects.prefetch_related(
+        'cylinder'
+    )
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Payments ' + str(now) + '.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Date', 'Customer ID', 'outlet', 'Amount', 'Payment Option', 'Payment Stage'])
+
+    for each in antis:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.user.username, each.outlet, each.payment_total, each.payment_choice, each.stage]
         )
     return response
 

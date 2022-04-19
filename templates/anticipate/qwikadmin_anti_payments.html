@@ -82,17 +82,14 @@
                     <td>₦{{order.payment_total|intcomma}}</td>
                     <td>{{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</td>
                     <td>{{order.payment_choice}}</td>
-                    {% if order.payment3 != None %}
-                    <td>3rd</td>
-                    {% elif order.payment2 != None %}
-                    <td>2nd</td>
-                    {% elif order.payment1 != None %}
-                    <td>1st</td>
-                    {% endif %}
+                    <td>{{order.stage}}</td>
                   </tr>
                   {% endfor %}
                 </tbody>
               </table>
+              <div class="card-footer text-right bg-white">
+                <a href="{% url 'anticipate:export_csv_payment' %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-download mr-1 fa-1x"></i> Export CSV</strong></button></a>
+              </div>
               <nav aria-label="...">
                 <ul class="pagination justify-content-center">
                   <li class="page-item"><a class="text-dark-green page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
