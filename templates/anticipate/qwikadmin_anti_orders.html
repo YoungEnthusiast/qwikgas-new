@@ -111,7 +111,7 @@
                 </tbody>
               </table>
               <div class="card-footer text-right bg-white">
-                <a href="{% url 'anticipate:export_csv' %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-download mr-1 fa-1x"></i> Export CSV</strong></button></a>
+                <a href="{% url 'anticipate:export_csv_anti' %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-download mr-1 fa-1x"></i> Export CSV</strong></button></a>
                 <a href=""><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-download mr-1 fa-1x"></i> Export PDF</strong></button></a>
               </div>
               <nav aria-label="...">
@@ -127,6 +127,8 @@
                   <li class="page-item"><a class="text-dark-green page-link" href="{% my_url antiorders_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
                 </ul>
               </nav>
+              <!-- <a href="{% url 'anticipate:qwikadmin_randomize' %}"><button type="button" class="btn btn-dark-green text-white col-md-12"><strong><i class="fa fa-random fa-1x mr-1 text-white"></i>Randomize Orders</strong></button></a> -->
+
             </div>
           </div>
         </div>

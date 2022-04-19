@@ -96,8 +96,11 @@ def showQwikPartnerAntiOrders(request):
             payment2 = form.cleaned_data.get('payment2')
             payment3 = form.cleaned_data.get('payment3')
 
+            x = datetime.datetime.now().year + datetime.datetime.now().month + datetime.datetime.now().day + datetime.datetime.now().hour + datetime.datetime.now().minute + datetime.datetime.now().second + 50*datetime.datetime.now().microsecond
+
+
             form.save(commit=False).outlet = outlet
-            form.save(commit=False).order_Id = str(random.randint(10000000,99999999))
+            form.save(commit=False).order_Id = x
             form.save(commit=False).payment_total = payment1
             form.save()
 
@@ -162,6 +165,17 @@ def showQwikAdminAntiOrders(request):
     total_antiorders = filtered_antiorders.qs.count()
     context['total_antiorders'] = total_antiorders
 
+    return render(request, 'anticipate/qwikadmin_anti_orders.html', context=context)
+
+@login_required
+@permission_required('users.view_admin')
+def randomize(request):
+    reg = AntiOrder.objects.all()
+    for each in reg:
+        each.order_Id = random.randint(10000000,99999999)
+        each.save()
+    messages.success(request, "Orders Randomized!")
+    return redirect('anticipate:qwikadmin_randomize')
     return render(request, 'anticipate/qwikadmin_anti_orders.html', context=context)
 
 @login_required
@@ -456,7 +470,7 @@ def showQwikAdminAntiSales(request):
 
     return render(request, 'anticipate/qwikadmin_anti_sales.html', context=context)
 
-def exportCSV(request):
+def exportCSVAntis(request):
     antis = AntiOrder.objects.prefetch_related(
         'cylinder'
     )
@@ -471,8 +485,23 @@ def exportCSV(request):
         writer.writerow(
             [each.created.strftime('%A, %d, %b %Y'), each.user.username, each.outlet, ', '.join(c.category.type for c in each.cylinder.all()), each.static_price, ', '.join(str(c.category.price) for c in each.cylinder.all()), each.static_total_cost, each.static_total_cost2, each.payment_choice, each.transaction, ', '.join(c.product_Id for c in each.cylinder.all())]
         )
+    return response
 
+def exportCSVCredits(request):
+    antis = AntiOrder.objects.prefetch_related(
+        'cylinder'
+    )
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Credit Sales ' + str(now) + '.csv'
 
+    writer = csv.writer(response)
+    writer.writerow(['Date', 'Customer ID', 'outlet', 'Total Amount (Old)', 'Total Amount (New)', 'Payment Choice', '1st Payment/Date', '2nd Payment/Date', '3rd Payment/Date', 'Balance', 'Remark'])
+
+    for each in antis:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.user.username, each.outlet, each.static_total_cost, each.static_total_cost2, each.payment_choice, each.payment1+"/"+each.payment1_date, each.payment2+"/"+each.payment2_date, each.payment3+"/"+each.payment3_date, each.balance, each.transaction]
+        )
     return response
 
 

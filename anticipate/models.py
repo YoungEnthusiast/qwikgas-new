@@ -22,7 +22,7 @@ class AntiOrder(models.Model):
 		('Closed', 'Closed'),
 	]
     user = models.ForeignKey(Person, null=True, blank=True, on_delete=models.SET_NULL)
-    order_Id = models.CharField(max_length = 10, blank=True, null=True)
+    order_Id = models.IntegerField(blank=True, null=True)
     cylinder = models.ManyToManyField('products.Product', related_name='anti_cylinders')
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True, related_name='anti_products')
     category = models.CharField(max_length=12, blank=True, null=True)
