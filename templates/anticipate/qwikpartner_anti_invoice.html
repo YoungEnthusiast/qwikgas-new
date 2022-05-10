@@ -54,18 +54,14 @@
               <p><strong class="text-dark-green">Cylinder ID(S):</strong> {% for order in order.cylinder.all %}{{order.product_Id}} {% endfor %}</p>
               <p><strong class="text-dark-green">Product:</strong> {{order.product.category}}</p>
               <p><strong class="text-dark-green">Quantity:</strong> {{order.quantity}}</p>
-              <p><strong class="text-dark-green">Unit Price:</strong> {% for order in order.cylinder.all %}₦{{order.category.price}} {% endfor %}</p>
+              <p><strong class="text-dark-green">Unit Price:</strong> {{order.static_price2}}</p>
               <p><strong class="text-dark-green">Total Cost:</strong> ₦{{order.static_total_cost2|intcomma}}</p>
               <p><strong class="text-dark-green">Payment Type:</strong> {{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</p>
               <p><strong class="text-dark-green">Payment Choice:</strong> {{order.payment_choice}}</p>
               <p><strong class="text-dark-green">1st Payment:</strong> {% if order.payment1 != None %} ₦{{order.payment1|intcomma}} on {{order.payment1_date}} {% else %} {% endif %}  </p>
               <p><strong class="text-dark-green">2nd Payment:</strong> {% if order.payment2 != None %} ₦{{order.payment2|intcomma}} on {{order.payment2_date}} {% else %} {% endif %}</p>
               <p><strong class="text-dark-green">3rd Payment:</strong> {% if order.payment3 != None %} ₦{{order.payment3|intcomma}} on {{order.payment3_date}} {% else %} {% endif %}</p>
-
             </div>
-
-
-
           <div class="card-footer text-right">
             <button type="button" class="btn btn-cylinder mb-1" onClick="javascript:window.print();"><i class="fas fa-print fa-1x mr-1"></i> Print Invoice</button>
           </div>

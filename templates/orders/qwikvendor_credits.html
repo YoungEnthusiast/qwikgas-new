@@ -1,4 +1,4 @@
-{% extends 'board_admin.html' %}
+{% extends 'board_vendor.html' %}
 {% load static %}
 {% load humanize %}
 {% block title %}
@@ -17,7 +17,7 @@
 		<div class="page-header">
 			<h4 class="page-title"><i class="fa fa-spinner text-dark-green mr-2 fa-1x"></i>Welcome to credits' page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
 			<ol class="breadcrumb bg-white">
-        <li class="breadcrumb-item"><a href="{% url 'qwikadmin_board' %}"><strong>Dashboard</strong></a></li>
+        <li class="breadcrumb-item"><a href="{% url 'qwikvendor_board' %}"><strong>Dashboard</strong></a></li>
 				<li class="breadcrumb-item active" aria-current="page"><strong>Credits</strong></li>
 			</ol>
 		</div>

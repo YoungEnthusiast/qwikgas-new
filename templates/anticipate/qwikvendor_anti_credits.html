@@ -1,8 +1,9 @@
 {% extends 'board_vendor.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% load humanize %}
 {% block title %}
-  <title>Anticipatory Orders</title>
+  <title>Anticipatory Credits</title>
   <meta name="description" content="">
 
 {% endblock title %}
@@ -15,22 +16,44 @@
     {% include 'partials/_alerts.html' %}
 		<!--Page Header-->
 		<div class="page-header">
-			<h4 class="page-title"><i class="fa fa-spinner text-dark-green mr-2 fa-1x"></i>Welcome to all customers anticipatory orders' page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+      <h4 class="page-title"><i class="fa fa-spinner text-dark-green mr-2 fa-1x"></i>Welcome to all anticipatory credit sales' page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
 			<ol class="breadcrumb bg-white">
         <li class="breadcrumb-item"><a href="{% url 'qwikvendor_board' %}"><strong>Dashboard</strong></a></li>
-				<li class="breadcrumb-item active" aria-current="page"><strong>Orders</strong></li>
+				<li class="breadcrumb-item active" aria-current="page"><strong>Credits</strong></li>
 			</ol>
 		</div>
 		<!--page header-->
+    <div class="row">
+      <div class="col-md-12 col-lg-6 col-xl-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{returned_empty_to_qwikpartner}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_returned_empty_to_qwikpartners}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500"></h6>
+                <span class="text-cylinder h1">₦</span><span class="counter num-font mb-0 text-cylinder h1">{{anti_balances|intcomma}}</span>
+                <p class="text-muted mb-0">Total Credit Balances (Anticipatory)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
 
 
     <div class="row">
       <div class="col-xl-12">
         <div class="card">
           <div class="card-header bg-white">
-            <div class="card-title text-dark-green">Anticipatory Orders' Histories Till Date</div>
+            <div class="card-title text-dark-green">Anticipatory Credits</div>
           </div>
-          <br>
           <div class="text-center">
             <h2 class="form-group text-dark-green">Filter By</h2>
           </div>
@@ -46,16 +69,15 @@
             </div>
           </div>
 
-
           <div class="card-body">
             <div class="text-center">
               {% if total_antiorders > 1 %}
                 <div class="form-group col-md-12">
-                  <h3 class="form-group text-dark-green">Total Orders: {{total_antiorders}}</h3>
+                  <h3 class="form-group text-dark-green">Total: {{total_antiorders}}</h3>
                 </div>
                 {% else %}
                 <div class="form-group col-md-12">
-                  <h3 class="form-group text-dark-green">Total Order: {{total_antiorders}}</h3>
+                  <h3 class="form-group text-dark-green">Total: {{total_antiorders}}</h3>
                 </div>
                 {% endif %}
             </div>
@@ -66,55 +88,46 @@
                   <tr class="text-dark-green">
                     <th>DATE/TIME</th>
                     <th>CUSTOMER</th>
-                    <th>ORDER ID</th>
-                    <th>CYLINDER ID(OLD)</th>
-                    <th>PRODUCT TYPE(OLD)</th>
-                    <th>PRODUCT TYPE(NEW)</th>
-                    <th>PRICE (OLD)</th>
-                    <th>PRICE (NEW)</th>
-                    <th>QUANTITY</th>
-                    <th>TOTAL COST(OLD)</th>
-                    <th>TOTAL COST(NEW)</th>
+                    <th>CUSTOMER ID</th>
+                    <th>OUTLET</th>
+                    <th>TOTAL AMOUNT(OLD)</th>
+                    <th>TOTAL AMOUNT(NEW)</th>
                     <th>PAYMENT TYPE</th>
-                    <th>PAYMENT CHOICE</th>
-                    <th>PAYMENT REFERENCE</th>
-                    <th>PAYMENT</th>
-                    <th>TRANSACTION STATUS</th>
-                    <th>CYLINDER ALLOTED</th>
-                    <th></th>
-                    <th></th>
+                    <th>PAYMENT OPTION</th>
+                    <th>1ST PAYMENT/DATE</th>
+                    <th>2ND PAYMENT/DATE</th>
+                    <th>3RD PAYMENT/DATE</th>
+                    <th>BALANCE</th>
+                    <th>REMARK</th>
                   </tr>
                 </thead>
                 <tbody>
                   {% for order in antiorders_page_obj %}
                   <tr class="">
                     <td>{{order.created}}</td>
-                    <td>{{order.user}}</td>
-                    <td>{{order.order_Id}}</td>
-                    <td>{{order.product.product_Id}}</td>
-                    <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
-                    <td>{% for order in order.cylinder.all %}{{order.category.type}} {% endfor %}</td>
-                    <td>₦{{order.static_price|intcomma}}</td>
-                    <td>{{order.static_price2}}</td>
-                    <td>{{order.quantity}}</td>
+                    <td>{{order.user.first_name}} {{order.user.last_name}}</td>
+                    <td>{{order.user.username}}</td>
+                    <td>{{order.outlet}}</td>
                     <td>₦{{order.static_total_cost|intcomma}}</td>
                     <td>₦{{order.static_total_cost2|intcomma}}</td>
                     <td>{{order.payment_type1}}{{order.payment_type2}}{{order.payment_type3}}</td>
                     <td>{{order.payment_choice}}</td>
-                    <td>{{order.payment_ref}}</td>
-                    <td>{{order.payment1|intcomma}} on {{order.payment1_date}}|{{order.payment2}} on {{order.payment2_date}}|{{order.payment3}} on {{order.payment3_date}}</td>
-                    <td>{{order.transaction}}</td>
-                    <td>{% for order in order.cylinder.all %}{{order.product_Id}} {% endfor %}</td>
+                    <td>{{order.payment1|intcomma}} on {{order.payment1_date}}</td>
+                    <td>{{order.payment2|intcomma}} on {{order.payment2_date}}</td>
+                    <td>{{order.payment3|intcomma}} on {{order.payment3_date}}</td>
+                    <td>{{order.balance|intcomma}}</td>
                     {% if order.transaction == "Open" %}
-                    <td class="text-center"><a href="update/{{order.id}}"><button type="button" class="btn btn-sm btn-dark-green"><strong> <i class="fa fa-edit fa-1x text-white"></i> Update</strong></button></a></td>
+                    <td>Not Fully Paid</td>
                     {% else %}
-                    <td></td>
+                    <td>Settled</td>
                     {% endif %}
-                    <td><a href="{% url 'anticipate:show_vendor_anti_invoice' order.id %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-receipt mr-1 fa-1x"></i> Invoice</strong></button></a></td>
                   </tr>
                   {% endfor %}
                 </tbody>
               </table>
+              <div class="card-footer text-right bg-white">
+                <a href="{% url 'anticipate:export_csv_credit' %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-download mr-1 fa-1x"></i> Export CSV</strong></button></a>
+              </div>
               <nav aria-label="...">
                 <ul class="pagination justify-content-center">
                   <li class="page-item"><a class="text-dark-green page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>

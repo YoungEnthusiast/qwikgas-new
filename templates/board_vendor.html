@@ -252,6 +252,18 @@
 							<a class="side-menu__item" data-toggle="slide" href="{% url 'anticipate:qwikvendor_anti_orders' %}"><i class="fas fa-handshake fa-1x mr-1"></i><span class="side-menu__label"><strong>Anticipatory</strong></span></a>
 						</li>
 						<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="#"><i class="fa fa-search-plus fa-1x mr-1"></i><span class="side-menu__label"><strong>Account</strong></span><i class="angle fas fa-angle-right"></i></a>
+							<ul class="slide-menu">
+								<li><a class="slide-item" href="{% url 'anticipate:qwikvendor_sales_graph' %}">Total Sales Value (Graph)</a></li>
+								<li><a class="slide-item" href="{% url 'anticipate:qwikvendor_anti_sales' %}">Sales (Anticipatory)</a></li>
+								<li><a class="slide-item" href="{% url 'orders:qwikvendor_sales' %}">Sales (User)</a></li>
+								<li><a class="slide-item" href="{% url 'anticipate:qwikvendor_anti_credits' %}">Credit Sales (Anticipatory)</a></li>
+								<li><a class="slide-item" href="{% url 'orders:qwikvendor_credits' %}">Credit Sales (User)</a></li>
+								<li><a class="slide-item" href="{% url 'anticipate:qwikvendor_anti_payments' %}">Payment (Anticipatory)</a></li>
+								<li><a class="slide-item" href="{% url 'orders:qwikvendor_payments' %}">Payment (User)</a></li>
+							</ul>
+						</li>
+						<li class="slide">
 							<a class="side-menu__item" data-toggle="slide" href="{% url 'logout' %}"><i class="fa fa-sign-out-alt fa-1x mr-1"></i><span class="side-menu__label"><strong>Sign out</strong></span></a>
 						</li>
 

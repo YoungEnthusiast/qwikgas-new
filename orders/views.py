@@ -297,6 +297,32 @@ def showQwikAdminCredits(request):
     return render(request, 'orders/qwikadmin_credits.html', context=context)
 
 @login_required
+@permission_required('users.view_vendor')
+def showQwikVendorCredits(request):
+    context = {}
+    filtered_orders = UserOrderFilterSales(
+        request.GET,
+        queryset = UserOrder.objects.filter(outlet__manager=request.user)
+    )
+    context['filtered_orders'] = filtered_orders
+    paginated_filtered_orders = Paginator(filtered_orders.qs, 10)
+    page_number = request.GET.get('page')
+    orders_page_obj = paginated_filtered_orders.get_page(page_number)
+    context['orders_page_obj'] = orders_page_obj
+    total_orders = filtered_orders.qs.count()
+    context['total_orders'] = total_orders
+
+    try:
+        balance = UserOrder.objects.filter(outlet__manager=request.user, payment_status="Unconfirmed").aggregate(Sum('total_cost'))['total_cost__sum']
+    except:
+        balance = 0
+    balances = round(balance,2)
+
+    context['balances'] = balances
+
+    return render(request, 'orders/qwikvendor_credits.html', context=context)
+
+@login_required
 @permission_required('users.view_admin')
 def showQwikAdminPayments(request):
     context = {}
@@ -313,6 +339,24 @@ def showQwikAdminPayments(request):
     context['total_orders'] = total_orders
 
     return render(request, 'orders/qwikadmin_payments.html', context=context)
+
+@login_required
+@permission_required('users.view_vendor')
+def showQwikVendorPayments(request):
+    context = {}
+    filtered_orders = UserOrderFilterPayments(
+        request.GET,
+        queryset = UserOrder.objects.filter(outlet__manager=request.user, payment_status="Confirmed")
+    )
+    context['filtered_orders'] = filtered_orders
+    paginated_filtered_orders = Paginator(filtered_orders.qs, 10)
+    page_number = request.GET.get('page')
+    orders_page_obj = paginated_filtered_orders.get_page(page_number)
+    context['orders_page_obj'] = orders_page_obj
+    total_orders = filtered_orders.qs.count()
+    context['total_orders'] = total_orders
+
+    return render(request, 'orders/qwikvendor_payments.html', context=context)
 
 @login_required
 @permission_required('users.view_admin')
@@ -339,6 +383,30 @@ def showQwikAdminSales(request):
     context['sale'] = sale
 
     return render(request, 'orders/qwikadmin_sales.html', context=context)
+
+@login_required
+@permission_required('users.view_vendor')
+def showQwikVendorSales(request):
+    context = {}
+    filtered_orders = UserOrderFilterSales(
+        request.GET,
+        queryset = UserOrder.objects.filter(outlet__manager=request.user)
+    )
+    context['filtered_orders'] = filtered_orders
+    paginated_filtered_orders = Paginator(filtered_orders.qs, 10)
+    page_number = request.GET.get('page')
+    orders_page_obj = paginated_filtered_orders.get_page(page_number)
+    context['orders_page_obj'] = orders_page_obj
+    total_orders = filtered_orders.qs.count()
+    context['total_orders'] = total_orders
+
+    try:
+        sale = UserOrder.objects.filter(outlet__manager=request.user).aggregate(Sum('total_cost'))['total_cost__sum']
+    except:
+        sale = 0
+    context['sale'] = sale
+
+    return render(request, 'orders/qwikvendor_sales.html', context=context)
 
 @login_required
 def showOrderItems(request):
@@ -852,7 +920,7 @@ def confirmOrderVendor(request, id):
             order2.payment_status = "Confirmed"
             order2.save()
             user = order2.user
-            referrer = order2.user.referrer
+            referrer = user.referrer
             count = UserOrder.objects.filter(payment_status="Confirmed", user=user).count()
 
             if count == 1:

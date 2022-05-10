@@ -189,7 +189,7 @@
                     <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
                     <td>{% for order in order.cylinder.all %}{{order.category.type}} {% endfor %}</td>
                     <td>₦{{order.static_price|intcomma}}</td>
-                    <td>{% for order in order.cylinder.all %}{{order.category.price}} {% endfor %}</td>
+                    <td>{{order.static_price2}}</td>
                     <td>{{order.quantity}}</td>
                     <td>₦{{order.static_total_cost|intcomma}}</td>
                     <td>₦{{order.static_total_cost2|intcomma}}</td>
