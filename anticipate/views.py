@@ -238,7 +238,7 @@ def showQwikAdminSalesGraph(request):
     total_joint_cost_list = [0]
     # total = 0.00
 
-    counter = -1
+    counter = 1
     for each_joint in sales_joint:
         if each_joint.created.strftime('%d, %b %Y') in created_joint_list:
             total_joint = total_joint_cost_list[-1]
@@ -281,6 +281,7 @@ def showQwikAdminSalesGraph(request):
             except:
                 each_joint2.total_cost = 0
                 total_joint_cost_list.insert(counter, int(each_joint2.total_cost))
+            counter += 1
 
     return render(request, 'anticipate/qwikadmin_sales_graph.html',  {'created_list': created_list,
                                                                         'created_user_list': created_user_list,
