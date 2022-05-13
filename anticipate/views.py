@@ -252,13 +252,13 @@ def showQwikAdminSalesGraph(request):
                 total_joint_cost_list.pop()
                 total_joint_cost_list.append(int(total_joint))
         else:
-            counter += 1
             created_joint_list.append(each_joint.created.strftime('%d, %b %Y'))
             try:
                 total_joint_cost_list.append(int(each_joint.static_total_cost2))
             except:
                 each_joint.static_total_cost2 = 0
                 total_joint_cost_list.append(int(each_joint.static_total_cost2))
+            counter += 1
 
     sales_joint2 = UserOrder.objects.all().order_by('created')
 
