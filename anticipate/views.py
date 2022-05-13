@@ -274,15 +274,26 @@ def showQwikAdminSalesGraph(request):
 
             del total_joint_cost_list[d_index]
             total_joint_cost_list.insert(d_index, int(total_joint2))
-        else:
-            created_joint_list.insert(counter, each_joint2.created.strftime('%d, %b %Y'))
-            try:
-                total_joint_cost_list.insert(counter, int(each_joint2.total_cost))
-            except:
-                each_joint2.total_cost = 0
-                total_joint_cost_list.insert(counter, int(each_joint2.total_cost))
-            counter += 1
+            counter = total_joint_cost_list.index(total_joint_cost_list[-1])
 
+        else:
+            last_date = created_joint_list[-1]
+            if last_date < each_joint2.created.strftime('%d, %b %Y'):
+                created_joint_list.insert(counter+1, each_joint2.created.strftime('%d, %b %Y'))
+                try:
+                    total_joint_cost_list.insert(counter+1, int(each_joint2.total_cost))
+                except:
+                    each_joint2.total_cost = 0
+                    total_joint_cost_list.insert(counter+1, int(each_joint2.total_cost))
+                counter += 1
+            else:
+                created_joint_list.insert(counter-1, each_joint2.created.strftime('%d, %b %Y'))
+                try:
+                    total_joint_cost_list.insert(counter-1, int(each_joint2.total_cost))
+                except:
+                    each_joint2.total_cost = 0
+                    total_joint_cost_list.insert(counter-1, int(each_joint2.total_cost))
+                counter += 1
     return render(request, 'anticipate/qwikadmin_sales_graph.html',  {'created_list': created_list,
                                                                         'created_user_list': created_user_list,
                                                                         'created_joint_list': created_joint_list,
