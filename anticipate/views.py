@@ -680,11 +680,11 @@ def exportCSVAntis(request):
     response['Content-Disposition'] = 'attachment; filename=Anticipatory ' + str(now) + '.csv'
 
     writer = csv.writer(response)
-    writer.writerow(['Date', 'Customer ID', 'outlet', 'Product Type (New)', 'Price (Old)', 'Price (New)', 'Total Cost (Old)', 'Total Cost (New)', 'Payment Choice', 'Transaction Status', 'Cylinder Alloted'])
+    writer.writerow(['Date', 'Customer ID', 'outlet', 'Product Type (New)', 'Price', 'Total Cost (Old)', 'Total Cost (New)', 'Payment Choice', 'Transaction Status', 'Cylinder Alloted'])
 
     for each in antis:
         writer.writerow(
-            [each.created.strftime('%A, %d, %b %Y'), each.user.username, each.outlet, ', '.join(c.category.type for c in each.cylinder.all()), each.static_price, each.static_price2, each.static_total_cost, each.static_total_cost2, each.payment_choice, each.transaction, ', '.join(c.product_Id for c in each.cylinder.all())]
+            [each.created.strftime('%A, %d, %b %Y'), each.user.username, each.outlet, ', '.join(c.category.type for c in each.cylinder.all()), each.static_price2, each.static_total_cost, each.static_total_cost2, each.payment_choice, each.transaction, ', '.join(c.product_Id for c in each.cylinder.all())]
         )
     return response
 

@@ -21,7 +21,11 @@ from django.db.models import Sum
 
 from django.db.models.functions import ExtractMonth, ExtractYear, TruncMonth
 from django.db.models import Count
-
+import csv
+from django.http import HttpResponse
+# from weasyprint import HTML, CSS
+import tempfile
+import datetime
 #from django.template.loader import render_to_string
 
 def create(request):
@@ -831,3 +835,33 @@ def addOutlet(request):
         else:
             messages.error(request, "Please review form input fields below")
     return render(request, 'users/qwikadmin_outlet.html', {'form': form})
+
+def exportCSVPeople(request):
+    users = Person.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Users ' + str(now) + '.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Date Registered', 'Customer', 'Company Name', 'Phone Number', 'outlet', 'Possession'])
+
+    for each in users:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.username + " | " + each.first_name + " " + each.last_name, each.com_name, str(each.phone_number), each.outlet, each.holding]
+        )
+    return response
+
+def exportCSVPeople(request):
+    users = Person.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Users ' + str(now) + '.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Date Registered', 'Customer', 'Company Name', 'Phone Number', 'outlet', 'Possession'])
+
+    for each in users:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.username + " | " + each.first_name + " " + each.last_name, each.com_name, str(each.phone_number), each.outlet, each.holding]
+        )
+    return response

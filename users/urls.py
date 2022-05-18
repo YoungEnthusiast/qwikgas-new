@@ -15,6 +15,7 @@ urlpatterns = [
     path('qwikpartner-dashboard/edit-profile', views.editQwikPartner, name='qwikpartner_profile'),
     path('qwika-dashboard/edit-profile', views.editQwikAdmin, name='qwikadmin_profile'),
     path('qwika-dashboard/all-users', views.showQwikAdminPeople, name='qwikadmin_people'),
+    path('qwika-dashboard/all-users/export-csv', views.exportCSVPeople, name='export_csv_people'),
     path('qwikcustomer-dashboard/edit-profile/change-password', views.changePasswordQwikCust, name='qwikcust_change_password'),
     path('qwikvendor-dashboard/edit-profile/change-password', views.changePasswordQwikVendor, name='qwikvendor_change_password'),
     path('qwikpartner-dashboard/edit-profile/change-password', views.changePasswordQwikPartner, name='qwikpartner_change_password'),
