@@ -1035,10 +1035,10 @@ def exportCSVOrderItemsNew(request):
     response['Content-Disposition'] = 'attachment; filename=Orde Items (New) ' + str(now) + '.csv'
 
     writer = csv.writer(response)
-    writer.writerow(['Date','Customer', 'Order ID', 'Total Cost', 'Delivery Schedule', 'Payment Status', 'Outlet', 'Address'])
+    writer.writerow(['Date', 'Customer', 'Order ID', 'Price', 'Quantity', 'Total Cost' 'Payment Status', 'Outlet', 'Order Status'])
 
     for each in orders:
         writer.writerow(
-            [each.created.strftime('%A, %d, %b %Y'), each.user, each.order_Id, each.total_cost, each.schedule_delivery, each.payment_status, each.outlet, each.address]
+            [each.created.strftime('%A, %d, %b %Y'), each.user, each.order_Id, each.price, each.order.quantity, each.order.total_cost, each.order.payment_status, each.order.outlet, each.order_item_status]
         )
     return response
