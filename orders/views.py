@@ -14,6 +14,11 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Sum
 # from django.template.loader import render_to_string
 from decimal import Decimal
+import csv
+from django.http import HttpResponse
+# from weasyprint import HTML, CSS
+import tempfile
+import datetime
 
 @login_required
 def createOrder(request):
@@ -1009,16 +1014,31 @@ def confirmOrderVendor(request, id):
     return render(request, 'orders/qwikvendor_order_confirm.html', {'form': form, 'order': order})
 
 def exportCSVOrders(request):
-    orders = Cylinder.objects.all()
+    orders = UserOrder.objects.all()
     response = HttpResponse(content_type='text/csv')
     now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
-    response['Content-Disposition'] = 'attachment; filename=Returned Filled to QwikLet ' + str(now) + '.csv'
+    response['Content-Disposition'] = 'attachment; filename=Ordes ' + str(now) + '.csv'
 
     writer = csv.writer(response)
-    writer.writerow(['Date','Customer', 'Order ID', 'Total Cost', 'Delivery Schedule', 'Payment Status', 'Outlet', ])
+    writer.writerow(['Date','Customer', 'Order ID', 'Total Cost', 'Delivery Schedule', 'Payment Status', 'Outlet', 'Address'])
 
-    for each in cylinders:
+    for each in orders:
         writer.writerow(
-            [each.created.strftime('%A, %d, %b %Y'), each.category, each.cylinder, each.partner_confirm, each.vendor_confirm]
+            [each.created.strftime('%A, %d, %b %Y'), each.user, each.order_Id, each.total_cost, each.schedule_delivery, each.payment_status, each.outlet, each.address]
+        )
+    return response
+
+def exportCSVOrderItemsNew(request):
+    orders = OrderItem.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Orde Items (New) ' + str(now) + '.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Date','Customer', 'Order ID', 'Total Cost', 'Delivery Schedule', 'Payment Status', 'Outlet', 'Address'])
+
+    for each in orders:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.user, each.order_Id, each.total_cost, each.schedule_delivery, each.payment_status, each.outlet, each.address]
         )
     return response
