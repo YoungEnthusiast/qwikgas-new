@@ -11,7 +11,6 @@ from django.contrib.auth.decorators import login_required, permission_required
 # from django.core.mail import send_mail
 # from cart.forms import CartAddProductForm
 # from django.template.loader import render_to_string
-from datetime import datetime
 from cart.forms import CartAddProductForm
 from django.core.paginator import Paginator
 #from django.db.models import Q
@@ -57,7 +56,7 @@ def product_list(request, category_slug=None):
     #products = Product.objects.filter(status__in=["At Ketu product (filled)","At Oshodi product (filled)"])
     # products = Product.objects.filter(Q(status="At Ketu product (filled)") | Q(status="At Oshodi product (filled)"))
 
-    today = datetime.today()
+    today = datetime.datetime.today()
     my_today = today.strftime('%d, %b %Y')
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
@@ -3794,5 +3793,97 @@ def exportCSVCylindersReturnedEmpty(request):
     for each in cylinders:
         writer.writerow(
             [each.created.strftime('%A, %d, %b %Y'), each.customer, each.category, each.cylinder, each.vendor_confirm]
+        )
+    return response
+
+def exportCSVCylindersDispatchedToPlant(request):
+    cylinders = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant")
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Dispatched to Plant ' + str(now) + '.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Date','Product Type', 'Cylinder ID', 'QwikPartner Remark'])
+
+    for each in cylinders:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.category, each.cylinder, each.partner_confirm]
+        )
+    return response
+
+def exportCSVCylindersDeliveredFilledToQwikLet(request):
+    cylinders = Cylinder.objects.filter(vendor_product_status="Dispatched to Plant")
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Delivered Filled to QwikLet ' + str(now) + '.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Date','Product Type', 'Cylinder ID', 'QwikVendor Remark'])
+
+    for each in cylinders:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.category, each.cylinder, each.vendor_confirm]
+        )
+    return response
+
+def exportCSVCylindersDispatchedFilledToQwikCustomer(request):
+    cylinders = Cylinder.objects.filter(vendor_product_status="Released Filled to QwikPartner")
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Dispatched Filled to QwikCustomer ' + str(now) + '.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Date','Product Type', 'Cylinder ID', 'QwikPartner Remark'])
+
+    for each in cylinders:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.category, each.cylinder, each.partner_confirm]
+        )
+    return response
+
+def exportCSVCylindersDeliveredToQwikCustomerAnti(request):
+    cylinders = AntiOrder.objects.prefetch_related(
+        'cylinder'
+    )
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Delivered to QwikCutomer (Anticipatory) ' + str(now) + '.csv'
+    writer = csv.writer(response)
+    writer.writerow(['Date', 'Customer', 'outlet', 'Product Type', 'Cylinder Alloted'])
+
+    for each in cylinders:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.user, each.outlet, ', '.join(c.category.type for c in each.cylinder.all()), ', '.join(c.product_Id for c in each.cylinder.all())]
+        )
+    return response
+
+def exportCSVCylindersDeliveredToQwikCustomer(request):
+    cylinders = OrderStatus.objects.filter(order_status="Delivered").prefetch_related(
+        'cylinder'
+    )
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Delivered to QwikCutomer (User) ' + str(now) + '.csv'
+    writer = csv.writer(response)
+    writer.writerow(['Date', 'Customer', 'outlet', 'Product Type', 'Cylinder Alloted'])
+
+    for each in cylinders:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.order.order.user, each.order.order.outlet, ', '.join(c.category.type for c in each.cylinder.all()), ', '.join(c.product_Id for c in each.cylinder.all())]
+        )
+    return response
+
+def exportCSVCylindersReturnedFilledToQwikLet(request):
+    cylinders = Cylinder.objects.filter(vendor_product_status="Released Filled to QwikPartner")
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Returned Filled to QwikLet ' + str(now) + '.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Date','Product Type', 'Cylinder ID', 'QwikPartner Status Update', 'QwikVendor Remark'])
+
+    for each in cylinders:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.category, each.cylinder, each.partner_confirm, each.vendor_confirm]
         )
     return response

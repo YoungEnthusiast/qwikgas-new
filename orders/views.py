@@ -290,9 +290,9 @@ def showQwikAdminCredits(request):
         balance = UserOrder.objects.filter(payment_status="Unconfirmed").aggregate(Sum('total_cost'))['total_cost__sum']
     except:
         balance = 0
-    balances = round(balance,2)
 
-    context['balances'] = balances
+
+    context['balance'] = balance
 
     return render(request, 'orders/qwikadmin_credits.html', context=context)
 
@@ -316,9 +316,8 @@ def showQwikVendorCredits(request):
         balance = UserOrder.objects.filter(outlet__manager=request.user, payment_status="Unconfirmed").aggregate(Sum('total_cost'))['total_cost__sum']
     except:
         balance = 0
-    balances = round(balance,2)
 
-    context['balances'] = balances
+    context['balance'] = balance
 
     return render(request, 'orders/qwikvendor_credits.html', context=context)
 
@@ -1008,3 +1007,18 @@ def confirmOrderVendor(request, id):
             messages.success(request, "The order has been confirmed successfully")
             return redirect('orders:qwikvendor_orders')
     return render(request, 'orders/qwikvendor_order_confirm.html', {'form': form, 'order': order})
+
+def exportCSVOrders(request):
+    orders = Cylinder.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Returned Filled to QwikLet ' + str(now) + '.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Date','Customer', 'Order ID', 'Total Cost', 'Delivery Schedule', 'Payment Status', 'Outlet', ])
+
+    for each in cylinders:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.category, each.cylinder, each.partner_confirm, each.vendor_confirm]
+        )
+    return response
