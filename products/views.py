@@ -16,6 +16,11 @@ from cart.forms import CartAddProductForm
 from django.core.paginator import Paginator
 #from django.db.models import Q
 from django.db.models import Sum
+import csv
+from django.http import HttpResponse
+# from weasyprint import HTML, CSS
+import tempfile
+import datetime
 
 @login_required
 def product_list(request, category_slug=None):
@@ -3747,3 +3752,47 @@ def unselectAll(request):
     messages.success(request, "All Unselected!")
     return redirect('products:qwikadmin_cylinders')
     return render(request, 'products/qwikadmin_cylinders.html')
+
+def exportCSVCylinders(request):
+    cylinders = Product.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Inventory ' + str(now) + '.csv'
+    writer = csv.writer(response)
+    writer.writerow(['Date Added', 'Product Id', 'Outlet', 'Last Updated'])
+
+    for each in cylinders:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.product_Id, each.outlet, each.updated.strftime('%A, %d, %b %Y')]
+        )
+    return response
+
+def exportCSVCylindersReceivedEmpty(request):
+    cylinders = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer")
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Cylinders Received Empty from Customers ' + str(now) + '.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Date', 'Customer', 'Product Type', 'Cylinder ID'])
+
+    for each in cylinders:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.customer, each.category, each.cylinder]
+        )
+    return response
+
+def exportCSVCylindersReturnedEmpty(request):
+    cylinders = Cylinder.objects.filter(partner_product_status="Received Empty from QwikCustomer")
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Cylinders Returned Empty to QwikLet ' + str(now) + '.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Date', 'Customer', 'Product Type', 'Cylinder ID', 'Vendor Remark'])
+
+    for each in cylinders:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.customer, each.category, each.cylinder, each.vendor_confirm]
+        )
+    return response

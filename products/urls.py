@@ -64,6 +64,9 @@ urlpatterns = [
     path('qwika-dashboard/cylinders-returned-empty/accept/<int:id>', views.acceptQwikAdminCylindersReturnedEmpty, name='accept_qwikadmin_cylinders_returned_empty'),
     path('qwika-dashboard/cylinders-returned-empty/decline/<int:id>', views.declineQwikAdminCylindersReturnedEmpty, name='decline_qwikadmin_cylinders_returned_empty'),
     path('qwika-dashboard/cylinders-received-empty/', views.showQwikAdminCylindersReceivedEmpty, name='qwikadmin_cylinders_received_empty'),
+    path('qwika-dashboard/cylinders-received-empty/export-csv', views.exportCSVCylindersReceivedEmpty, name='export_csv_cylinders_received_empty'),
+    path('qwika-dashboard/cylinders-returned-empty/export-csv', views.exportCSVCylindersReturnedEmpty, name='export_csv_cylinders_returned_empty'),
+
     path('qwika-dashboard/cylinders-returned-empty/', views.showQwikAdminCylindersReturnedEmpty, name='qwikadmin_cylinders_returned_empty'),
     path('qwika-dashboard/cylinders-received-empty/update/<int:id>', views.updateQwikAdminCylindersReceivedEmpty, name='update_qwikadmin_cylinders_received_empty'),
     path('qwika-dashboard/cylinders-returned-empty/update/<int:id>', views.updateQwikAdminCylindersReturnedEmpty, name='update_qwikadmin_cylinders_returned_empty'),
@@ -80,6 +83,7 @@ urlpatterns = [
     # path('<id>/<slug>/', views.product_detail, name='product_detail'),
     # path('fund-wallet', views.fundWallet, name='fund'),
     path('qwika-dashboard/cylinders/', views.showQwikAdminCylinders, name='qwikadmin_cylinders'),
+    path('qwika-dashboard/cylinders/export-csv', views.exportCSVCylinders, name='export_csv_cylinders'),
     path('qwika-dashboard/cylinders/update/<int:id>', views.updateCylinder, name='qwikadmin_update_cylinders'),
     path('qwika-dashboard/cylinder/add-new', views.addCylinder, name='qwikadmin_cylinder'),
     path('qwika-dashboard/cylinders/delete/<int:id>', views.deleteCylinder),

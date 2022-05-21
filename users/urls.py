@@ -32,6 +32,7 @@ urlpatterns = [
     path('qwika-dashboard/user/update/<int:id>', views.updatePerson, name='person_update'),
     path('qwika-dashboard/user/delete/<int:id>', views.deletePerson),
     path('qwika-dashboard/outlets', views.showQwikAdminOutlets, name='qwikadmin_outlets'),
+    path('qwika-dashboard/outlets/export-csv', views.exportCSVOutlets, name='export_csv_outlets'),
     path('qwika-dashboard/outlet/update/<int:id>', views.updateOutlet, name='outlet_update'),
     path('qwika-dashboard/outlet/add-new', views.addOutlet, name='qwikadmin_outlet'),
     path('qwika-dashboard/outlet/delete/<int:id>', views.deleteOutlet),

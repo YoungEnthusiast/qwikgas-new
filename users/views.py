@@ -851,17 +851,16 @@ def exportCSVPeople(request):
         )
     return response
 
-def exportCSVPeople(request):
-    users = Person.objects.all()
+def exportCSVOutlets(request):
+    outlets = Outlet.objects.all()
     response = HttpResponse(content_type='text/csv')
     now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
-    response['Content-Disposition'] = 'attachment; filename=Users ' + str(now) + '.csv'
-
+    response['Content-Disposition'] = 'attachment; filename=Outlets ' + str(now) + '.csv'
     writer = csv.writer(response)
-    writer.writerow(['Date Registered', 'Customer', 'Company Name', 'Phone Number', 'outlet', 'Possession'])
+    writer.writerow(['Date Added', 'QwikVendor', 'QwikPartner', 'Email', 'Address'])
 
-    for each in users:
+    for each in outlets:
         writer.writerow(
-            [each.created.strftime('%A, %d, %b %Y'), each.username + " | " + each.first_name + " " + each.last_name, each.com_name, str(each.phone_number), each.outlet, each.holding]
+            [each.created.strftime('%A, %d, %b %Y'), each.manager, each.partner, each.email, each.address]
         )
     return response
