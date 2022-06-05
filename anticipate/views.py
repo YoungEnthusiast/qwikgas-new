@@ -134,6 +134,7 @@ def showQwikPartnerAntiOrders(request):
 
             reg3 = AntiOrder.objects.filter(user=user)[0]
             reg3.balance = reg3.static_total_cost2 - reg3.payment_total
+            reg3.payment_date = reg3.updated
             reg3.save()
 
 
@@ -238,7 +239,7 @@ def showQwikAdminSalesGraph(request):
     total_joint_cost_list = [0]
     # total = 0.00
 
-    counter = 1
+    counter = -1
     for each_joint in sales_joint:
         if each_joint.created.strftime('%d, %b %Y') in created_joint_list:
             total_joint = total_joint_cost_list[-1]
@@ -252,13 +253,13 @@ def showQwikAdminSalesGraph(request):
                 total_joint_cost_list.pop()
                 total_joint_cost_list.append(int(total_joint))
         else:
+            counter += 1
             created_joint_list.append(each_joint.created.strftime('%d, %b %Y'))
             try:
                 total_joint_cost_list.append(int(each_joint.static_total_cost2))
             except:
                 each_joint.static_total_cost2 = 0
                 total_joint_cost_list.append(int(each_joint.static_total_cost2))
-            counter += 1
 
     sales_joint2 = UserOrder.objects.all().order_by('created')
 
@@ -274,31 +275,137 @@ def showQwikAdminSalesGraph(request):
 
             del total_joint_cost_list[d_index]
             total_joint_cost_list.insert(d_index, int(total_joint2))
-            counter = total_joint_cost_list.index(total_joint_cost_list[-1])
-
         else:
-            last_date = created_joint_list[-1]
-            if last_date < each_joint2.created.strftime('%d, %b %Y'):
-                created_joint_list.insert(counter+1, each_joint2.created.strftime('%d, %b %Y'))
-                try:
-                    total_joint_cost_list.insert(counter+1, int(each_joint2.total_cost))
-                except:
-                    each_joint2.total_cost = 0
-                    total_joint_cost_list.insert(counter+1, int(each_joint2.total_cost))
-                counter += 1
-            else:
-                created_joint_list.insert(counter-1, each_joint2.created.strftime('%d, %b %Y'))
-                try:
-                    total_joint_cost_list.insert(counter-1, int(each_joint2.total_cost))
-                except:
-                    each_joint2.total_cost = 0
-                    total_joint_cost_list.insert(counter-1, int(each_joint2.total_cost))
-                counter += 1
+            created_joint_list.insert(counter, each_joint2.created.strftime('%d, %b %Y'))
+            try:
+                total_joint_cost_list.insert(counter, int(each_joint2.total_cost))
+            except:
+                each_joint2.total_cost = 0
+                total_joint_cost_list.insert(counter, int(each_joint2.total_cost))
+
     return render(request, 'anticipate/qwikadmin_sales_graph.html',  {'created_list': created_list,
                                                                         'created_user_list': created_user_list,
                                                                         'created_joint_list': created_joint_list,
                                                                         'static_total_cost2_list': static_total_cost2_list,
                                                                         'total_cost_list': total_cost_list, 'total_joint_cost_list': total_joint_cost_list})
+
+# @login_required
+# @permission_required('users.view_admin')
+# def showQwikAdminSalesGraph(request):
+#     sales = AntiOrder.objects.all().order_by('created')
+#     created_list = [""]
+#     static_total_cost2_list = [0]
+#     # total = 0.00
+#     for each in sales:
+#         if each.created.strftime('%d, %b %Y') in created_list:
+#             total = static_total_cost2_list[-1]
+#             try:
+#                 total = int(total) + int(each.static_total_cost2)
+#                 static_total_cost2_list.pop()
+#                 static_total_cost2_list.append(int(total))
+#             except:
+#                 each.static_total_cost2 = 0
+#                 total = int(total) + int(each.static_total_cost2)
+#                 static_total_cost2_list.pop()
+#                 static_total_cost2_list.append(int(total))
+#         else:
+#             created_list.append(each.created.strftime('%d, %b %Y'))
+#             try:
+#                 static_total_cost2_list.append(int(each.static_total_cost2))
+#             except:
+#                 each.static_total_cost2 = 0
+#                 static_total_cost2_list.append(int(each.static_total_cost2))
+#     sales_user = UserOrder.objects.all().order_by('created')
+#     created_user_list = [""]
+#     total_cost_list = [0]
+#     # total = 0.00
+#     for each_user in sales_user:
+#         if each_user.created.strftime('%d, %b %Y') in created_user_list:
+#             total_user = total_cost_list[-1]
+#             try:
+#                 total_user = int(total_user) + int(each_user.total_cost)
+#                 total_cost_list.pop()
+#                 total_cost_list.append(int(total_user))
+#             except:
+#                 each_user.total_cost = 0
+#                 total_user = int(total_user) + int(each_user.total_cost)
+#                 total_cost_list.pop()
+#                 total_cost_list.append(int(total_user))
+#
+#         else:
+#             created_user_list.append(each_user.created.strftime('%d, %b %Y'))
+#             try:
+#                 total_cost_list.append(int(each_user.total_cost))
+#             except:
+#                 each_user.total_cost = 0
+#                 total_cost_list.append(int(each_user.total_cost))
+#
+#     sales_joint = AntiOrder.objects.all().order_by('created')
+#     created_joint_list = [""]
+#     total_joint_cost_list = [0]
+#     # total = 0.00
+#
+#     counter = 1
+#     for each_joint in sales_joint:
+#         if each_joint.created.strftime('%d, %b %Y') in created_joint_list:
+#             total_joint = total_joint_cost_list[-1]
+#             try:
+#                 total_joint = int(total_joint) + int(each_joint.static_total_cost2)
+#                 total_joint_cost_list.pop()
+#                 total_joint_cost_list.append(int(total_joint))
+#             except:
+#                 each_joint.static_total_cost2 = 0
+#                 total_joint = int(total_joint) + int(each_joint.static_total_cost2)
+#                 total_joint_cost_list.pop()
+#                 total_joint_cost_list.append(int(total_joint))
+#         else:
+#             created_joint_list.append(each_joint.created.strftime('%d, %b %Y'))
+#             try:
+#                 total_joint_cost_list.append(int(each_joint.static_total_cost2))
+#             except:
+#                 each_joint.static_total_cost2 = 0
+#                 total_joint_cost_list.append(int(each_joint.static_total_cost2))
+#             counter += 1
+#
+#     sales_joint2 = UserOrder.objects.all().order_by('created')
+#
+#     for each_joint2 in sales_joint2:
+#         if each_joint2.created.strftime('%d, %b %Y') in created_joint_list:
+#             d_index = created_joint_list.index(each_joint2.created.strftime('%d, %b %Y'))
+#             total_joint2 = total_joint_cost_list[d_index]
+#             try:
+#                 total_joint2 = int(total_joint2) + int(each_joint2.total_cost)
+#             except:
+#                 each_joint2.total_cost = 0
+#                 total_joint2 = int(total_joint2) + int(each_joint2.total_cost)
+#
+#             del total_joint_cost_list[d_index]
+#             total_joint_cost_list.insert(d_index, int(total_joint2))
+#             counter = total_joint_cost_list.index(total_joint_cost_list[-1])
+#
+#         else:
+#             last_date = created_joint_list[-1]
+#             if last_date < each_joint2.created.strftime('%d, %b %Y'):
+#                 created_joint_list.insert(counter+1, each_joint2.created.strftime('%d, %b %Y'))
+#                 try:
+#                     total_joint_cost_list.insert(counter+1, int(each_joint2.total_cost))
+#                 except:
+#                     each_joint2.total_cost = 0
+#                     total_joint_cost_list.insert(counter+1, int(each_joint2.total_cost))
+#                 counter += 1
+#             else:
+#                 created_joint_list.insert(counter-1, each_joint2.created.strftime('%d, %b %Y'))
+#                 try:
+#                     total_joint_cost_list.insert(counter-1, int(each_joint2.total_cost))
+#                 except:
+#                     each_joint2.total_cost = 0
+#                     total_joint_cost_list.insert(counter-1, int(each_joint2.total_cost))
+#                 counter += 1
+#     return render(request, 'anticipate/qwikadmin_sales_graph.html',  {'created_list': created_list,
+#                                                                         'created_user_list': created_user_list,
+#                                                                         'created_joint_list': created_joint_list,
+#                                                                         'static_total_cost2_list': static_total_cost2_list,
+#                                                                         'total_cost_list': total_cost_list, 'total_joint_cost_list': total_joint_cost_list})
 
 @login_required
 @permission_required('users.view_vendor')
@@ -516,6 +623,7 @@ def updateQwikPartnerAntiOrders(request, id):
                 reg3.payment_total = 0 + payment2
             # reg3.payment_total = reg3.payment_total + payment2
             reg3.balance = reg3.static_total_cost2 - reg3.payment_total
+            reg3.payment_date = reg3.updated
             reg3.save()
 
             # reg = AntiOrder.objects.filter(id=product.id)[0]
@@ -539,6 +647,7 @@ def updateQwikPartnerAntiOrders3rd(request, id):
             reg3 = AntiOrder.objects.get(id=id)
             reg3.payment_total = reg3.payment_total + payment3
             reg3.balance = reg3.static_total_cost2 - reg3.payment_total
+            reg3.payment_date = reg3.updated            
             reg3.save()
             # reg = AntiOrder.objects.filter(id=product.id)[0]
             # reg.vendor_product = request.user.first_name
@@ -685,6 +794,23 @@ def exportCSVAntis(request):
     for each in antis:
         writer.writerow(
             [each.created.strftime('%A, %d, %b %Y'), each.user.username, each.outlet, ', '.join(c.category.type for c in each.cylinder.all()), each.static_price2, each.static_total_cost, each.static_total_cost2, each.payment_choice, each.transaction, ', '.join(c.product_Id for c in each.cylinder.all())]
+        )
+    return response
+
+def exportCSVSalesAnti(request):
+    sales = AntiOrder.objects.prefetch_related(
+        'cylinder'
+    )
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Sales ' + str(now) + '.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Date', 'Customer', 'outlet',  'Total Cost (Old)', 'Total Cost (New)', 'Payment Type', 'Payment Choice', 'Payment Status'])
+
+    for each in sales:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.user, each.outlet, each.static_total_cost, each.static_total_cost2, each.payment_type1 + "" + each.payment_type2 + "" + each.payment_type3, each.payment_choice, each.transaction]
         )
     return response
 

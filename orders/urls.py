@@ -40,7 +40,10 @@ urlpatterns = [
     # path('st---only2', views.addOrder, name='add_order'),
     path('qwikcustomer-address/order/<int:id>', views.showAddressCust, name='qwikcust_address'),
     path('qwika-dashboard/orders/export-csv', views.exportCSVOrders, name='export_csv_orders'),
+    path('qwika-dashboard/sales/export-csv', views.exportCSVSales, name='export_csv_sales'),
     path('qwika-dashboard/order-items/export-csv', views.exportCSVOrderItems, name='export_csv_order_items'),
-
+    path('qwika-dashboard/order-statuses/export-csv', views.exportCSVCylindersOrderStatuses, name='export_csv_order_statuses'),
+    path('qwika-dashboard/credits/export-csv', views.exportCSVCreditsUser, name='export_csv_credit_user'),
+    path('qwika-dashboard/payments/export-csv', views.exportCSVPaymentsUser, name='export_csv_payment_user'),
     # path('qwika-dashboard/sales-graph-user/', views.showQwikAdminSalesGraphUser, name='qwikadmin_sales_graph_user'),
 ]

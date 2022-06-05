@@ -1028,17 +1028,78 @@ def exportCSVOrders(request):
         )
     return response
 
-def exportCSVOrderItemsNew(request):
+def exportCSVOrderItems(request):
     orders = OrderItem.objects.all()
     response = HttpResponse(content_type='text/csv')
     now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
     response['Content-Disposition'] = 'attachment; filename=Orde Items (New) ' + str(now) + '.csv'
 
     writer = csv.writer(response)
-    writer.writerow(['Date', 'Customer', 'Order ID', 'Price', 'Quantity', 'Total Cost' 'Payment Status', 'Outlet', 'Order Status'])
+    writer.writerow(['Date', 'Customer', 'Order ID', 'Price', 'Quantity', 'Total Cost', 'Payment Status', 'Outlet', 'Order Status'])
 
     for each in orders:
         writer.writerow(
-            [each.created.strftime('%A, %d, %b %Y'), each.user, each.order_Id, each.price, each.order.quantity, each.order.total_cost, each.order.payment_status, each.order.outlet, each.order_item_status]
+            [each.created.strftime('%A, %d, %b %Y'), each.order.user, each.order.order_Id, each.price, each.quantity, each.order.total_cost, each.order.payment_status, each.order.outlet, each.order_item_status]
+        )
+    return response
+
+def exportCSVCylindersOrderStatuses(request):
+    orders = OrderStatus.objects.filter(order_status="Delivered").prefetch_related(
+        'cylinder'
+    )
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Delivered to QwikCutomer (User) ' + str(now) + '.csv'
+    writer = csv.writer(response)
+    writer.writerow(['Date', 'Customer', 'Order ID', 'Quantity', 'Total Cost', 'Payment Status', 'Outlet', 'Order Status', 'Cylinder Alloted'])
+
+    for each in orders:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.order.order.user, each.order.order.order_Id, each.quantity, each.order.static_total_cost2, each.order.order.payment_status, each.order.order.outlet, each.order_status, ', '.join(c.product_Id for c in each.cylinder.all())]
+        )
+    return response
+
+def exportCSVSales(request):
+    sales = UserOrder.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Sales (Anticipatory) ' + str(now) + '.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Date', 'Customer', 'outlet',  'Total Cost', 'Payment Type', 'Payment Choice', 'Payment Status'])
+
+    for each in sales:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.user, each.outlet, each.total_cost, each.payment_type, each.payment_choice, each.transaction]
+        )
+    return response
+
+def exportCSVCreditsUser(request):
+    orders = UserOrder.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Credit Sales (User) ' + str(now) + '.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Date', 'Customer', 'outlet', 'Total Amount', 'Payment Choice', '1st Payment/Date', '2nd Payment/Date', '3rd Payment/Date', 'Balance', 'Remark'])
+
+    for each in orders:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.user, each.outlet, each.total_cost, each.payment_choice, str(each.payment1)+"/"+str(each.payment1_date), str(each.payment2)+"/"+str(each.payment2_date), str(each.payment3)+"/"+str(each.payment3_date), " " , " "]
+        )
+    return response
+
+def exportCSVPaymentsUser(request):
+    orders = UserOrder.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Payments (User) ' + str(now) + '.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Date', 'Customer ID', 'outlet', 'Amount', 'Payment Option', 'Payment Stage'])
+
+    for each in orders:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.user, each.outlet, " ", each.payment_choice, " "]
         )
     return response

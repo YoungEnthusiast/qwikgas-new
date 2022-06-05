@@ -46,7 +46,7 @@
           </div>
 
           <div class="card-body">
-            <div class="text-center">
+            <!-- <div class="text-center">
               {% if total_antiorders > 1 %}
                 <div class="form-group col-md-12">
                   <h3 class="form-group text-dark-green">Total: {{total_antiorders}}</h3>
@@ -56,7 +56,7 @@
                   <h3 class="form-group text-dark-green">Total: {{total_antiorders}}</h3>
                 </div>
                 {% endif %}
-            </div>
+            </div> -->
 
             <div class="table-responsive">
               <table class="table card-table table-vcenter text-nowrap">
@@ -74,8 +74,9 @@
                 </thead>
                 <tbody>
                   {% for order in antiorders_page_obj %}
+                  {% if order.payment_total != 0 %}
                   <tr class="">
-                    <td>{{order.created}}</td>
+                    <td>{{order.updated}}</td>
                     <td>{{order.user.first_name}} {{order.user.last_name}}</td>
                     <td>{{order.user.username}}</td>
                     <td>{{order.outlet}}</td>
@@ -84,6 +85,7 @@
                     <td>{{order.payment_choice}}</td>
                     <td>{{order.stage}}</td>
                   </tr>
+                  {% endif %}
                   {% endfor %}
                 </tbody>
               </table>
