@@ -572,10 +572,10 @@ def showQwikAdminAntiPayments(request):
     context = {}
     filtered_antiorders = AntiOrderFilterPayments(
         request.GET,
-        queryset = AntiOrder.objects.all()
+        queryset = AntiOrder.objects.all().order_by('-updated')
     )
     context['filtered_antiorders'] = filtered_antiorders
-    paginated_filtered_antiorders = Paginator(filtered_antiorders.qs, 10)
+    paginated_filtered_antiorders = Paginator(filtered_antiorders.qs, 500)
     page_number = request.GET.get('page')
     antiorders_page_obj = paginated_filtered_antiorders.get_page(page_number)
     context['antiorders_page_obj'] = antiorders_page_obj
@@ -647,7 +647,7 @@ def updateQwikPartnerAntiOrders3rd(request, id):
             reg3 = AntiOrder.objects.get(id=id)
             reg3.payment_total = reg3.payment_total + payment3
             reg3.balance = reg3.static_total_cost2 - reg3.payment_total
-            reg3.payment_date = reg3.updated            
+            reg3.payment_date = reg3.updated
             reg3.save()
             # reg = AntiOrder.objects.filter(id=product.id)[0]
             # reg.vendor_product = request.user.first_name

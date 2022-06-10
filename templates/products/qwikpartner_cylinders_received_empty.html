@@ -200,20 +200,7 @@
         <div class="card-header bg-white">
           <div class="card-title text-dark-green">Received Empty from Customers</div>
         </div>
-        <div class="text-center">
-          <h2 class="form-group text-dark-green">Filter By</h2>
-        </div>
 
-        <div class="col-md-12">
-          <div class="box-element bg-dark-green" id="form-wrapper">
-            <form method="get" class="form-inline text-white">
-              {% for field in filtered_cylinders.form %}
-                <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
-              {% endfor %}
-              <input type="submit" class="btn btn-cylinder" value="Go">
-            </form>
-          </div>
-        </div>
         <div class="card-body">
           <div class="text-center">
             {% if total_cylinders > 1 %}
