@@ -13,16 +13,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os
 
-
-
-
-
-
 import sys
 from pathlib import Path
-
-
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -122,19 +114,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'yustaoab@gmail.com'
 EMAIL_HOST_PASSWORD = 'twnqanloovwgjrsq'
 
-#MY EMAIL SETTING
-# EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'mail.qwikgas.ai'  #Hosted on namecheap Ex: mail.pure.com
-# EMAIL_USE_TLS = False
-# EMAIL_PORT = 26 #This will be different based on your Host, for Namecheap I use this`
-# EMAIL_HOST_USER = '' # Ex: info@pure.com
-# EMAIL_HOST_PASSWORD = '' # for the email you created through cPanel. The password for that
-#
-# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -176,10 +155,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/3.2/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Africa/Lagos'
@@ -190,10 +165,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -201,13 +172,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'qwikgas/static')]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-# Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = "/where-next/"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-try:
-    from .local_settings import *
-except ImportError:
-    pass

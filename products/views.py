@@ -5,7 +5,7 @@ from orders.models import UserOrder, OrderStatus
 from users.models import Wallet, Outlet, Person
 from .forms import CategoryForm, ProductForm, ProductFormPartner, ProductFormAdmin, CylinderFormVendor, CylinderFormAdminUp, CylinderFormAdminUpDispatchedToPlant, CylinderFormAdminUpReturnedFilledToQwikLet, CylinderFormAdminUpDispatchedToQwikCustomer, CylinderFormAdminUpDeliveredToQwikCustomerAnti, CylinderFormAdminUpDeliveredToQwikCustomerUser, CylinderFormPartner, CylinderFormVendorUp, CylinderFormPartnerUp, CylinderFormCustomerUp
 # from orders.forms import VisitorOrderForm
-from .filters import ProductFilter, ProductFilterAdmin, CategoryFilter, CylinderFilter, CylinderFilter2, CylinderFilter3
+from .filters import ProductFilter, ProductFilterAdmin, CategoryFilter, CylinderFilter, CylinderFilter2, CylinderFilter3, CylinderFilter4
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 # from django.core.mail import send_mail
@@ -1974,7 +1974,7 @@ def showQwikAdminCylindersDeliveredToQwikCustomerAnti(request):
     returned_filled_to_qwiklet = round(perc_returned_filled_to_qwiklets/100,2)
 
     context = {}
-    filtered_cylinders = CylinderFilter(
+    filtered_cylinders = CylinderFilter4(
         request.GET,
         queryset = AntiOrder.objects.all()
         # queryset = Cylinder.objects.filter(cylinder__outlet__partner=request.user, partner_product_status="Received Empty from QwikCustomer")

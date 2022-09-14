@@ -5,7 +5,7 @@ from orders.models import UserOrder
 from products.models import Owing, Product, Cylinder
 # from products.models import Category
 # from users.models import Wallet, Person, Outlet
-from .filters import AntiOrderFilter, AntiOrderFilter2, AntiOrderFilterSales, AntiOrderFilterCredits, AntiOrderFilterPayments
+from .filters import AntiOrderFilter, AntiOrderFilter2, AntiOrderFilterSales, AntiOrderFilterCredits, AntiOrderFilterPayments, AntiOrderVendorFilterPayments
 from django.contrib import messages
 # from django.core.mail import send_mail
 from .forms import AntiOrderForm, AntiOrderFormVen, AntiOrderFormPar, AntiOrderFormPar2
@@ -588,12 +588,12 @@ def showQwikAdminAntiPayments(request):
 @permission_required('users.view_vendor')
 def showQwikVendorAntiPayments(request):
     context = {}
-    filtered_antiorders = AntiOrderFilterPayments(
+    filtered_antiorders = AntiOrderVendorFilterPayments(
         request.GET,
         queryset = AntiOrder.objects.filter(outlet__manager=request.user)
     )
     context['filtered_antiorders'] = filtered_antiorders
-    paginated_filtered_antiorders = Paginator(filtered_antiorders.qs, 10)
+    paginated_filtered_antiorders = Paginator(filtered_antiorders.qs, 500)
     page_number = request.GET.get('page')
     antiorders_page_obj = paginated_filtered_antiorders.get_page(page_number)
     context['antiorders_page_obj'] = antiorders_page_obj

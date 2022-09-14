@@ -1,6 +1,7 @@
 import django_filters as filters
 from django_filters import CharFilter, DateFilter
 from .models import Product, Category, Cylinder
+from anticipate.models import AntiOrder
 from django.forms.widgets import TextInput, NumberInput
 from django.db.models import Q
 
@@ -50,6 +51,19 @@ class CylinderFilter3(filters.FilterSet):
         fields = []
     def my_custom_filter(self, queryset, name, value):
         return queryset.filter(Q(category__icontains=value )| Q(outlet__icontains=value) | Q(cylinder__icontains=value))
+
+class CylinderFilter4(filters.FilterSet):
+    start_date = DateFilter(input_formats=['%Y-%m-%d', '%d-%m-%Y', '%Y/%m/%d', '%d/%m/%Y'], field_name="created", lookup_expr='gte', label='Dates Above', widget=NumberInput(attrs={'type': 'date'}))
+    start_date2 = DateFilter(input_formats=['%Y-%m-%d', '%d-%m-%Y', '%Y/%m/%d', '%d/%m/%Y'], field_name="created", lookup_expr='lte', label='Dates Below', widget=NumberInput(attrs={'type': 'date'}))
+    # customer_id = CharFilter(field_name='customer__username', lookup_expr='icontains', label="Customer's ID")
+    q = CharFilter(method='my_custom_filter',label="Others")
+    class Meta:
+        model = AntiOrder
+        fields = []
+    def my_custom_filter(self, queryset, name, value):
+        return queryset.filter(Q(user__username__icontains=value) | Q(user__first_name__icontains=value) | Q(user__last_name__icontains=value) | Q(outlet__icontains=value) | Q(category__icontains=value )| Q(product__product_Id__icontains=value))
+
+
 
 class ProductFilterAdmin(filters.FilterSet):
     class Meta:
