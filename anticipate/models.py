@@ -22,7 +22,7 @@ class AntiOrder(models.Model):
 		('Closed', 'Closed'),
 	]
     user = models.ForeignKey(Person, null=True, blank=True, on_delete=models.SET_NULL)
-    order_Id = models.CharField(max_length = 10, blank=True, null=True)
+    order_Id = models.IntegerField(blank=True, null=True)
     cylinder = models.ManyToManyField('products.Product', related_name='anti_cylinders')
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True, related_name='anti_products')
     category = models.CharField(max_length=12, blank=True, null=True)
@@ -39,19 +39,19 @@ class AntiOrder(models.Model):
     payment_ref = models.CharField(max_length=40, blank=True, null=True, verbose_name="Payment Reference")
     payment1 = models.DecimalField(max_digits=10, decimal_places=2, default=0, blank=True, null=True, verbose_name="1st Payment")
     payment1_date = models.DateField(blank=True, null=True, verbose_name="1st Payment Date")
-    payment2 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name="2nd Payment")
+    payment2 = models.DecimalField(max_digits=10,  decimal_places=2, blank=True, null=True, verbose_name="2nd Payment")
     payment2_date = models.DateField(blank=True, null=True, verbose_name="2nd Payment Date")
     payment3 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name="3rd Payment")
     payment3_date = models.DateField(blank=True, null=True, verbose_name="3rd Payment Date")
-    payment_total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
-    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
+    payment_total = models.DecimalField(max_digits=10, decimal_places=2, default=0, blank=True, null=True)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0, blank=True, null=True)
     outlet = models.ForeignKey('users.Outlet', on_delete=models.SET_NULL, null=True, blank=True)
-    # address = models.PointField(null=True, verbose_name="Delivery Address")
+    stage = models.CharField(max_length=3, blank=True, null=True)
     transaction = models.CharField(max_length=12, choices=TRANSACTION_CHOICES, default='Open', blank=True, null=True, verbose_name="Transaction Status")
 
 
     static_price = models.DecimalField(max_digits=11, blank=True, null=True, decimal_places=2)
-    static_total_cost = models.DecimalField(max_digits=13, default=0.00, blank=True, null=True, decimal_places=2)
+    static_total_cost = models.DecimalField(max_digits=13, default=0, blank=True, null=True, decimal_places=2)
     static_price2 = models.DecimalField(max_digits=11, blank=True, null=True, decimal_places=2)
     static_total_cost2 = models.DecimalField(max_digits=13, blank=True, null=True, decimal_places=2)
     # point = models.PositiveIntegerField(default=0)

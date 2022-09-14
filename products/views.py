@@ -3746,4 +3746,4 @@ def unselectAll(request):
         each.save()
     messages.success(request, "All Unselected!")
     return redirect('products:qwikadmin_cylinders')
-    return render(request, 'products/qwikadmin_cylinders.html', {'product': product})
+    return render(request, 'products/qwikadmin_cylinders.html')

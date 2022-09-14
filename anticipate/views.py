@@ -20,12 +20,12 @@ from django.http import HttpResponse
 # from weasyprint import HTML, CSS
 import tempfile
 import datetime
-
-import os
-
-os.add_dll_directory(r"C:\Program Files\GTK3-Runtime Win64\bin")
-
-from weasyprint import HTML, CSS
+#
+# import os
+#
+# os.add_dll_directory(r"C:\Program Files\GTK3-Runtime Win64\bin")
+#
+# from weasyprint import HTML, CSS
 
 # HTML('https://weasyprint.org/').write_pdf('weasyprint-website.pdf')
 #
@@ -96,9 +96,14 @@ def showQwikPartnerAntiOrders(request):
             payment2 = form.cleaned_data.get('payment2')
             payment3 = form.cleaned_data.get('payment3')
 
+            x = datetime.datetime.now().year + datetime.datetime.now().month + datetime.datetime.now().day + datetime.datetime.now().hour + datetime.datetime.now().minute + datetime.datetime.now().second + 50*datetime.datetime.now().microsecond
+
+
             form.save(commit=False).outlet = outlet
-            form.save(commit=False).order_Id = str(random.randint(10000000,99999999))
+            form.save(commit=False).order_Id = x
             form.save(commit=False).payment_total = payment1
+            form.save(commit=False).stage = "1st"
+
             form.save()
 
             reg = AntiOrder.objects.filter(user=user)[0]
@@ -162,6 +167,17 @@ def showQwikAdminAntiOrders(request):
     total_antiorders = filtered_antiorders.qs.count()
     context['total_antiorders'] = total_antiorders
 
+    return render(request, 'anticipate/qwikadmin_anti_orders.html', context=context)
+
+@login_required
+@permission_required('users.view_admin')
+def randomize(request):
+    reg = AntiOrder.objects.all()
+    for each in reg:
+        each.order_Id = random.randint(10000000,99999999)
+        each.save()
+    messages.success(request, "Orders Randomized!")
+    return redirect('anticipate:qwikadmin_randomize')
     return render(request, 'anticipate/qwikadmin_anti_orders.html', context=context)
 
 @login_required
@@ -324,6 +340,7 @@ def updateQwikPartnerAntiOrders(request, id):
         if form.is_valid():
             # user = form.cleaned_data.get('user')
             payment2 = form.cleaned_data.get('payment2')
+            form.save(commit=False).stage = "2nd"
 
             form.save()
 
@@ -352,6 +369,7 @@ def updateQwikPartnerAntiOrders3rd(request, id):
         form = AntiOrderFormPar2(request.POST, instance=order)
         if form.is_valid():
             payment3 = form.cleaned_data.get('payment3')
+            form.save(commit=False).stage = "3rd"
             form.save()
             reg3 = AntiOrder.objects.get(id=id)
             reg3.payment_total = reg3.payment_total + payment3
@@ -456,33 +474,71 @@ def showQwikAdminAntiSales(request):
 
     return render(request, 'anticipate/qwikadmin_anti_sales.html', context=context)
 
-def exportCSV(request):
+def exportCSVAntis(request):
+    antis = AntiOrder.objects.prefetch_related(
+        'cylinder'
+    )
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="Anticipatory.csv"'
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Anticipatory ' + str(now) + '.csv'
 
     writer = csv.writer(response)
-    writer.writerow(['Date', 'Customer ID', 'outlet', 'Total Cost'])
+    writer.writerow(['Date', 'Customer ID', 'outlet', 'Product Type (New)', 'Price (Old)', 'Price (New)', 'Total Cost (Old)', 'Total Cost (New)', 'Payment Choice', 'Transaction Status', 'Cylinder Alloted'])
 
-    antis = []
-
-    antis0 = AntiOrder.objects.all()
-    for each in antis0:
-        writer.writerow([each.created, each.user.username, each.outlet, each.static_total_cost2])
-
+    for each in antis:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.user.username, each.outlet, ', '.join(c.category.type for c in each.cylinder.all()), each.static_price, ', '.join(str(c.category.price) for c in each.cylinder.all()), each.static_total_cost, each.static_total_cost2, each.payment_choice, each.transaction, ', '.join(c.product_Id for c in each.cylinder.all())]
+        )
     return response
 
-def exportPDF(request):
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'inine; attachment; filename=Report' + str(datetime.datetime.now()) + '.pdf'
-    response['Content-Transfer-Encoding'] = 'binary'
-    anti_orders = AntiOrder.objects.all()
+def exportCSVCredits(request):
+    antis = AntiOrder.objects.prefetch_related(
+        'cylinder'
+    )
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Credit Sales ' + str(now) + '.csv'
 
-    html_string = render_to_string('anticipate/pdf-output.html', {'antiorders_page_obj': 'anti_orders'})
-    html = HTML(string=html_string)
-    result = html.write_pdf()
-    with tempfile.NamedTemporaryFile(delete=True) as output:
-        output.write(result)
-        output.flush()
-        output = open(output.name, 'rb')
-        response.write(output.read())
+    writer = csv.writer(response)
+    writer.writerow(['Date', 'Customer ID', 'outlet', 'Total Amount (Old)', 'Total Amount (New)', 'Payment Choice', '1st Payment/Date', '2nd Payment/Date', '3rd Payment/Date', 'Balance', 'Remark'])
+
+    for each in antis:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.user.username, each.outlet, each.static_total_cost, each.static_total_cost2, each.payment_choice, str(each.payment1)+"/"+str(each.payment1_date), str(each.payment2)+"/"+str(each.payment2_date), str(each.payment3)+"/"+str(each.payment3_date), each.balance, each.transaction]
+        )
     return response
+
+def exportCSVPayments(request):
+    antis = AntiOrder.objects.prefetch_related(
+        'cylinder'
+    )
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Payments ' + str(now) + '.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Date', 'Customer ID', 'outlet', 'Amount', 'Payment Option', 'Payment Stage'])
+
+    for each in antis:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.user.username, each.outlet, each.payment_total, each.payment_choice, each.stage]
+        )
+    return response
+
+
+
+# def exportPDF(request):
+#     response = HttpResponse(content_type='application/pdf')
+#     response['Content-Disposition'] = 'inine; attachment; filename=Report' + str(datetime.datetime.now()) + '.pdf'
+#     response['Content-Transfer-Encoding'] = 'binary'
+#     anti_orders = AntiOrder.objects.all()
+#
+#     html_string = render_to_string('anticipate/pdf-output.html', {'antiorders_page_obj': 'anti_orders'})
+#     html = HTML(string=html_string)
+#     result = html.write_pdf()
+#     with tempfile.NamedTemporaryFile(delete=True) as output:
+#         output.write(result)
+#         output.flush()
+#         output = open(output.name, 'rb')
+#         response.write(output.read())
+#     return response

@@ -70,7 +70,6 @@
                     <th>CYLINDER ID(OLD)</th>
                     <th>PRODUCT TYPE(OLD)</th>
                     <th>PRODUCT TYPE(NEW)</th>
-                    <th>OUTLET</th>
                     <th>PRICE (OLD)</th>
                     <th>PRICE (NEW)</th>
                     <th>QUANTITY</th>
@@ -95,7 +94,6 @@
                     <td>{{order.product.product_Id}}</td>
                     <td>{{order.product.category.type}}({{order.product.category.mass}})</td>
                     <td>{% for order in order.cylinder.all %}{{order.category.type}}<br> {% endfor %}</td>
-                    <td>{{order.outlet}}</td>
                     <td>₦{{order.static_price|intcomma}}</td>
                     <td>{% for order in order.cylinder.all %}{{order.category.price}}<br> {% endfor %}</td>
                     <td>{{order.quantity}}</td>
@@ -113,8 +111,8 @@
                 </tbody>
               </table>
               <div class="card-footer text-right bg-white">
-                <a href="{% url 'anticipate:export_csv' %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-download mr-1 fa-1x"></i> Export CSV</strong></button></a>
-                <a href="{% url 'anticipate:export_pdf' %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-download mr-1 fa-1x"></i> Export PDF</strong></button></a>
+                <a href="{% url 'anticipate:export_csv_anti' %}"><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-download mr-1 fa-1x"></i> Export CSV</strong></button></a>
+                <a href=""><button type="button" class="btn btn-sm btn-dark-green"><strong><i class="fa fa-download mr-1 fa-1x"></i> Export PDF</strong></button></a>
               </div>
               <nav aria-label="...">
                 <ul class="pagination justify-content-center">
@@ -129,6 +127,8 @@
                   <li class="page-item"><a class="text-dark-green page-link" href="{% my_url antiorders_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
                 </ul>
               </nav>
+              <!-- <a href="{% url 'anticipate:qwikadmin_randomize' %}"><button type="button" class="btn btn-dark-green text-white col-md-12"><strong><i class="fa fa-random fa-1x mr-1 text-white"></i>Randomize Orders</strong></button></a> -->
+
             </div>
           </div>
         </div>
