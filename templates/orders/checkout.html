@@ -41,25 +41,27 @@
       </div>
     </div>
     <div class="row">
-      <div class="form-group col-lg-3">
-      <a class="btn btn-dark-green btn-block" href="pay"><strong>Pay From wallet <span class="text-lemon-green">₦{{current_balance|intcomma}}</span></strong></a>
-      </div>
+
       <div class="form-group col-lg-2">
             <form id="form">
               <div id="user-info">
+                <div class="form-group">
+                  <button id="form-button" class="btn btn-dark-green btn-block" type="submit" onclick="payWithPaystack()"> <strong>Pay with Card</strong> </button>
+                </div>
                 <div class="form-group">
                   <label hidden for="email-address">Email</label>
                   <input hidden required class="form-control" readonly type="email" value="{{order.user.email}}" id="email-address" name="email" placeholder="Enter Email" required />
                 </div>
                 <div class="form-group">
                   <label hidden for="amount">Amount</label>
-                  <input hidden required class="form-control" readonly type="tel" value="{{order.get_total_cost}}" id="amount" required />
+                  <input hidden required class="form-control" readonly type="tel" value="{{altogether}}" id="amount" required />
                 </div>
-                <div class="form-group">
-                  <button id="form-button" class="btn btn-dark-green btn-block" type="submit" onclick="payWithPaystack()"> <strong>Pay with Card</strong> </button>
-                </div>
+
               </div>
             </form>
+      </div>
+      <div class="form-group col-lg-3">
+      <a class="btn btn-dark-green btn-block" href="pay"><strong>Pay From wallet <span class="text-lemon-green">₦{{current_balance|intcomma}}</span></strong></a>
       </div>
 
 
@@ -119,7 +121,7 @@
           callback: function(response){
             let message = 'Thank you! You have completed your payment! Your Reference Number is: ' + response.reference;
             alert(message);
-            window.location.href = "{% url 'index' %}"
+            window.location.href = "{% url 'orders:payment_complete_card' %}"
           }
         });
         handler.openIframe();
