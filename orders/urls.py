@@ -14,6 +14,7 @@ urlpatterns = [
     path('qwikvendor-dashboard/orders/invoice/<str:pk>/', views.showQwikVendorInvoice, name='show_vendor_invoice'),
     path('qwikpartner-dashboard/orders/invoice/<str:pk>/', views.showQwikPartnerInvoice, name='show_partner_invoice'),
     path('qwika-dashboard/orders/invoice/<str:pk>/', views.showQwikAdminInvoice, name='show_admin_invoice'),
+    path('card-payment-paystack', views.showPaymentCompleteCard, name='payment_complete_card'),
     path('card-payment', views.showPaymentComplete, name='payment_complete'),
     path('orders/checkout/<str:pk>/pay', views.updateWallet),
     path('qwikcustomer-dashboard/orders/', views.showOrderItems, name='order_items'),

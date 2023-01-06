@@ -47,7 +47,6 @@ class Outlet(models.Model):
         except:
             return str(self.id)
 
-
 class Person(AbstractUser):
     GENDER_CHOICES = [
 		('Male','Male'),

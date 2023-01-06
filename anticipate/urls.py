@@ -22,8 +22,11 @@ urlpatterns = [
     path('qwikcustomer-dashboard/anticipatory-orders/invoice/<str:pk>/', views.showAntiInvoice, name='show_anti_invoice'),
     path('qwikcustomer-dashboard/anticipatory-orders/invoice/unpaid/<str:pk>/', views.showAntiInvoiceUnPaid, name='show_anti_invoice_unpaid'),
     path('qwika-dashboard/anticipatory-orders/export-csv', views.exportCSVAntis, name='export_csv_anti'),
+<<<<<<< HEAD
     path('qwika-dashboard/anticipatory-sales/export-csv', views.exportCSVSalesAnti, name='export_csv_sales'),
 
+=======
+>>>>>>> 0bf2bd073b020b6168a2073fa7e8193444b09888
     path('qwika-dashboard/anticipatory-credits/export-csv', views.exportCSVCredits, name='export_csv_credit'),
     path('qwika-dashboard/anticipatory-payments/export-csv', views.exportCSVPayments, name='export_csv_payment'),
     path('qwika-dashboard/anticipatory-orders/randomized', views.randomize, name='qwikadmin_randomize'),

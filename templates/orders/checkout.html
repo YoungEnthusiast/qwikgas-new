@@ -41,11 +41,27 @@
       </div>
     </div>
     <div class="row">
+
+      <div class="form-group col-lg-2">
+            <form id="form">
+              <div id="user-info">
+                <div class="form-group">
+                  <button id="form-button" class="btn btn-dark-green btn-block" type="submit" onclick="payWithPaystack()"> <strong>Pay with Card</strong> </button>
+                </div>
+                <div class="form-group">
+                  <label hidden for="email-address">Email</label>
+                  <input hidden required class="form-control" readonly type="email" value="{{order.user.email}}" id="email-address" name="email" placeholder="Enter Email" required />
+                </div>
+                <div class="form-group">
+                  <label hidden for="amount">Amount</label>
+                  <input hidden required class="form-control" readonly type="tel" value="{{altogether}}" id="amount" required />
+                </div>
+
+              </div>
+            </form>
+      </div>
       <div class="form-group col-lg-3">
       <a class="btn btn-dark-green btn-block" href="pay"><strong>Pay From wallet <span class="text-lemon-green">₦{{current_balance|intcomma}}</span></strong></a>
-      </div>
-      <div class="form-group col-lg-2">
-      <a class="btn btn-dark-green btn-block" href=""><strong>Pay with card</strong></a>
       </div>
 
 
@@ -87,6 +103,33 @@
 
     </div>
     <br>
+
+
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script>
+      const form = document.getElementById('form');
+      form.addEventListener("submit", payWithPaystack, false);
+      function payWithPaystack(e) {
+        e.preventDefault();
+        let handler = PaystackPop.setup({
+          key: 'pk_test_8b5034b6a82fb45ee0f2662d339845ca48d7d8e8',
+          email: document.getElementById('email-address').value,
+          amount: document.getElementById('amount').value * 100,
+          onClose: function(){
+            alert('Window closed.');
+          },
+          callback: function(response){
+            let message = 'Thank you! You have completed your payment! Your Reference Number is: ' + response.reference;
+            alert(message);
+            window.location.href = "{% url 'orders:payment_complete_card' %}"
+          }
+        });
+        handler.openIframe();
+      }
+    </script>
+
+
+
     {% else %}
       <h2 class="text-center">Access Restricted</h2>
       <br>

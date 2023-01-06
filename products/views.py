@@ -3751,6 +3751,7 @@ def unselectAll(request):
     messages.success(request, "All Unselected!")
     return redirect('products:qwikadmin_cylinders')
     return render(request, 'products/qwikadmin_cylinders.html')
+<<<<<<< HEAD
 
 def exportCSVCylinders(request):
     cylinders = Product.objects.all()
@@ -3887,3 +3888,5 @@ def exportCSVCylindersReturnedFilledToQwikLet(request):
             [each.created.strftime('%A, %d, %b %Y'), each.category, each.cylinder, each.partner_confirm, each.vendor_confirm]
         )
     return response
+=======
+>>>>>>> 0bf2bd073b020b6168a2073fa7e8193444b09888

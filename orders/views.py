@@ -96,6 +96,9 @@ def deleteOrder(request, id):
 @login_required
 def showOrder(request, pk, **kwargs):
     order = UserOrder.objects.get(id=pk)
+    total_cost = order.get_total_cost()
+    charges = 0.015*float(total_cost)
+    altogether = float(total_cost) + charges
     order_items = OrderItem.objects.filter(order__id=pk)
 
     try:
@@ -127,7 +130,7 @@ def showOrder(request, pk, **kwargs):
         else:
             messages.error(request, "Please review form input fields below")
 
-    context = {'order': order, 'order_items': order_items, 'current_balance': current_balance, 'form':form}
+    context = {'order': order, 'order_items': order_items, 'current_balance': current_balance, 'altogether': altogether, 'form':form}
     return render(request, 'orders/checkout.html', context)
 
 @login_required
@@ -895,6 +898,10 @@ def showPaymentComplete(request):
             wallet_entry3.save()
         order3.point = order3.point - 11
         order3.save()
+    return render(request, 'orders/payment_card.html')
+
+def showPaymentCompleteCard(request):
+
     return render(request, 'orders/payment_card.html')
 
 @login_required
