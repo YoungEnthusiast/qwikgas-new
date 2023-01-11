@@ -748,6 +748,38 @@ def showQwikAdminAntiSales(request):
 
     return render(request, 'anticipate/qwikadmin_anti_sales.html', context=context)
 
+@login_required
+@permission_required('users.view_vendor')
+def showQwikVendorAntiSales(request):
+    context = {}
+    filtered_antiorders = AntiOrderFilterSales(
+        request.GET,
+        queryset = AntiOrder.objects.filter(outlet__manager=request.user)
+    )
+    context['filtered_antiorders'] = filtered_antiorders
+    paginated_filtered_antiorders = Paginator(filtered_antiorders.qs, 10)
+    page_number = request.GET.get('page')
+    antiorders_page_obj = paginated_filtered_antiorders.get_page(page_number)
+    context['antiorders_page_obj'] = antiorders_page_obj
+    total_antiorders = filtered_antiorders.qs.count()
+    context['total_antiorders'] = total_antiorders
+
+    try:
+        anti_sale1 = AntiOrder.objects.filter(outlet__manager=request.user).aggregate(Sum('static_total_cost'))['static_total_cost__sum']
+    except:
+        anti_sale1 = 0
+    try:
+        anti_sale2 = AntiOrder.objects.filter(outlet__manager=request.user).aggregate(Sum('static_total_cost2'))['static_total_cost2__sum']
+    except:
+        anti_sale2 = 0
+
+    anti_sale = anti_sale1 + anti_sale2
+    anti_sales = round(anti_sale,2)
+
+    context['anti_sales'] = anti_sales
+
+    return render(request, 'anticipate/qwikvendor_anti_sales.html', context=context)
+
 def exportCSVAntis(request):
     antis = AntiOrder.objects.prefetch_related(
         'cylinder'
@@ -757,11 +789,28 @@ def exportCSVAntis(request):
     response['Content-Disposition'] = 'attachment; filename=Anticipatory ' + str(now) + '.csv'
 
     writer = csv.writer(response)
-    writer.writerow(['Date', 'Customer ID', 'outlet', 'Product Type (New)', 'Price (Old)', 'Price (New)', 'Total Cost (Old)', 'Total Cost (New)', 'Payment Choice', 'Transaction Status', 'Cylinder Alloted'])
+    writer.writerow(['Date', 'Customer ID', 'outlet', 'Product Type (New)', 'Price', 'Total Cost (Old)', 'Total Cost (New)', 'Payment Choice', 'Transaction Status', 'Cylinder Alloted'])
 
     for each in antis:
         writer.writerow(
-            [each.created.strftime('%A, %d, %b %Y'), each.user.username, each.outlet, ', '.join(c.category.type for c in each.cylinder.all()), each.static_price, ', '.join(str(c.category.price) for c in each.cylinder.all()), each.static_total_cost, each.static_total_cost2, each.payment_choice, each.transaction, ', '.join(c.product_Id for c in each.cylinder.all())]
+            [each.created.strftime('%A, %d, %b %Y'), each.user.username, each.outlet, ', '.join(c.category.type for c in each.cylinder.all()), each.static_price2, each.static_total_cost, each.static_total_cost2, each.payment_choice, each.transaction, ', '.join(c.product_Id for c in each.cylinder.all())]
+        )
+    return response
+
+def exportCSVSalesAnti(request):
+    sales = AntiOrder.objects.prefetch_related(
+        'cylinder'
+    )
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%A_%d_%b_%Y')
+    response['Content-Disposition'] = 'attachment; filename=Sales ' + str(now) + '.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Date', 'Customer', 'outlet',  'Total Cost (Old)', 'Total Cost (New)', 'Payment Type', 'Payment Choice', 'Payment Status'])
+
+    for each in sales:
+        writer.writerow(
+            [each.created.strftime('%A, %d, %b %Y'), each.user, each.outlet, each.static_total_cost, each.static_total_cost2, each.payment_type1 + "" + each.payment_type2 + "" + each.payment_type3, each.payment_choice, each.transaction]
         )
     return response
 

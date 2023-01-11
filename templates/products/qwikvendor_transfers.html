@@ -1,0 +1,268 @@
+{% extends 'board_vendor.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+  <title>Transferred Products</title>
+  <meta name="description" content="">
+
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+<div class=" app-content">
+	<div class="side-app">
+    <br>
+    {% include 'partials/_alerts.html' %}
+		<!--Page Header-->
+		<div class="page-header">
+			<h4 class="page-title"><i class="fa fa-warehouse text-dark-green mr-2 fa-1x"></i>Welcome to products' transfer page, <strong class="text-dark-green">{{user.first_name}}</strong></h4>
+			<ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="{% url 'qwikvendor_board' %}"><strong>Dashboard</strong></a></li>
+        <!-- <li class="breadcrumb-item"><a href=""><strong>Transferred Products</strong></a></li> -->
+				<li class="breadcrumb-item active" aria-current="page"><strong>Transferred Products</strong></li>
+			</ol>
+		</div>
+		<!--page header-->
+    <!-- <div class="row">
+      <div class="col-md-12 col-lg-6 col-xl-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{returned_empty_to_qwiklet}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_returned_empty_to_qwiklets}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500"></h6>
+                <h1 class="counter num-font mb-0 text-cylinder">{{returned_empty_to_qwiklets}}</h1>
+                <p class="text-muted mb-0">Returned Empty to Qwiklet</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-lg-6 col-xl-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{dispatched_to_plant}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_dispatched_to_plants}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500"></h6>
+                <h1 class="counter num-font mb-0 text-cylinder">{{dispatched_to_plants}}</h1>
+                <p class="text-muted mb-0">Dispatched to Plant</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-lg-6 col-xl-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{delivered_filled_to_qwiklet}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_delivered_filled_to_qwiklets}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500"></h6>
+                <h1 class="counter num-font mb-0 text-cylinder">{{delivered_filled_to_qwiklets}}</h1>
+                <p class="text-muted mb-0">Delivered Filled to Qwiklet</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 col-lg-6 col-xl-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{released_filled_to_qwikpartner}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_released_filled_to_qwikpartners}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500"></h6>
+                <h1 class="counter num-font mb-0 text-cylinder">{{released_filled_to_qwikpartners}}</h1>
+                <p class="text-muted mb-0">Released Filled to QwikPartner</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-lg-6 col-xl-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{delivered_to_qwikcustomer}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_delivered_to_qwikcustomers}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500"></h6>
+                <h1 class="counter num-font mb-0 text-cylinder">{{delivered_to_qwikcustomers}}</h1>
+                <p class="text-muted mb-0">Delivered to QwikCustomer (Anticipatory)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-lg-6 col-xl-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{delivered_to_qwikcustomer_user}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_delivered_to_qwikcustomers_users}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500"></h6>
+                <h1 class="counter num-font mb-0 text-cylinder">{{delivered_to_qwikcustomers_users}}</h1>
+                <p class="text-muted mb-0">Delivered to QwikCustomer (User)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-lg-6 col-xl-3">
+
+      </div>
+      <div class="col-md-12 col-lg-6 col-xl-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-0">
+              <div class="col-md-5">
+                <div class="dash3 mb-0">
+                  <div class="chart-circle  chart-circle-md mt-4 mt-sm-0 mb-0" data-value="{{returned_filled_to_qwiklet}}" data-thickness="6" data-color="#007541">
+                    <div class="chart-circle-value text-center ">{{perc_returned_filled_to_qwiklets}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7  mt-4 mt-sm-0">
+                <h6 class="media-heading fw-500"></h6>
+                <h1 class="counter num-font mb-0 text-cylinder">{{returned_filled_to_qwiklets}}</h1>
+                <p class="text-muted mb-0">Returned Filled to Qwiklet</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-lg-6 col-xl-3">
+
+      </div>
+    </div> -->
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header bg-white">
+          <!-- <div class="card-title text-dark-green">Returned Filled to QwikLet</div> -->
+        </div>
+        <div class="card-body">
+          <div class="text-center">
+            {% if total_cylinders > 1 %}
+              <div class="form-group col-md-12">
+                <h3 class="form-group text-dark-green">Total: {{total_cylinders}}</h3>
+              </div>
+              {% else %}
+              <div class="form-group col-md-12">
+                <h3 class="form-group text-dark-green">Total: {{total_cylinders}}</h3>
+              </div>
+              {% endif %}
+          </div>
+
+          <div class="modal fade" id="add1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title text-dark-green" id="inquiryModalLabel"><i class="fas fa-plus-circle"></i> Enter Cylinder</h4>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                      <br>
+                      <form method="post" class="form-group col-lg-12 text-dark-green" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="form-row">
+                          <div class="form-group col-sm-12 mb-2">
+                              {{ form.cylinder|as_crispy_field }}
+                          </div>
+                      </div>
+                      <input type="submit" class="form-group col-md-12 btn btn-cylinder" value="OK">
+                    </form>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <button class="btn btn-dark-green col-md-12" data-toggle="modal" data-target="#add1"><strong><i class="fa fa-plus-circle fa-1x mr-1 text-white"></i>Enter Cylinder</strong></button>
+          <div class="table-responsive ">
+            <table class="table card-table table-vcenter text-nowrap">
+              <thead class="text-dark-green">
+                <tr>
+                  <th>Date & Time</th>
+                  <th>Outlet</th>
+                  <th>Cylinder ID</th>
+                  <th>Cylinder Type</th>
+                  <th>Transfer Mode</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody class="">
+                {% for product in trans_products_page_obj %}
+                <tr class="">
+                  <td>{{product.created}}</td>
+                  <td>{{product.outlet}}</td>
+                  <td>{{product.}}</td>
+                  <td>{{product.}}</td>
+                  <td>{{product.}}</td>
+                  <td>{{product.}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <nav aria-label="...">
+              <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="text-dark-green page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
+                {% if cylinders_page_obj.has_previous %}
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url cylinders_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{cylinders_page_obj.previous_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item active" aria-current="page"><a class="bg-dark-green page-link" href="{% my_url cylinders_page_obj.number 'page' request.GET.urlencode %}">{{cylinders_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+                {% if cylinders_page_obj.has_next %}
+                  <li class="page-item"><a class="text-dark-green page-link" href="{% my_url cylinders_page_obj.next_page_number 'page' request.GET.urlencode %}">{{cylinders_page_obj.next_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item"><a class="text-dark-green page-link" href="{% my_url cylinders_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content%}

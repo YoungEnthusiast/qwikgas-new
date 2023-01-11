@@ -95,5 +95,6 @@ urlpatterns = [
     path('qwika-dashboard/cylinders/delete/<int:id>', views.deleteCylinder),
     path('qwika-dashboard/cylinders/un-selected', views.unselectAll, name='qwikadmin_unselect_cylinders'),
 
+    path('qwikvendor-dashboard/transferred-products/', views.showQwikVendorTransferredProducts, name='qwikvendor_transferreds'),
 
 ]

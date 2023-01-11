@@ -105,7 +105,6 @@ class Cylinder(models.Model):
         ('Delivered to QwikCustomer', 'Delivered to QwikCustomer'),
         ('Returned Filled to QwikLet', 'Returned Filled to QwikLet'),
         ('Delivered to QwikCustomer', 'Delivered to QwikCustomer'),
-
     ]
     PARTNER_CHOICES = [
         ('Received Empty from QwikCustomer', 'Received Empty from QwikCustomer'),
@@ -124,6 +123,14 @@ class Cylinder(models.Model):
     CUSTOMER_CHOICES = [
         ('Returned Empty to QwikPartner','Returned Empty to QwikPartner'),
         ('Received Filled', 'Received Filled'),
+    ]
+    VENDOR_TRANSFER_CHOICES = [
+        ('Transfer','Transfer'),
+        ('Receiving', 'Receiving'),
+    ]
+    PARTNER_TRANSFER_CHOICES = [
+        ('Transfer','Transfer'),
+        ('Receiving', 'Receiving'),
     ]
     ADMIN_CHOICES = [
         ('Received Empty from QwikCustomer', 'Received Empty from QwikCustomer'),
@@ -159,6 +166,12 @@ class Cylinder(models.Model):
     customer_product_status = models.CharField(max_length=35, choices=CUSTOMER_CHOICES, blank=True, null=True, verbose_name="QwikCustomer's Remark")
     admin_product_status = models.CharField(max_length=35, choices=ADMIN_CHOICES, blank=True, null=True, verbose_name="QwikAdmin's Remark")
     admin_product = models.CharField(max_length=20, null=True, blank=True)
+
+    vendor_transfer_mode = models.CharField(max_length=9, choices=VENDOR_TRANSFER_CHOICES, blank=True, null=True, verbose_name="Vendor's Transfer Remark")
+    partner_transfer_mode = models.CharField(max_length=9, choices=PARTNER_TRANSFER_CHOICES, blank=True, null=True, verbose_name="Partner's Transfer Remark")
+    transfer_product_status = models.CharField(max_length=20, null=True, blank=True)
+    transferred = models.BooleanField(null=True, default=False)
+
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True)
 

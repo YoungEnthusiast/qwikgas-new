@@ -37,6 +37,13 @@ class CylinderFormAdminUp(forms.ModelForm):
         model = Cylinder
         fields = ['cylinder', 'customer']
 
+
+class CylinderFormTransfer(forms.ModelForm):
+    cylinder = forms.ModelChoiceField(queryset=Cylinder.objects.filter(partner_product_status="Delivered Filled to QwikLet"))
+    class Meta:
+        model = Cylinder
+        fields = ['cylinder']
+
 class CylinderFormAdminUpDispatchedToPlant(forms.ModelForm):
     class Meta:
         model = Cylinder

@@ -3,7 +3,7 @@ from .models import Category, Product, Cylinder, Owing
 from anticipate.models import AntiOrder
 from orders.models import UserOrder, OrderStatus
 from users.models import Wallet, Outlet, Person
-from .forms import CategoryForm, ProductForm, ProductFormPartner, ProductFormAdmin, CylinderFormVendor, CylinderFormAdminUp, CylinderFormAdminUpDispatchedToPlant, CylinderFormAdminUpReturnedFilledToQwikLet, CylinderFormAdminUpDispatchedToQwikCustomer, CylinderFormAdminUpDeliveredToQwikCustomerAnti, CylinderFormAdminUpDeliveredToQwikCustomerUser, CylinderFormPartner, CylinderFormVendorUp, CylinderFormPartnerUp, CylinderFormCustomerUp
+from .forms import CategoryForm, ProductForm, ProductFormPartner, ProductFormAdmin, CylinderFormVendor, CylinderFormAdminUp, CylinderFormAdminUpDispatchedToPlant, CylinderFormAdminUpReturnedFilledToQwikLet, CylinderFormAdminUpDispatchedToQwikCustomer, CylinderFormAdminUpDeliveredToQwikCustomerAnti, CylinderFormAdminUpDeliveredToQwikCustomerUser, CylinderFormPartner, CylinderFormVendorUp, CylinderFormPartnerUp, CylinderFormCustomerUp, CylinderFormTransfer
 # from orders.forms import VisitorOrderForm
 from .filters import ProductFilter, ProductFilterAdmin, CategoryFilter, CylinderFilter, CylinderFilter2, CylinderFilter3, CylinderFilter4
 from django.contrib import messages
@@ -3706,6 +3706,23 @@ def showQwikAdminCylinders(request):
 
 @login_required
 @permission_required('users.view_admin')
+def showQwikAdminCylinders(request):
+    context = {}
+    filtered_products = ProductFilterAdmin(
+        request.GET,
+        queryset = Product.objects.all()
+    )
+    context['filtered_products'] = filtered_products
+    paginated_filtered_products = Paginator(filtered_products.qs, 10)
+    page_number = request.GET.get('page')
+    products_page_obj = paginated_filtered_products.get_page(page_number)
+    context['products_page_obj'] = products_page_obj
+    total_products = filtered_products.qs.count()
+    context['total_products'] = total_products
+    return render(request, 'products/qwikadmin_cylinders.html', context=context)
+
+@login_required
+@permission_required('users.view_admin')
 def updateCylinder(request, id):
     product = Product.objects.get(id=id)
     form = ProductFormAdmin(instance=product)
@@ -3751,7 +3768,6 @@ def unselectAll(request):
     messages.success(request, "All Unselected!")
     return redirect('products:qwikadmin_cylinders')
     return render(request, 'products/qwikadmin_cylinders.html')
-<<<<<<< HEAD
 
 def exportCSVCylinders(request):
     cylinders = Product.objects.all()
@@ -3888,5 +3904,32 @@ def exportCSVCylindersReturnedFilledToQwikLet(request):
             [each.created.strftime('%A, %d, %b %Y'), each.category, each.cylinder, each.partner_confirm, each.vendor_confirm]
         )
     return response
-=======
->>>>>>> 0bf2bd073b020b6168a2073fa7e8193444b09888
+
+@login_required
+@permission_required('users.view_vendor')
+def showQwikVendorTransferredProducts(request):
+    context = {}
+    filtered_products = ProductFilterAdmin(
+        request.GET,
+        queryset = Product.objects.all()
+    )
+    context['filtered_products'] = filtered_products
+    paginated_filtered_products = Paginator(filtered_products.qs, 10)
+    page_number = request.GET.get('page')
+    products_page_obj = paginated_filtered_products.get_page(page_number)
+    context['products_page_obj'] = products_page_obj
+    total_products = filtered_products.qs.count()
+    context['total_products'] = total_products
+
+    form = CylinderFormTransfer()
+    if request.method == 'POST':
+        form = CylinderFormTransfer(request.POST, request.FILES, None)
+        if form.is_valid():
+            transferred = form.cleaned_data['transferred']
+            form.save()
+            messages.success(request, "The product has been added successfully")
+            return redirect('products:qwikvendor_transferreds')
+        else:
+            messages.error(request, "Please review form input fields below")
+    context['form'] = form
+    return render(request, 'products/qwikvendor_transfers.html', context=context)
