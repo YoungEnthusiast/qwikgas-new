@@ -20,7 +20,7 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 
 class CylinderAdmin(admin.ModelAdmin):
-    list_display = ['created', 'cylinder', 'customer_product_status', 'vendor_product_status', 'partner_product_status', 'admin_product_status']
+    list_display = ['created', 'cylinder', 'transferred', 'customer_product_status', 'vendor_product_status', 'partner_product_status', 'admin_product_status']
     # search_fields = ['type', 'price']
     list_display_links = ['cylinder']
     # list_editable = ['price']

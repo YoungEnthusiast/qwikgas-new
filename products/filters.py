@@ -63,8 +63,6 @@ class CylinderFilter4(filters.FilterSet):
     def my_custom_filter(self, queryset, name, value):
         return queryset.filter(Q(user__username__icontains=value) | Q(user__first_name__icontains=value) | Q(user__last_name__icontains=value) | Q(outlet__icontains=value) | Q(category__icontains=value )| Q(product__product_Id__icontains=value))
 
-
-
 class ProductFilterAdmin(filters.FilterSet):
     class Meta:
         model = Product

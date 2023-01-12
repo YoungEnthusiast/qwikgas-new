@@ -3909,12 +3909,12 @@ def exportCSVCylindersReturnedFilledToQwikLet(request):
 @permission_required('users.view_vendor')
 def showQwikVendorTransferredProducts(request):
     context = {}
-    filtered_products = ProductFilterAdmin(
+    filtered_products = CylinderFilter3(
         request.GET,
-        queryset = Product.objects.all()
+        queryset = Cylinder.objects.filter(transferred=True)
     )
     context['filtered_products'] = filtered_products
-    paginated_filtered_products = Paginator(filtered_products.qs, 10)
+    paginated_filtered_products = Paginator(filtered_products.qs, 100)
     page_number = request.GET.get('page')
     products_page_obj = paginated_filtered_products.get_page(page_number)
     context['products_page_obj'] = products_page_obj
@@ -3925,11 +3925,32 @@ def showQwikVendorTransferredProducts(request):
     if request.method == 'POST':
         form = CylinderFormTransfer(request.POST, request.FILES, None)
         if form.is_valid():
-            transferred = form.cleaned_data['transferred']
+            status = form.cleaned_data.get('transfer_product_status')
             form.save()
+            reg = Cylinder.objects.filter(transfer_product_status=status)[0]
+            reg.transferred = True
+            reg.save()
             messages.success(request, "The product has been added successfully")
             return redirect('products:qwikvendor_transferreds')
         else:
             messages.error(request, "Please review form input fields below")
     context['form'] = form
     return render(request, 'products/qwikvendor_transfers.html', context=context)
+
+@login_required
+@permission_required('users.view_partner')
+def acceptPartnerTransfer(request, id):
+    cylinder = Cylinder.objects.get(id=id)
+    cylinder.partner_confirm = True
+    cylinder.who9 = "Accepted"
+    cylinder.save()
+    # return redirect('products:qwikpartner_cylinders_dispatched_to_plant')
+
+@login_required
+@permission_required('users.view_partner')
+def declinePartnerTransfer(request, id):
+    cylinder = Cylinder.objects.get(id=id)
+    cylinder.partner_confirm = False
+    cylinder.who9 = "Declined"
+    cylinder.save()
+    # return redirect('products:qwikpartner_cylinders_dispatched_to_plant')

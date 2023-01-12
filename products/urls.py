@@ -41,6 +41,7 @@ urlpatterns = [
     path('qwika-dashboard/cylinders-returned-filled-to-qwiklet/not-return/<int:id>', views.notReturnQwikAdminCylindersReturnedFilledToQwikLet, name='not_return_qwikadmin_cylinders_returned_filled_to_qwiklet'),
     path('qwika-dashboard/cylinders-returned-filled-to-qwiklet/', views.showQwikAdminCylindersReturnedFilledToQwikLet, name='qwikadmin_cylinders_returned_filled_to_qwiklet'),
     path('qwikpartner-dashboard/cylinders-dispatched-to-plant/accept/<int:id>', views.acceptQwikPartnerCylindersDispatchedToPlant, name='accept_qwikpartner_cylinders_dispatched_to_plant'),
+
     path('qwikpartner-dashboard/cylinders-dispatched-to-plant/decline/<int:id>', views.declineQwikPartnerCylindersDispatchedToPlant, name='decline_qwikpartner_cylinders_dispatched_to_plant'),
     path('qwika-dashboard/cylinders-dispatched-to-plant/', views.showQwikAdminCylindersDispatchedToPlant, name='qwikadmin_cylinders_dispatched_to_plant'),
     path('qwika-dashboard/cylinders-dispatched-to-plant/accept/<int:id>', views.acceptQwikAdminCylindersDispatchedToPlant, name='accept_qwikadmin_cylinders_dispatched_to_plant'),
@@ -96,5 +97,7 @@ urlpatterns = [
     path('qwika-dashboard/cylinders/un-selected', views.unselectAll, name='qwikadmin_unselect_cylinders'),
 
     path('qwikvendor-dashboard/transferred-products/', views.showQwikVendorTransferredProducts, name='qwikvendor_transferreds'),
+    path('qwikpartner-dashboard/transferred-products/accept/<int:id>', views.acceptPartnerTransfer, name='accept_qwikpartner_transfer'),
+    path('qwikpartner-dashboard/transferred-products/decline/<int:id>', views.declinePartnerTransfer, name='decline_qwikpartner_transfer'),
 
 ]
